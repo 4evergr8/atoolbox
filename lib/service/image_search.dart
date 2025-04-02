@@ -21,7 +21,7 @@ Future<String> searchLocalImage(File imageFile, String workerUrl) async {
     ..files.add(http.MultipartFile.fromBytes(
       'file',
       imageBytes,
-      filename: imageFile.path.split('/').last ?? 'unknown.jpg',
+      filename: imageFile.path.split('/').last,
     ));
 
   // 发送请求并获取响应
