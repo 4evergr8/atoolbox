@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://flutter.io/">
+  <a href="https://www.google.com/search?q=Emoji+Kitchen">
     <img src="./assets/aaa.png" alt="Logo" width=100 height=100>
   </a>
 
