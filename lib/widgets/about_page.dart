@@ -36,7 +36,7 @@ class AboutPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // 邮箱
+
             ListTile(
               leading: const Icon(Icons.video_camera_front),
               title: const Text('哔哩哔哩'),
@@ -45,7 +45,7 @@ class AboutPage extends StatelessWidget {
                 launchUrl(Uri.parse('https://space.bilibili.com/3546816836537000'), mode: LaunchMode.externalApplication);
               },
             ),
-            // 社交媒体链接
+
             ListTile(
               leading: const Icon(Icons.code),
               title: const Text('Github'),
