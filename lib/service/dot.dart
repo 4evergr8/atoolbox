@@ -265,6 +265,8 @@ int getRecordTypeCode(String type) {
     case 'SOA': return DnsRecordType.SOA;
     case 'TXT': return DnsRecordType.TXT;
     case 'ANY': return DnsRecordType.ANY;
+    default: return DnsRecordType.A; // 默认返回 A 记录
+
   }
 }
 
