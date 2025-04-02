@@ -114,38 +114,40 @@ class _DNSScreenState extends State<DNSScreen> {
               icon: Icons.domain,
               title: '查询域名',
               child: TextField(
-                controller: _domainController, // 使用类级别的控制器
+                controller: _domainController,
                 onChanged: (value) => setState(() => _domain = value),
                 decoration: InputDecoration(
                   labelText: 'Domain',
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            _buildSettingCard(
-              context,
-              icon: Icons.type_specimen,
-              title: '查询类型',
-              child: DropdownButtonFormField<String>(
-                value: _type,
-                decoration: InputDecoration(
-                  labelText: 'Type',
+            if (_isDoh) ...[
+              SizedBox(height: 16),
+              _buildSettingCard(
+                context,
+                icon: Icons.type_specimen,
+                title: '查询类型',
+                child: DropdownButtonFormField<String>(
+                  value: _type,
+                  decoration: InputDecoration(
+                    labelText: 'Type',
+                  ),
+                  items: _dnsTypes.map((String type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(type),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      setState(() {
+                        _type = newValue;
+                      });
+                    }
+                  },
                 ),
-                items: _dnsTypes.map((String type) {
-                  return DropdownMenuItem<String>(
-                    value: type,
-                    child: Text(type),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      _type = newValue;
-                    });
-                  }
-                },
               ),
-            ),
+            ],
             SizedBox(height: 16),
             _buildSettingCard(
               context,
@@ -190,7 +192,7 @@ class _DNSScreenState extends State<DNSScreen> {
                     content: '请稍候，查询正在进行...',
                   );
                   // 调用 DoT 查询函数
-                  result = await dotQuery(_queryUrl, _domain, _type, _timeout);
+                  result = await dotQuery(_queryUrl, _domain, _timeout);
                   Navigator.of(context).pop();
                 }
                 //
