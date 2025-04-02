@@ -3,14 +3,9 @@ import 'dart:async';
 
 Future<String> dohPtrQuery(String queryUrl, String ip, int timeoutMs) async {
   try {
-    // 验证 IP 地址格式
-    final ipParts = ip.split('.');
-    if (ipParts.length != 4) {
-      return '错误：请输入有效的 IPv4 地址';
-    }
-
     // 将 IP 地址转换为 PTR 查询格式
     // 例如：1.1.1.1 -> 1.1.1.1.in-addr.arpa
+    final ipParts = ip.split('.');
     final ptrDomain = '${ipParts[3]}.${ipParts[2]}.${ipParts[1]}.${ipParts[0]}.in-addr.arpa';
 
     // 设置请求头
@@ -20,7 +15,7 @@ Future<String> dohPtrQuery(String queryUrl, String ip, int timeoutMs) async {
 
     // 构造查询参数
     final params = {
-      'name': '4.3.2.1.in-addr.arpa',
+      'name': ptrDomain,
       'type': 'PTR',
     };
 
