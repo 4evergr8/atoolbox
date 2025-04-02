@@ -3,6 +3,118 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
 
+// 从 DNS 响应中读取域名
+String readDomainName(Uint8List data, int offset) {
+  StringBuffer domain = StringBuffer();
+  int currentOffset = offset;
+  
+  while (currentOffset < data.length) {
+    int length = data[currentOffset];
+    if (length == 0) break;
+    
+    // 检查是否是压缩指针
+    if ((length & 0xC0) == 0xC0) {
+      int pointerOffset = ((length & 0x3F) << 8) | data[currentOffset + 1];
+      return readDomainName(data, pointerOffset);
+    }
+    
+    if (domain.length > 0) domain.write('.');
+    domain.write(String.fromCharCodes(
+      data.sublist(currentOffset + 1, currentOffset + 1 + length)
+    ));
+    currentOffset += length + 1;
+  }
+  
+  return domain.toString();
+}
+
+// 解析 DNS 响应
+String parseDnsResponse(Uint8List responseBytes) {
+  try {
+    if (responseBytes.length < 12) {
+      return '响应数据太短，无法解析';
+    }
+
+    // 解析头部
+    final id = (responseBytes[0] << 8) | responseBytes[1];
+    final flags = (responseBytes[2] << 8) | responseBytes[3];
+    final questions = (responseBytes[4] << 8) | responseBytes[5];
+    final answerRRs = (responseBytes[6] << 8) | responseBytes[7];
+    final authorityRRs = (responseBytes[8] << 8) | responseBytes[9];
+    final additionalRRs = (responseBytes[10] << 8) | responseBytes[11];
+
+    StringBuffer result = StringBuffer();
+    result.writeln('DNS 查询结果:');
+    result.writeln('查询ID: 0x${id.toRadixString(16).padLeft(4, '0')}');
+    result.writeln('响应标志: 0x${flags.toRadixString(16).padLeft(4, '0')}');
+    result.writeln('问题数: $questions');
+    result.writeln('回答数: $answerRRs');
+
+    // 解析问题部分
+    int offset = 12;
+    String queryDomain = readDomainName(responseBytes, offset);
+    result.writeln('\n查询域名: $queryDomain');
+    
+    // 跳过问题部分的类型和类别
+    while (offset < responseBytes.length && responseBytes[offset] != 0) {
+      offset += responseBytes[offset] + 1;
+    }
+    offset += 5; // 跳过类型和类别
+
+    // 解析回答部分
+    if (answerRRs > 0) {
+      result.writeln('\n解析结果:');
+      for (int i = 0; i < answerRRs; i++) {
+        if (offset >= responseBytes.length) break;
+
+        // 读取域名
+        String name = readDomainName(responseBytes, offset);
+        offset += 2; // 跳过压缩指针
+
+        // 读取类型和类别
+        int type = (responseBytes[offset] << 8) | responseBytes[offset + 1];
+        offset += 4; // 跳过类型和类别
+
+        // 读取 TTL
+        int ttl = (responseBytes[offset] << 24) |
+                  (responseBytes[offset + 1] << 16) |
+                  (responseBytes[offset + 2] << 8) |
+                  responseBytes[offset + 3];
+        offset += 4;
+
+        // 读取数据长度
+        int dataLength = (responseBytes[offset] << 8) | responseBytes[offset + 1];
+        offset += 2;
+
+        // 根据记录类型解析数据
+        if (type == 1) { // A 记录
+          if (dataLength == 4) {
+            String ip = '${responseBytes[offset]}.${responseBytes[offset + 1]}.'
+                       '${responseBytes[offset + 2]}.${responseBytes[offset + 3]}';
+            result.writeln('A 记录: $ip');
+          }
+        } else if (type == 28) { // AAAA 记录
+          if (dataLength == 16) {
+            String ipv6 = responseBytes.sublist(offset, offset + 16)
+                .map((b) => b.toRadixString(16).padLeft(2, '0'))
+                .join(':');
+            result.writeln('AAAA 记录: $ipv6');
+          }
+        } else if (type == 5) { // CNAME 记录
+          String cname = readDomainName(responseBytes, offset);
+          result.writeln('CNAME 记录: $cname');
+        }
+
+        offset += dataLength;
+      }
+    }
+
+    return result.toString();
+  } catch (e) {
+    return '解析响应时出错: $e';
+  }
+}
+
 Future<String> dohQuery(String queryUrl, String domain, int timeoutMs) async {
   try {
     // 构造 DNS 查询报文
@@ -59,9 +171,8 @@ Future<String> dohQuery(String queryUrl, String domain, int timeoutMs) async {
     final response = await http.get(url, headers: headers).timeout(Duration(milliseconds: timeoutMs));
 
     if (response.statusCode == 200) {
-      // 请求成功，解析响应内容
-      // 这里简单地返回原始响应数据，实际应用中需要解析 DNS 响应报文
-      return '请求成功。响应内容:\n${response.bodyBytes}';
+      // 解析 DNS 响应
+      return parseDnsResponse(response.bodyBytes);
     } else {
       // 请求失败，返回错误信息
       return '请求失败。状态码: ${response.statusCode}';
