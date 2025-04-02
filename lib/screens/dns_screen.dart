@@ -29,10 +29,11 @@ class _DNSScreenState extends State<DNSScreen> {
     'A',      // IPv4 地址
     'AAAA',   // IPv6 地址
     'CNAME',  // 规范名称
-    'MX',     // 邮件交换
     'NS',     // 域名服务器
+    'MX',     // 邮件交换
     'SOA',    // 起始授权机构
     'TXT',    // 文本
+    'ANY',
   ];
 
   @override
@@ -189,7 +190,7 @@ class _DNSScreenState extends State<DNSScreen> {
                     content: '请稍候，查询正在进行...',
                   );
                   // 调用 DoT 查询函数
-                  result = await dotQuery(_queryUrl, _domain, _timeout);
+                  result = await dotQuery(_queryUrl, _domain, _type, _timeout);
                   Navigator.of(context).pop();
                 }
                 //
