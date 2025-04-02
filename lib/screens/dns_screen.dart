@@ -91,7 +91,7 @@ class _DNSScreenState extends State<DNSScreen> {
                   });
                 },
                 title: Text(_isDoh ? 'DoH' : 'DoT'),
-                subtitle: Text(_isDoh ? 'DNS over HTTPS' : 'DNS over TLS（施工中）'),
+                subtitle: Text(_isDoh ? 'DNS over HTTPS' : 'DNS over TLS（仅支持A类型）'),
               ),
             ),
             SizedBox(height: 16),
