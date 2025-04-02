@@ -3,11 +3,6 @@ import 'dart:async';
 
 Future<String> dohPtrV6Query(String queryUrl, String ip, int timeoutMs) async {
   try {
-    // 验证 IP 地址格式
-    if (!isValidIPv6(ip)) {
-      return '错误：请输入有效的 IPv6 地址';
-    }
-
     // 将 IPv6 地址转换为 PTR 查询格式
     final ptrDomain = convertIPv6ToPtr(ip);
 
@@ -36,28 +31,6 @@ Future<String> dohPtrV6Query(String queryUrl, String ip, int timeoutMs) async {
     }
   } catch (e) {
     return '请求失败。错误信息: $e';
-  }
-}
-
-// 验证 IPv6 地址格式
-bool isValidIPv6(String ip) {
-  try {
-    // 移除可能的方括号
-    ip = ip.replaceAll(RegExp(r'[\[\]]'), '');
-    
-    // 检查基本格式
-    if (!RegExp(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$').hasMatch(ip)) {
-      return false;
-    }
-    
-    // 检查压缩格式 (::)
-    if (ip.split('::').length > 2) {
-      return false;
-    }
-    
-    return true;
-  } catch (e) {
-    return false;
   }
 }
 
