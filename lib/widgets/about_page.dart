@@ -73,6 +73,16 @@ class AboutPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 8), // 添加段落间距
                 Text(
+                  '此软件使用IntelliJ IDEA和Cursor作为编译器。',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8), // 添加段落间距
+                Text(
+                  '软件使用了Flutter框架和Dart语言。',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8), // 添加段落间距
+                Text(
                   '本地搜图功能借助了CloudflareWorker和R2存储桶。',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
