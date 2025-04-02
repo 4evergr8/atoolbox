@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/screens/ptr_screen.dart';
 import '/screens/netspeed_screen.dart';
 import '/screens/dns_screen.dart';
 import '/screens/thumbnail_screen.dart';
@@ -76,6 +77,19 @@ class InternetPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const DNSScreen()),
+                );
+              },
+            ),
+            SizedBox(height: 16),
+            _buildFunctionItem(
+              context,
+              icon: Icons.web,
+              title: 'IP反查域名',
+              subtitle: 'DoHPTR查询测试',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PTRScreen()),
                 );
               },
             ),
