@@ -1,0 +1,43 @@
+name: web_tools
+description: "A new Flutter project."
+publish_to: 'none'
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "#000000"
+  image: assets/aaa.png
+  android: true
+  ios: false
+version: 1.0.0+1
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: any
+  network_info_plus: any
+  http: any
+  share_handler: any
+  url_launcher: any
+  flutter_launcher_icons: any
+  path_provider: any
+  google_mlkit_language_id: any
+  google_mlkit_translation: any
+  image_picker: any
+  share_handler_platform_interface: any
+  google_mlkit_text_recognition: any
+  path: any
+  open_file: any
+  flutter_native_splash: any
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/profile.png
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
