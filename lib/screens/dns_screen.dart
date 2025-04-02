@@ -13,15 +13,27 @@ class DNSScreen extends StatefulWidget {
 
 class _DNSScreenState extends State<DNSScreen> {
   bool _isDoh = true; // 默认为 DoH
-  String _queryUrl = 'https://dns.alidns.com/dns-query'; // 默认 DoH 地址
+  String _queryUrl = 'https://doh.pub/dns-query'; // 默认 DoH 地址
   final String _queryPort = ':853'; // 默认 DoT 端口
   String _domain = 'baidu.com'; // 默认查询域名
+  String _type = 'A'; // 默认查询类型
   int _timeout = 5000; // 默认超时时长（毫秒）
 
   // 提升 TextEditingController 到类级别
   late TextEditingController _queryUrlController;
   late TextEditingController _domainController;
   late TextEditingController _timeoutController;
+
+  // DNS 记录类型列表
+  final List<String> _dnsTypes = [
+    'A',      // IPv4 地址
+    'AAAA',   // IPv6 地址
+    'CNAME',  // 规范名称
+    'MX',     // 邮件交换
+    'NS',     // 域名服务器
+    'SOA',    // 起始授权机构
+    'TXT',    // 文本
+  ];
 
   @override
   void initState() {
@@ -111,6 +123,31 @@ class _DNSScreenState extends State<DNSScreen> {
             SizedBox(height: 16),
             _buildSettingCard(
               context,
+              icon: Icons.type_specimen,
+              title: '查询类型',
+              child: DropdownButtonFormField<String>(
+                value: _type,
+                decoration: InputDecoration(
+                  labelText: 'Type',
+                ),
+                items: _dnsTypes.map((String type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _type = newValue;
+                    });
+                  }
+                },
+              ),
+            ),
+            SizedBox(height: 16),
+            _buildSettingCard(
+              context,
               icon: Icons.timer,
               title: '超时时长',
               child: TextField(
@@ -141,7 +178,7 @@ class _DNSScreenState extends State<DNSScreen> {
                   );
 
                   // 调用 DoH 查询函数
-                  result = await dohQuery(_queryUrl, _domain, _timeout);
+                  result = await dohQuery(_queryUrl, _domain, _type, _timeout);
                   // 关闭扫描中的弹窗
                   Navigator.of(context).pop();
 
