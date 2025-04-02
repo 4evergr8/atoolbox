@@ -6,14 +6,6 @@ import 'dart:io';
 // DNS 记录类型常量
 class DnsRecordType {
   static const int A = 1;      // IPv4 地址
-  static const int NS = 2;     // 域名服务器
-  static const int CNAME = 5;  // 规范名称
-  static const int SOA = 6;    // 起始授权机构
-  static const int PTR = 12;   // 指针
-  static const int MX = 15;    // 邮件交换
-  static const int TXT = 16;   // 文本
-  static const int AAAA = 28;  // IPv6 地址
-  static const int ANY = 255;  // 所有记录类型
 }
 
 // 从 DNS 响应中读取域名
@@ -39,65 +31,6 @@ String readDomainName(Uint8List data, int offset) {
   }
   
   return domain.toString();
-}
-
-// 获取记录类型名称
-String getRecordTypeName(int type) {
-  switch (type) {
-    case DnsRecordType.A: return 'A';
-    case DnsRecordType.NS: return 'NS';
-    case DnsRecordType.CNAME: return 'CNAME';
-    case DnsRecordType.SOA: return 'SOA';
-    case DnsRecordType.PTR: return 'PTR';
-    case DnsRecordType.MX: return 'MX';
-    case DnsRecordType.TXT: return 'TXT';
-    case DnsRecordType.AAAA: return 'AAAA';
-    case DnsRecordType.ANY: return 'ANY';
-    default: return 'TYPE$type';
-  }
-}
-
-// 解析 SOA 记录
-String parseSOARecord(Uint8List data, int offset) {
-  String mname = readDomainName(data, offset);
-  int currentOffset = offset;
-  while (currentOffset < data.length && data[currentOffset] != 0) {
-    currentOffset += data[currentOffset] + 1;
-  }
-  currentOffset++;
-  String rname = readDomainName(data, currentOffset);
-  
-  // 跳过序列号、刷新、重试、过期和最小 TTL
-  currentOffset += 20;
-  
-  return '主域名服务器: $mname\n管理员邮箱: $rname';
-}
-
-// 解析 MX 记录
-String parseMXRecord(Uint8List data, int offset) {
-  int preference = (data[offset] << 8) | data[offset + 1];
-  String exchange = readDomainName(data, offset + 2);
-  return '优先级: $preference\n邮件服务器: $exchange';
-}
-
-// 解析 TXT 记录
-String parseTXTRecord(Uint8List data, int offset, int length) {
-  List<String> strings = [];
-  int currentOffset = offset;
-  
-  while (currentOffset < offset + length) {
-    int stringLength = data[currentOffset];
-    currentOffset++;
-    if (currentOffset + stringLength > offset + length) break;
-    
-    String txt = String.fromCharCodes(
-      data.sublist(currentOffset, currentOffset + stringLength)
-    );
-    strings.add(txt);
-    currentOffset += stringLength;
-  }
-  
-  return strings.join(' ');
 }
 
 // 解析 DNS 响应
@@ -160,51 +93,16 @@ String parseDnsResponse(Uint8List responseBytes) {
         int dataLength = (responseBytes[offset] << 8) | responseBytes[offset + 1];
         offset += 2;
 
-        // 根据记录类型解析数据
-        result.writeln('\n${getRecordTypeName(type)} 记录:');
-        result.writeln('域名: $name');
-        result.writeln('TTL: $ttl 秒');
-
-        switch (type) {
-          case DnsRecordType.A: // A 记录
-            if (dataLength == 4) {
-              String ip = '${responseBytes[offset]}.${responseBytes[offset + 1]}.'
-                         '${responseBytes[offset + 2]}.${responseBytes[offset + 3]}';
-              result.writeln('IPv4 地址: $ip');
-            }
-            break;
-          case DnsRecordType.NS: // NS 记录
-            String ns = readDomainName(responseBytes, offset);
-            result.writeln('域名服务器: $ns');
-            break;
-          case DnsRecordType.CNAME: // CNAME 记录
-            String cname = readDomainName(responseBytes, offset);
-            result.writeln('规范名称: $cname');
-            break;
-          case DnsRecordType.SOA: // SOA 记录
-            result.writeln(parseSOARecord(responseBytes, offset));
-            break;
-          case DnsRecordType.PTR: // PTR 记录
-            String ptr = readDomainName(responseBytes, offset);
-            result.writeln('指针: $ptr');
-            break;
-          case DnsRecordType.MX: // MX 记录
-            result.writeln(parseMXRecord(responseBytes, offset));
-            break;
-          case DnsRecordType.TXT: // TXT 记录
-            result.writeln('文本: ${parseTXTRecord(responseBytes, offset, dataLength)}');
-            break;
-          case DnsRecordType.AAAA: // AAAA 记录
-            if (dataLength == 16) {
-              String ipv6 = responseBytes.sublist(offset, offset + 16)
-                  .map((b) => b.toRadixString(16).padLeft(2, '0'))
-                  .join(':');
-              result.writeln('IPv6 地址: $ipv6');
-            }
-            break;
-          default:
-            result.writeln('未知记录类型: $type');
-            result.writeln('原始数据: ${responseBytes.sublist(offset, offset + dataLength)}');
+        // 只处理 A 记录
+        if (type == DnsRecordType.A) {
+          result.writeln('\nA 记录:');
+          result.writeln('域名: $name');
+          result.writeln('TTL: $ttl 秒');
+          if (dataLength == 4) {
+            String ip = '${responseBytes[offset]}.${responseBytes[offset + 1]}.'
+                       '${responseBytes[offset + 2]}.${responseBytes[offset + 3]}';
+            result.writeln('IPv4 地址: $ip');
+          }
         }
 
         offset += dataLength;
@@ -254,23 +152,7 @@ Uint8List buildDnsQuery(String domain, int queryType) {
   return Uint8List.fromList(header + domainBytes);
 }
 
-// 获取记录类型代码
-int getRecordTypeCode(String type) {
-  switch (type.toUpperCase()) {
-    case 'A': return DnsRecordType.A;
-    case 'AAAA': return DnsRecordType.AAAA;
-    case 'CNAME': return DnsRecordType.CNAME;
-    case 'NS': return DnsRecordType.NS;
-    case 'MX': return DnsRecordType.MX;
-    case 'SOA': return DnsRecordType.SOA;
-    case 'TXT': return DnsRecordType.TXT;
-    case 'ANY': return DnsRecordType.ANY;
-    default: return DnsRecordType.A; // 默认返回 A 记录
-
-  }
-}
-
-Future<String> dotQuery(String server, String domain, String queryType, int timeoutMs) async {
+Future<String> dotQuery(String server, String domain, int timeoutMs) async {
   try {
     // 解析服务器地址和端口
     final parts = server.split(':');
@@ -285,11 +167,18 @@ Future<String> dotQuery(String server, String domain, String queryType, int time
     );
 
     try {
-      // 构造 DNS 查询报文
-      final query = buildDnsQuery(domain, getRecordTypeCode(queryType));
+      // 构造 DNS 查询报文，固定查询 A 记录
+      final query = buildDnsQuery(domain, DnsRecordType.A);
+
+      // 添加长度字段（2字节）
+      final length = query.length;
+      final requestBytes = Uint8List(length + 2);
+      requestBytes[0] = (length >> 8) & 0xFF;
+      requestBytes[1] = length & 0xFF;
+      requestBytes.setRange(2, length + 2, query);
 
       // 发送查询报文
-      socket.add(query);
+      socket.add(requestBytes);
 
       // 等待响应
       final response = await socket.first;
@@ -297,8 +186,22 @@ Future<String> dotQuery(String server, String domain, String queryType, int time
       // 关闭连接
       await socket.close();
 
-      // 返回响应数据
-      return response.toString();
+      // 检查响应数据
+      if (response.length < 2) {
+        return '响应数据太短';
+      }
+
+      // 读取响应长度
+      final responseLength = (response[0] << 8) | response[1];
+      if (response.length < responseLength + 2) {
+        return '响应数据不完整';
+      }
+
+      // 提取 DNS 响应数据
+      final dnsResponse = response.sublist(2, responseLength + 2);
+
+      // 解析并返回完整的响应数据
+      return parseDnsResponse(dnsResponse);
     } finally {
       // 确保连接被关闭
       await socket.close();
