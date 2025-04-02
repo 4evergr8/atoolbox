@@ -26,6 +26,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                     children: links.map((link) {
                       return ElevatedButton(
                         onPressed: () async {
+
                           // 打开链接
                           final uri = Uri.parse(link[1]);
                           if (await canLaunchUrl(uri)) {
@@ -39,6 +40,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                         onLongPress: () {
                           // 复制链接到剪贴板
                           Clipboard.setData(ClipboardData(text: link[1])).then((_) {
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('链接已复制: ${link[1]}')),
                             );
