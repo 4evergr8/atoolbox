@@ -13,7 +13,7 @@ class PTRScreen extends StatefulWidget {
 
 class _PTRScreenState extends State<PTRScreen> {
   bool _isIPv4 = true; // 默认为 IPv4
-  String _queryUrl = 'https://doh.pub/dns-query'; // 默认 DoH 地址
+  String _queryUrl = 'https://cloudflare-dns.com/dns-query'; // 默认 DoH 地址
   String _ip = '8.8.8.8'; // 默认查询 IP
   int _timeout = 5000; // 默认超时时长（毫秒）
 
