@@ -83,9 +83,9 @@ class _DNSScreenState extends State<DNSScreen> {
                   setState(() {
                     _isDoh = value;
                     if (_isDoh) {
-                      _queryUrl = 'https://dns.alidns.com/dns-query'; // DoH 地址
+                      _queryUrl = 'https://doh.pub/dns-query'; // DoH 地址
                     } else {
-                      _queryUrl = 'dns.alidns.com'; // DoT 地址
+                      _queryUrl = 'dot.pub'; // DoT 地址
                     }
                     _queryUrlController.text = _queryUrl; // 更新控制器内容
                   });
