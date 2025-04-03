@@ -1,29 +1,9 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:yaml/yaml.dart';
+import '../service/video_download.dart';
 
-Future<String> fetchVideoInfo(String bvid, String cid, String ua) async {
-  final url = Uri.parse('https://api.bilibili.com/x/player/playurl').replace(
-    queryParameters: {'bvid': bvid, 'cid': cid, 'fnval': '1', 'fnver': '0'},
-  );
 
-  final headers = {'User-Agent': ua};
-  final res = await http.get(url, headers: headers);
 
-  if (res.statusCode != 200) {
-    return '请求失败，状态码: ${res.statusCode}';
-  }
-
-  final data = jsonDecode(res.body);
-  if (data['code'] == 0 && data['data'] != null && data['data']['durl'] != null) {
-    final videoUrl = data['data']['durl'][0]['url'];
-    return '视频链接: $videoUrl';
-  } else {
-    return '未找到视频链接或数据异常';
-  }
-}
-
-Future<String> processYamlAndFetchInfo(String yamlStr, String ua) async {
+Future<String> yamlProcess(String yamlStr, String ua) async {
   final yamlMap = loadYaml(yamlStr);
   final medias = yamlMap['data']['medias'];
 
@@ -36,7 +16,7 @@ Future<String> processYamlAndFetchInfo(String yamlStr, String ua) async {
     // Only proceed if both bvid and cid are available
     if (bvid != null && cid != null) {
       // Await the result of each fetchVideoInfo call sequentially
-      final videoInfo = await fetchVideoInfo(bvid, cid.toString(), ua);
+      final videoInfo = await videoDownload(bvid, cid.toString(), ua);
       result.add(videoInfo);
     }
   }
@@ -118,7 +98,7 @@ data:
   final ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
 
   try {
-    final result = await processYamlAndFetchInfo(yamlString, ua);
+    final result = await yamlProcess(yamlString, ua);
     print(result);  // Output will contain the result of each video fetch
   } catch (e) {
     print('发生错误: $e');
