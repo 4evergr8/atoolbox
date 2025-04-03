@@ -78,7 +78,7 @@ class InternetPage extends StatelessWidget {
               SizedBox(height: 16),
               _buildFunctionItem(
                 context,
-                icon: Icons.settings_backup_restore,
+                icon: Icons.video_camera_front,
                 title: '视频备份',
                 subtitle: '哔哩哔哩视频备份，无需登录',
                 onTap: () {
