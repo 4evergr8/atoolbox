@@ -54,14 +54,14 @@ Future<String> videoDownload(String bvid, String cid, String ua) async {
       return('下载失败, HTTP 状态码: ${videoRes.statusCode}');
     }
   } else {
-    return('未找到可用的播放 URL');
+    return('未找到可用的播放 URL，BVID: $bvid,CID: $cid');
   }
 }
 
 void main() async {
   try {
-    String bvid = 'BV1eboCYwEkR';
-    String cid = '29047785800';
+    String bvid = 'BV1GJ411x7h7';
+    String cid = '137649199';
     String ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
 
     await videoDownload(bvid, cid, ua);
