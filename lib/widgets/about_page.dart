@@ -73,7 +73,12 @@ class AboutPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 8), // 添加段落间距
                 Text(
-                  '此软件使用IntelliJ IDEA和Cursor作为编译器。',
+                  '此软件使用IntelliJ IDEA作为编译器。',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8), // 添加段落间距
+                Text(
+                  'GithubCopilot插件彻底干亖了Cursor，免费，还有三种模式。',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8), // 添加段落间距
