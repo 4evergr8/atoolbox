@@ -31,7 +31,7 @@ Future<String> fetchCid(String bvid, String ua) async {
 
 void main() async {
 
-    String bvid = 'BV1FgfKYqEKv';
+    String bvid = 'BV1GJ411x7h7';
     String ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
     String cid = await fetchCid(bvid, ua);
     print('提取的cid: $cid');
