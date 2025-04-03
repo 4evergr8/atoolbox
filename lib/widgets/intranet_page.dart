@@ -4,7 +4,6 @@ import '../screens/translate_screen.dart';
 import '/screens/port_screen.dart';
 import '/screens/address_screen.dart';
 
-
 class IntranetPage extends StatelessWidget {
   const IntranetPage({super.key});
 
@@ -18,80 +17,87 @@ class IntranetPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Intranet',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            SizedBox(height: 20),
-            _buildFunctionItem(
-              context,
-              icon: Icons.wifi_find,
-              title: '局域网扫描',
-              subtitle: '扫描局域网内的设备',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddressScreen()),
-                );
-              },
-            ),
-            SizedBox(height: 16),
-            _buildFunctionItem(
-              context,
-              icon: Icons.import_export,
-              title: '端口扫描',
-              subtitle: '扫描设备端口',
-              onTap: () {
-                // 假设跳转到路由器设置页面
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const PortScreen()),
-                );
-              },
-            ),
-            SizedBox(height: 16),
-            _buildFunctionItem(
-              context,
-              icon: Icons.pageview,
-              title: '离线OCR',
-              subtitle: '从图片中提取文字',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const OfflineOCRScreen()),
-                );
-              },
-            ),
-            SizedBox(height: 16),
-            _buildFunctionItem(
-              context,
-              icon: Icons.translate,
-              title: '离线翻译',
-              subtitle: '离线翻译，支持检测语言',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const TranslateScreen()),
-                );
-              },
-            ),
-
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Intranet',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              SizedBox(height: 20),
+              _buildFunctionItem(
+                context,
+                icon: Icons.wifi_find,
+                title: '局域网扫描',
+                subtitle: '扫描局域网内的设备',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddressScreen(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.import_export,
+                title: '端口扫描',
+                subtitle: '扫描设备端口',
+                onTap: () {
+                  // 假设跳转到路由器设置页面
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PortScreen()),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.pageview,
+                title: '离线OCR',
+                subtitle: '从图片中提取文字',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OfflineOCRScreen(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.translate,
+                title: '离线翻译',
+                subtitle: '离线翻译，支持检测语言',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TranslateScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildFunctionItem(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required String subtitle,
-        required VoidCallback onTap,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
     return Card(
       elevation: 4, // 添加阴影
       shape: RoundedRectangleBorder(
@@ -119,6 +125,3 @@ class LocalNetworkDevicesScreen extends StatelessWidget {
     );
   }
 }
-
-
-
