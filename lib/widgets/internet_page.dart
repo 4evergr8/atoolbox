@@ -60,7 +60,7 @@ class InternetPage extends StatelessWidget {
               context,
               icon: Icons.settings_backup_restore,
               title: '收藏夹备份',
-              subtitle: '哔哩哔哩收藏夹备份',
+              subtitle: '哔哩哔哩收藏夹备份，仅支持公开收藏夹',
               onTap: () {
                 Navigator.push(
                   context,
