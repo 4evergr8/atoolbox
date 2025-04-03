@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart'; // 用于选择本地图片
-import 'dart:io'; // 用于处理文件
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '/service/image_search.dart';
 import '/widgets/popup_links.dart';
-import '/widgets/popup_infinity.dart'; // 导入通用弹窗工具类
+import '/widgets/popup_infinity.dart';
 
 class ImageSearchScreen extends StatefulWidget {
   const ImageSearchScreen({super.key});
