@@ -5,10 +5,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive_io.dart';
 import 'package:share_plus/share_plus.dart';
 
-Future<void> fetchAndSaveMedia(String cookie, String ua, String id) async {
+Future<void> fetchAndSaveMedia( String ua, String id) async {
   final headers = {
     'user-agent': ua,
-    'cookie': cookie,
+    //'cookie': cookie,
   };
 
   int pageNumber = 1;
@@ -57,12 +57,15 @@ Future<void> fetchAndSaveMedia(String cookie, String ua, String id) async {
       final coverUrl = media['cover'];
       final coverRes = await http.get(Uri.parse(coverUrl));
       final coverFile = File('${pageDir.path}/$mediaId.jpg');
-      coverFile.writeAsBytesSync(coverRes.bodyBytes);
+      await coverFile.writeAsBytes(coverRes.bodyBytes);
     }
 
     pageNumber++;
   }
+
+  // 确保所有文件都已写入磁盘
   await Future.delayed(Duration(seconds: 1));
+
   final encoder = ZipFileEncoder();
   encoder.create('${baseDir.path}.zip');
   encoder.addDirectory(baseDir);
