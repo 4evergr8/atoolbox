@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:web_tools/screens/yaml_process.dart';
 
 import '../service/cid_fetcher.dart';
 import '../service/video_download.dart';
@@ -17,10 +18,10 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
-  bool _isDefaultMode = true; // 默认为默认模式
+  bool _isDefaultMode = true;
   final TextEditingController _uaController = TextEditingController();
   final TextEditingController _bvController = TextEditingController();
-  File? _yamlFile; // 用于存储选择的 YAML 文件
+  File? _yamlFile;
 
   @override
   void initState() {
@@ -51,7 +52,15 @@ class _VideoScreenState extends State<VideoScreen> {
       showTextPopup(context, result);
     } else {
       if (_yamlFile != null) {
-        print('UA: $ua, YAML File: ${_yamlFile!.path}');
+        DialogUtils.showLoadingDialog(
+          context: context,
+          title: '下载中...',
+          content: '请稍候，视频正在下载...',
+        );
+        final result = await yamlProcess(_yamlFile!.path, _uaController.text);
+        Navigator.of(context).pop(); // 关闭加载对话框
+        showTextPopup(context, result);
+
       } else {
         // 提示用户选择文件
         ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +68,7 @@ class _VideoScreenState extends State<VideoScreen> {
         );
       }
     }
-    await _saveSettings(ua);
+    await _saveSettings(_uaController.text);
   }
 
   @override
@@ -119,13 +128,14 @@ class _VideoScreenState extends State<VideoScreen> {
                 icon: Icons.perm_identity,
                 title: 'BV 号',
                 child: TextField(
-                  controller: _bvController,
+                  controller: _bvController..text = 'BV1GJ411x7h7', // 设置默认值
                   decoration: InputDecoration(
                     labelText: 'BV 号',
                     hintText: '请输入 BV 号',
                   ),
                 ),
               ),
+
             ] else ...[
               SizedBox(height: 16),
               _buildSettingCard(
