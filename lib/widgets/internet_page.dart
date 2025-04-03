@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/screens/video_screen.dart';
 import '/screens/backup_screen.dart';
 import '/screens/ptr_screen.dart';
 import '/screens/netspeed_screen.dart';
@@ -70,6 +71,21 @@ class InternetPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const BackupScreen(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.settings_backup_restore,
+                title: '视频备份',
+                subtitle: '哔哩哔哩视频备份，无需登录',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const VideoScreen(),
                     ),
                   );
                 },
