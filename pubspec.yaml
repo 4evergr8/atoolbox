@@ -20,6 +20,8 @@ dependencies:
   http: any
   share_handler: any
   url_launcher: any
+  shared_preferences: any
+  share_plus: any
   flutter_launcher_icons: any
   path_provider: any
   google_mlkit_language_id: any
