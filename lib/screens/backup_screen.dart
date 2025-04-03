@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart'; // 导入剪贴板库
 import '/widgets/popup_text.dart';
 import '/service/backup_collection.dart'; // 假设 backup_collection.dart 包含 fetchAndSaveMedia 函数
 import '/widgets/popup_infinity.dart'; // 导入通用弹窗工具类
@@ -57,6 +58,14 @@ class _BackupScreenState extends State<BackupScreen> {
 
     // 显示备份完成提示
     showTextPopup(context, '备份完成');
+  }
+
+  void _copyCookieCode() {
+    const cookieCode = "javascript:(function(){prompt('',document.cookie);})();";
+    Clipboard.setData(ClipboardData(text: cookieCode));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('已将代码复制到剪贴板')),
+    );
   }
 
   @override
@@ -117,10 +126,20 @@ class _BackupScreenState extends State<BackupScreen> {
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: _startBackup,
-              icon: Icon(Icons.settings_backup_restore),
-              label: Text('开始备份'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _startBackup,
+                  icon: Icon(Icons.settings_backup_restore),
+                  label: Text('开始备份'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: _copyCookieCode,
+                  icon: Icon(Icons.code),
+                  label: Text('cookie代码'),
+                ),
+              ],
             ),
           ],
         ),
