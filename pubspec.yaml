@@ -16,6 +16,8 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: any
+  archive: any
+  json2yaml: any
   network_info_plus: any
   http: any
   share_handler: any
