@@ -45,16 +45,13 @@ class _BackupScreenState extends State<BackupScreen> {
     );
 
     // 执行备份操作
-    await fetchAndSaveMedia(ua, id);
+    await fetchAndSaveMedia(context,ua, id);
 
     // 关闭备份中的弹窗
     Navigator.of(context).pop();
 
     // 保存设置
     await _saveSettings(ua, id);
-
-    // 显示备份完成提示
-    showTextPopup(context, '备份完成');
   }
 
   @override
