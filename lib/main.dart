@@ -56,22 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _launchURL() async {
-    const url = 'https://example.com';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         BottomNavBar(), // 使用底部导航栏组件
-        if (_isFirstLaunch)
-          _buildFirstLaunchDialog(),
+        if (_isFirstLaunch) _buildFirstLaunchDialog(),
       ],
     );
   }
@@ -79,16 +69,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildFirstLaunchDialog() {
     return AlertDialog(
       title: const Text('欢迎'),
-      content: const Text('感谢您使用我们的应用！点击下方按钮以了解更多信息。'),
+      content: const Text('欢迎使用，点击下方按钮查看使用方法。'),
       actions: [
-        TextButton(
-          onPressed: () {
-            _launchURL();
+        ElevatedButton.icon(
+          onPressed: () async {
+            final uri = Uri.parse('https://github.com/4evergr8/atoolbox');
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('https://github.com/4evergr8/atoolbox')),
+              );
+            }
             setState(() {
               _isFirstLaunch = false;
             });
           },
-          child: const Text('了解更多'),
+          icon: Icon(Icons.web),
+          label: Text('了解更多'),
         ),
       ],
     );
