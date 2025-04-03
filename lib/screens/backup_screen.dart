@@ -12,7 +12,6 @@ class BackupScreen extends StatefulWidget {
 }
 
 class _BackupScreenState extends State<BackupScreen> {
-  final TextEditingController _cookieController = TextEditingController();
   final TextEditingController _uaController = TextEditingController();
   final TextEditingController _idController = TextEditingController();
 
@@ -24,18 +23,17 @@ class _BackupScreenState extends State<BackupScreen> {
 
   Future<void> _loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _cookieController.text = prefs.getString('cookie') ?? "";
     _uaController.text = prefs.getString('ua') ?? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
+    _idController.text = prefs.getString('id') ?? '';
   }
 
-  Future<void> _saveSettings(String cookie, String ua) async {
+  Future<void> _saveSettings(String ua, String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('cookie', cookie);
     await prefs.setString('ua', ua);
+    await prefs.setString('id', id);
   }
 
   void _startBackup() async {
-    String cookie = _cookieController.text;
     String ua = _uaController.text;
     String id = _idController.text;
 
@@ -47,13 +45,13 @@ class _BackupScreenState extends State<BackupScreen> {
     );
 
     // 执行备份操作
-    await fetchAndSaveMedia(cookie, ua, id);
+    await fetchAndSaveMedia(ua, id);
 
     // 关闭备份中的弹窗
     Navigator.of(context).pop();
 
     // 保存设置
-    await _saveSettings(cookie, ua);
+    await _saveSettings(ua, id);
 
     // 显示备份完成提示
     showTextPopup(context, '备份完成');
@@ -78,19 +76,6 @@ class _BackupScreenState extends State<BackupScreen> {
               style: theme.textTheme.headlineSmall,
             ),
             SizedBox(height: 20),
-            _buildSettingCard(
-              context,
-              icon: Icons.cookie,
-              title: 'COOKIE',
-              child: TextField(
-                controller: _cookieController,
-                decoration: InputDecoration(
-                  labelText: 'COOKIE',
-                  hintText: '请在浏览器中获取',
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
             _buildSettingCard(
               context,
               icon: Icons.browser_updated,
