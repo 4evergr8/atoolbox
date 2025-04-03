@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/screens/backup_screen.dart';
 import '/screens/ptr_screen.dart';
 import '/screens/netspeed_screen.dart';
 import '/screens/dns_screen.dart';
@@ -51,6 +52,19 @@ class InternetPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const ThumbnailSearchScreen()),
+                );
+              },
+            ),
+            SizedBox(height: 16),
+            _buildFunctionItem(
+              context,
+              icon: Icons.settings_backup_restore,
+              title: '收藏夹备份',
+              subtitle: '哔哩哔哩收藏夹备份',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BackupScreen()),
                 );
               },
             ),
