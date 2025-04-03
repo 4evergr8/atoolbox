@@ -10,10 +10,10 @@ Future<String> searchLocalImage(File imageFile, String workerUrl) async {
   String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
   String key = '$randomKey$timestamp';
 
-  // 上传 URL
+
   String uploadUrl = '$workerUrl/upload/$key';
 
-  // 读取图片文件为字节数据
+
   List<int> imageBytes = await imageFile.readAsBytes();
 
   // 创建 MultipartRequest
