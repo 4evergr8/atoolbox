@@ -36,8 +36,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isFirstLaunch = false;
-
   @override
   void initState() {
     super.initState();
@@ -49,46 +47,45 @@ class _HomeScreenState extends State<HomeScreen> {
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
     if (isFirstLaunch) {
-      setState(() {
-        _isFirstLaunch = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showFirstLaunchDialog();
       });
       await prefs.setBool('isFirstLaunch', false);
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BottomNavBar(), // 使用底部导航栏组件
-        if (_isFirstLaunch) _buildFirstLaunchDialog(),
-      ],
+  void _showFirstLaunchDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // 禁止点击外部关闭
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('欢迎'),
+          content: const Text('欢迎使用，点击下方按钮查看使用方法。'),
+          actions: [
+            ElevatedButton.icon(
+              onPressed: () async {
+                final uri = Uri.parse('https://github.com/4evergr8/atoolbox');
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('https://github.com/4evergr8/atoolbox')),
+                  );
+                }
+                Navigator.of(context).pop(); // 关闭弹窗
+              },
+              icon: Icon(Icons.web),
+              label: Text('了解更多'),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildFirstLaunchDialog() {
-    return AlertDialog(
-      title: const Text('欢迎'),
-      content: const Text('欢迎使用，点击下方按钮查看使用方法。'),
-      actions: [
-        ElevatedButton.icon(
-          onPressed: () async {
-            final uri = Uri.parse('https://github.com/4evergr8/atoolbox');
-            if (await canLaunchUrl(uri)) {
-              await launchUrl(uri, mode: LaunchMode.externalApplication);
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('https://github.com/4evergr8/atoolbox')),
-              );
-            }
-            setState(() {
-              _isFirstLaunch = false;
-            });
-          },
-          icon: Icon(Icons.web),
-          label: Text('了解更多'),
-        ),
-      ],
-    );
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavBar(); // 仅显示底部导航栏
   }
 }
