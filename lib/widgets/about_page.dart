@@ -40,7 +40,7 @@ class AboutPage extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.video_camera_front),
                 title: const Text('哔哩哔哩'),
-                subtitle: const Text('4evergr8'),
+                subtitle: const Text('可以给UP投个币吗🪙'),
                 onTap: () {
                   launchUrl(
                     Uri.parse('https://space.bilibili.com/3546816836537000'),
@@ -52,10 +52,10 @@ class AboutPage extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.code),
                 title: const Text('Github'),
-                subtitle: const Text('4evergr8'),
+                subtitle: const Text('软件源代码'),
                 onTap: () {
                   launchUrl(
-                    Uri.parse('https://github.com/4evergr8'),
+                    Uri.parse('https://github.com/4evergr8/atoolbox'),
                     mode: LaunchMode.externalApplication,
                   );
                 },
@@ -63,7 +63,7 @@ class AboutPage extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.web),
                 title: const Text('GithubPages'),
-                subtitle: const Text('4evergr8.github.io'),
+                subtitle: const Text('欢迎访问'),
                 onTap: () {
                   launchUrl(
                     Uri.parse('https://4evergr8.github.io'),
