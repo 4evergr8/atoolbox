@@ -18,7 +18,6 @@ dependencies:
   google_fonts: any
   archive: any
   json2yaml: any
-  file_picker : any
   network_info_plus: any
   http: any
   share_handler: any
