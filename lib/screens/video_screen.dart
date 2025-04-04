@@ -1,14 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:web_tools/screens/yaml_process.dart';
-
-import '../service/cid_fetcher.dart';
-import '../service/video_download.dart';
-import '../widgets/popup_infinity.dart';
-import '../widgets/popup_text.dart'; // 用于选择文件
+import '/service/cid_fetcher.dart';
+import '/service/json_process.dart';
+import '/service/video_download.dart';
+import '/widgets/popup_infinity.dart';
+import '/widgets/popup_text.dart'; // 用于选择文件
 
 class VideoScreen extends StatefulWidget {
   const VideoScreen({super.key});
@@ -21,6 +18,7 @@ class _VideoScreenState extends State<VideoScreen> {
   bool _isDefaultMode = true;
   final TextEditingController _uaController = TextEditingController();
   final TextEditingController _bvController = TextEditingController();
+  final TextEditingController _jsonController = TextEditingController();
   File? _yamlFile;
 
   @override
@@ -47,24 +45,23 @@ class _VideoScreenState extends State<VideoScreen> {
         content: '请稍候，视频正在下载...',
       );
       final cid =await fetchCid(_bvController.text,_uaController.text);
-      final result = await videoDownload(cid, _bvController.text, _uaController.text);
+      final result = await videoDownload(_bvController.text, cid,  _uaController.text);
       Navigator.of(context).pop(); // 关闭加载对话框
       showTextPopup(context, result);
     } else {
-      if (_yamlFile != null) {
+      if (_jsonController.text.isNotEmpty) {
         DialogUtils.showLoadingDialog(
           context: context,
           title: '下载中...',
           content: '请稍候，视频正在下载...',
         );
-        final result = await yamlProcess(_yamlFile!.path, _uaController.text);
+        final result = await jsonProcess(_jsonController.text, _uaController.text);
         Navigator.of(context).pop(); // 关闭加载对话框
         showTextPopup(context, result);
-
       } else {
-        // 提示用户选择文件
+        // 提示用户输入 JSON 字符串
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('请选择一个 YAML 文件')),
+          SnackBar(content: Text('请输入一个 JSON 字符串')),
         );
       }
     }
@@ -105,7 +102,7 @@ class _VideoScreenState extends State<VideoScreen> {
                 title: Text(_isDefaultMode ? '默认模式' : '切换模式'),
                 subtitle: Text(_isDefaultMode
                     ? '通过输入 BV 号进行下载'
-                    : '通过选择 YAML 文件进行下载'),
+                    : '通过输入 JSON 字符串进行下载'),
               ),
             ),
             SizedBox(height: 16),
@@ -140,28 +137,17 @@ class _VideoScreenState extends State<VideoScreen> {
               SizedBox(height: 16),
               _buildSettingCard(
                 context,
-                icon: Icons.file_present,
-                title: '选择 YAML 文件',
-                child: ElevatedButton(
-                  onPressed: () async {
-                    FilePickerResult? result = await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
-                      allowedExtensions: ['yaml'],
-                    );
-                    if (result != null) {
-                      setState(() {
-                        _yamlFile = File(result.files.single.path!);
-                      });
-                    }
-                  },
-                  child: Text('选择文件'),
+                icon: Icons.text_snippet,
+                title: '输入 JSON 字符串',
+                child: TextField(
+                  controller: _jsonController,
+                  decoration: InputDecoration(
+                    labelText: 'JSON 字符串',
+                    hintText: '请输入 JSON 字符串',
+                  ),
+                  maxLines: null,
                 ),
               ),
-              if (_yamlFile != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text('已选择文件: ${_yamlFile!.path}'),
-                ),
             ],
             SizedBox(height: 20),
             ElevatedButton.icon(
@@ -206,3 +192,4 @@ class _VideoScreenState extends State<VideoScreen> {
     );
   }
 }
+
