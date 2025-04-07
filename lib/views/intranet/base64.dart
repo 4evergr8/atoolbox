@@ -78,6 +78,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
                 controller: _decodeController,
                 decoration: InputDecoration(
                   labelText: '输入 Base64 编码的字符串',
+                  hintText:'例如：SGVsbG8gV29ybGQh',
                 ),
                 maxLines: null, // 允许多行输入
                 minLines: 3, // 最小行数
@@ -101,6 +102,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
                 controller: _encodeController,
                 decoration: InputDecoration(
                   labelText: '输入需要编码的字符串',
+                  hintText:'例如：Hello World!', 
                 ),
                 maxLines: null, // 允许多行输入
                 minLines: 3, // 最小行数
