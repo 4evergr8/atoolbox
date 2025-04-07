@@ -1,4 +1,4 @@
-flutter build apk --split-per-abi
+flutter build apk --split-per-abi --no-tree-shake-icons
 dart fix --apply
 flutter pub run flutter_native_splash:create
 flutter pub run flutter_launcher_icons
