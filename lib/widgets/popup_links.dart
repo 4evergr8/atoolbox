@@ -14,7 +14,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
         content: ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.6, // 弹窗宽度占屏幕宽度的 60%
-            maxHeight: MediaQuery.of(context).size.height * 0.3, // 弹窗高度占屏幕高度的 50%
+            maxHeight: MediaQuery.of(context).size.height * 0.35, // 弹窗高度占屏幕高度的 50%
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min, // 确保内容尽可能紧凑
