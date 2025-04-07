@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'widgets/bottom_nav_bar.dart';
-import 'util.dart'; // 假设 util.dart 包含 createTextTheme 函数
-import 'theme.dart'; // 假设 theme.dart 包含 MaterialTheme 类
+import 'themes/util.dart';
+import 'themes/theme.dart';
 
 void main() {
   runApp(const MyApp());
