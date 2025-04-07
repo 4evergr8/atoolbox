@@ -15,17 +15,17 @@ class InternetPage extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('在线功能', style: theme.textTheme.headlineMedium),
+        title: Text('在线', style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Internet',
+                '需要联网',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(height: 20),
