@@ -10,11 +10,11 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('链接选项', style: theme.textTheme.headlineMedium),
+        title: Text('链接选项', style: theme.textTheme.headlineSmall),
         content: ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.6, // 弹窗宽度占屏幕宽度的 60%
-            maxHeight: MediaQuery.of(context).size.height * 0.5, // 弹窗高度占屏幕高度的 50%
+            maxHeight: MediaQuery.of(context).size.height * 0.3, // 弹窗高度占屏幕高度的 50%
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min, // 确保内容尽可能紧凑
@@ -61,7 +61,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                       Navigator.of(context).pop(); // 关闭弹窗
                     },
                     icon: Icon(Icons.check), // 添加确认图标
-                    label: Text('确定'),
+                    label: Text('了解'),
                   ),
                 ],
               ),
