@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '/widgets/internet_page.dart';
-import '/widgets/intranet_page.dart';
+import '/views/internet_page.dart';
+import '/views/intranet_page.dart';
 import '/service/share_handler.dart';
-import '/widgets/about_page.dart'; // 引用处理分享的逻辑
+import '/views/about_page.dart'; // 引用处理分享的逻辑
 
 
 class BottomNavBar extends StatefulWidget {
