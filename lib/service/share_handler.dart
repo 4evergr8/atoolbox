@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
-import '/screens/share_screen.dart';
+import '/views/share_screen.dart';
 
 
 // ShareHandlerService 负责初始化和监听分享内容
