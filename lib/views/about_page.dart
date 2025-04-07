@@ -132,7 +132,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8), // 添加段落间距
                   Text(
-                    '   软件内图标来自GoogleMaterialIcon。',
+                    '   软件内图标来自GoogleMaterialIcons。',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8), // 添加段落间距
