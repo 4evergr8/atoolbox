@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'internet/url_decode.dart';
+import 'intranet/base64.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/translate_screen.dart';
 import 'intranet/port_screen.dart';
@@ -37,6 +38,21 @@ class IntranetPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const URLDecode()),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.lock_open,
+                title: 'Base64解码',
+                subtitle: 'Base64编码与解码',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EncodeDecode(),
+                    ),
                   );
                 },
               ),
