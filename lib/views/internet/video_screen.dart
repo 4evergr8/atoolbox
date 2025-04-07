@@ -44,7 +44,7 @@ class _VideoScreenState extends State<VideoScreen> {
         content: '请稍候，视频正在下载...',
       );
       final cid =await fetchCid(_bvController.text,_uaController.text);
-      final result = await videoDownload(_bvController.text, cid,  _uaController.text);
+      final result = await videoDownload(context,_bvController.text, cid,  _uaController.text);
       Navigator.of(context).pop(); // 关闭加载对话框
       showTextPopup(context, result);
     } else {
@@ -54,7 +54,7 @@ class _VideoScreenState extends State<VideoScreen> {
           title: '下载中...',
           content: '请稍候，视频正在下载...',
         );
-        final result = await jsonProcess(_jsonController.text, _uaController.text);
+        final result = await jsonProcess(context,_jsonController.text, _uaController.text);
         Navigator.of(context).pop(); // 关闭加载对话框
         showTextPopup(context, result);
       } else {
