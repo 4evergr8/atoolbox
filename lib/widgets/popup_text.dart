@@ -19,11 +19,11 @@ void showTextPopup(BuildContext context, String initialText) {
           bool isSelecting = false;
 
           return AlertDialog(
-            title: Text('详细信息', style: theme.textTheme.headlineMedium),
+            title: Text('详细信息', style: theme.textTheme.headlineSmall),
             content: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.6,
-                maxHeight: MediaQuery.of(context).size.height * 0.5,
+                maxHeight: MediaQuery.of(context).size.height * 0.3,
               ),
               child: GestureDetector(
                 onPanStart: (_) => isSelecting = true,
