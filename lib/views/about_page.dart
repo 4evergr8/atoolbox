@@ -61,7 +61,7 @@ class AboutPage extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.code),
+                leading: const Icon(Icons.music_note),
                 title: const Text('音乐分享'),
                 subtitle: const Text('我爱听的歌'),
                 onTap: () {
@@ -128,6 +128,11 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 8), // 添加段落间距
                   Text(
                     '   离线翻译功能来自google_mlkit_translation。',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8), // 添加段落间距
+                  Text(
+                    '   软件内图标来自GoogleMaterialIcon。',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8), // 添加段落间距
