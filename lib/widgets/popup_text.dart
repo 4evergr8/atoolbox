@@ -23,7 +23,7 @@ void showTextPopup(BuildContext context, String initialText) {
             content: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.6,
-                maxHeight: MediaQuery.of(context).size.height * 0.3,
+                maxHeight: MediaQuery.of(context).size.height * 0.35,
               ),
               child: GestureDetector(
                 onPanStart: (_) => isSelecting = true,
