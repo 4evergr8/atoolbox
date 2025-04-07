@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'internet/url_decode.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/translate_screen.dart';
 import 'intranet/port_screen.dart';
@@ -26,6 +27,20 @@ class IntranetPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(height: 20),
+              _buildFunctionItem(
+                context,
+                icon: Icons.import_export,
+                title: 'URL解码',
+                subtitle: 'URL解码与编辑',
+                onTap: () {
+                  // 假设跳转到路由器设置页面
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const URLDecode()),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
               _buildFunctionItem(
                 context,
                 icon: Icons.wifi_find,
@@ -109,19 +124,6 @@ class IntranetPage extends StatelessWidget {
         subtitle: Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
         onTap: onTap,
       ),
-    );
-  }
-}
-
-// 假设的局域网设备页面
-class LocalNetworkDevicesScreen extends StatelessWidget {
-  const LocalNetworkDevicesScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('局域网设备')),
-      body: Center(child: Text('这是局域网设备页面')),
     );
   }
 }
