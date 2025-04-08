@@ -97,7 +97,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8), // 添加段落间距
                   Text(
-                    '   GithubCopilot插件彻底干亖了Cursor，免费，还有三种模式。',
+                    '   Github Copilot插件彻底干亖了Cursor，不仅免费，还有三种模式可选。',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8), // 添加段落间距
@@ -128,6 +128,11 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(height: 8), // 添加段落间距
                   Text(
                     '   离线翻译功能来自google_mlkit_translation。',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8), // 添加段落间距
+                  Text(
+                    '   离线扫码功能来自google_mlkit_barcode_scanning。',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8), // 添加段落间距
