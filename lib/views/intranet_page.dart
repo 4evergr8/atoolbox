@@ -3,6 +3,7 @@ import 'internet/url_decode.dart';
 import 'intranet/avbv.dart';
 import 'intranet/base64.dart';
 import 'intranet/ocr_screen.dart';
+import 'intranet/qrcode.dart';
 import 'intranet/translate_screen.dart';
 import 'intranet/port_screen.dart';
 import 'intranet/address_screen.dart';
@@ -68,6 +69,21 @@ class IntranetPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const AVBV(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.qr_code,
+                title: '图片扫码',
+                subtitle: '识别图片中的码，支持识别多个',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QRCodeScan(),
                     ),
                   );
                 },
