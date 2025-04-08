@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
 import '/service/intranet/avbv.dart';
 
-
 class AVBV extends StatefulWidget {
   const AVBV({super.key});
 
@@ -17,7 +16,7 @@ class _AVBVState extends State<AVBV> {
   // 解码并复制到剪贴板
   void _BV2AVAndCopy() async {
     try {
-      String AVString =  bv2av(_BV2AV.text);
+      String AVString = bv2av(_BV2AV.text);
       await Clipboard.setData(ClipboardData(text: AVString));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('转换成功，已复制到剪贴板')),
@@ -33,7 +32,7 @@ class _AVBVState extends State<AVBV> {
   // 编码并复制到剪贴板
   void _AV2BVAndCopy() async {
     try {
-      String BVString =  av2bv(_AV2BV.text);
+      String BVString = av2bv(_AV2BV.text);
       await Clipboard.setData(ClipboardData(text: BVString));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('转换成功，已复制到剪贴板')),
@@ -75,11 +74,8 @@ class _AVBVState extends State<AVBV> {
                 controller: _BV2AV,
                 decoration: InputDecoration(
                   labelText: '输入BV号',
-                  hintText:'例如：BV17x411w7KC',
+                  hintText: '例如：BV17x411w7KC',
                 ),
-                maxLines: null, // 允许多行输入
-                minLines: 3, // 最小行数
-                expands: false, // 不自动填充剩余空间
               ),
             ),
             SizedBox(height: 16),
@@ -99,11 +95,8 @@ class _AVBVState extends State<AVBV> {
                 controller: _AV2BV,
                 decoration: InputDecoration(
                   labelText: '输入AV号',
-                  hintText:'例如：170001',
+                  hintText: '例如：170001',
                 ),
-                maxLines: null, // 允许多行输入
-                minLines: 3, // 最小行数
-                expands: false, // 不自动填充剩余空间
               ),
             ),
             SizedBox(height: 16),
@@ -149,4 +142,3 @@ class _AVBVState extends State<AVBV> {
     );
   }
 }
-
