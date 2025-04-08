@@ -6,27 +6,56 @@ https://api.bilibili.com/x/player/playurl?bvid=BV1y7411Q7Eq&cid=171776208&fnval=
 
 
 
+import itertools
+import csv
+import re
 
-import 'dart:io';
-import 'package:http/http.dart' as http;
+# 原始乱码字符串
+garbled_text = "锘挎槬鐪犱笉瑙夋檽锛屽澶勯椈鍟奸笩"
 
-void main() async {
-  final url = Uri.parse(
-      '');
+# 常见编码列表
+encodings = [
+    "utf-8", "utf-16le", "utf-16be", "utf-32le", "utf-32be",
+    "iso2022_jp", "iso2022_kr", "iso2022_cn", "shift_jis",
+    "gb18030", "big5", "euc_jp", "euc_kr",
+    "iso8859_1", "iso8859_2", "iso8859_5", "iso8859_6",
+    "iso8859_7", "iso8859_8", "iso8859_9",
+    "windows_1250", "windows_1251", "windows_1252",
+    "windows_1253", "windows_1254", "windows_1255",
+    "windows_1256", "koi8_r"
+]
 
-  final headers = {
-    "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-    "Referer": "https://www.bilibili.com"
-  };
+# 用于去除控制字符（如 \n、\r、\t）
+def sanitize_text(text):
+    return re.sub(r'[\r\n\t]', lambda m: repr(m.group(0))[1:-1], text)
 
-  final response = await http.get(url, headers: headers);
+# 结果列表
+results = []
 
-  if (response.statusCode == 200) {
-    final file = File('Download_video.flv');
-    await file.writeAsBytes(response.bodyBytes);
-    print('文件下载完成: ${file.absolute.path}');
-  } else {
-    print('下载失败, HTTP 状态码: ${response.statusCode}');
-  }
-}
+# 枚举所有 (错误编码, 正确编码) 的组合
+for wrong_enc, original_enc in itertools.permutations(encodings, 2):
+    try:
+        garbled_bytes = garbled_text.encode(wrong_enc, errors='replace')
+        recovered = garbled_bytes.decode(original_enc, errors='replace')
+        results.append((wrong_enc, original_enc, recovered))
+    except Exception:
+        continue
+
+# 写入 CSV，处理控制字符并设置 escapechar
+with open("recovered_combinations.csv", "w", encoding="utf-8", newline='') as f:
+    writer = csv.writer(f, quoting=csv.QUOTE_MINIMAL, escapechar='\\')
+    writer.writerow(["错误编码", "原编码", "恢复结果"])
+    for row in results:
+        safe_row = [sanitize_text(cell) if isinstance(cell, str) else cell for cell in row]
+        writer.writerow(safe_row)
+
+print(f"✅ 共保存 {len(results)} 条结果到 recovered_combinations.csv")
+
+
+
+
+
+尝试用dart实现以上代码，输入参数为字符串，输出参数为字符串
+
+使用可能的所有错误编码和原编码进行尝试，对得出的结果进行“可读性”评分，输出排名前三的条目
+输出格式：错误编码1（逗号）原编码1（冒号）（空格）（还原出的内容）（换行）错误编码2（逗号）原编码2（冒号）（空格）（还原出的内容）（换行）错误编码3（逗号）原编码3（冒号）（空格）（还原出的内容）
