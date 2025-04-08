@@ -89,7 +89,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -103,7 +103,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -117,7 +117,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -131,7 +131,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -145,7 +145,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -159,7 +159,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -173,7 +173,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -187,7 +187,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -201,7 +201,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -215,7 +215,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -229,7 +229,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
@@ -243,7 +243,7 @@ class AboutPage extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
-                      Icon(Icons.circle_notifications, size: 10), // 更小的圆点
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
