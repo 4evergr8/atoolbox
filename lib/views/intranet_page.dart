@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'internet/url_decode.dart';
 import 'intranet/avbv.dart';
 import 'intranet/base64.dart';
+import 'intranet/garbled_screen.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/qrcode.dart';
 import 'intranet/translate_screen.dart';
@@ -61,21 +62,6 @@ class IntranetPage extends StatelessWidget {
               SizedBox(height: 16),
               _buildFunctionItem(
                 context,
-                icon: Icons.rotate_90_degrees_ccw,
-                title: 'AVBV互转',
-                subtitle: 'AV号和BV号转换',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AVBV(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 16),
-              _buildFunctionItem(
-                context,
                 icon: Icons.qr_code,
                 title: '图片扫码',
                 subtitle: '识别图片中的码，支持识别多个',
@@ -88,6 +74,37 @@ class IntranetPage extends StatelessWidget {
                   );
                 },
               ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.transform,
+                title: '图片扫码',
+                subtitle: '识别图片中的码，支持识别多个',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const GarbledRecovery(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
+                icon: Icons.rotate_90_degrees_ccw,
+                title: 'AVBV互转',
+                subtitle: 'AV号和BV号转换',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AVBV(),
+                    ),
+                  );
+                },
+              ),
+
               SizedBox(height: 16),
               _buildFunctionItem(
                 context,
