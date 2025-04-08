@@ -38,7 +38,7 @@ class AboutPage extends StatelessWidget {
               const SizedBox(height: 20),
 
               ListTile(
-                leading: const Icon(Icons.video_camera_front),
+                leading: const Icon(Icons.video_collection),
                 title: const Text('哔哩哔哩'),
                 subtitle: const Text('可以给UP投个币吗🪙'),
                 onTap: () {
