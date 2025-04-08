@@ -2,13 +2,21 @@ import 'package:charset_converter/charset_converter.dart';
 
 Future<String> recoverGarbledText(String garbledText) async {
   List<String> encodings = [
-    "windows-1250", "windows-1251", "windows-1252", "windows-1253", "windows-1254",
-    "windows-1255", "windows-1256", "windows-1257", "windows-1258", "iso-8859-1",
-    "iso-8859-2", "iso-8859-3", "iso-8859-4", "iso-8859-5", "iso-8859-6", "iso-8859-7",
-    "iso-8859-8", "iso-8859-9", "iso-8859-10", "iso-8859-11", "iso-8859-13", "iso-8859-14",
-    "iso-8859-15", "iso-8859-16", "utf-8", "utf-16", "utf-32", "gbk", "big5", "shift_jis",
-    "euc-jp", "euc-kr", "tis-620", "koi8-r"
+    "Big5", "Big5-HKSCS", "BOCU-1", "CESU-8", "cp1363", "cp851", "EUC-JP", "EUC-KR",
+    "GB18030", "GBK", "hp-roman8", "HZ-GB-2312", "IBM-Thai", "IBM00858", "IBM01140",
+    "IBM01141", "IBM01142", "IBM01143", "IBM01144", "IBM01145", "IBM01146", "IBM01147",
+    "IBM01148", "IBM01149", "IBM037", "IBM1026", "IBM1047", "IBM273", "IBM277", "IBM278",
+    "IBM280", "IBM284", "IBM285", "IBM290", "IBM297", "IBM420", "IBM424", "IBM437", "IBM500",
+    "IBM775", "IBM850", "IBM852", "IBM855", "IBM857", "IBM860", "IBM861", "IBM862", "IBM863",
+    "IBM864", "IBM865", "IBM866", "IBM868", "IBM869", "IBM870", "IBM871", "IBM918", "ISO-2022-CN",
+    "ISO-2022-CN-EXT", "ISO-2022-JP", "ISO-2022-JP-1", "ISO-2022-JP-2", "ISO-2022-KR", "ISO-8859-1",
+    "ISO-8859-10", "ISO-8859-13", "ISO-8859-14", "ISO-8859-15", "ISO-8859-2", "ISO-8859-3", "ISO-8859-4",
+    "ISO-8859-5", "ISO-8859-6", "ISO-8859-7", "ISO-8859-8", "ISO-8859-9", "KOI8-R", "KOI8-U", "macintosh",
+    "SCSU", "Shift_JIS", "TIS-620", "US-ASCII", "UTF-16", "UTF-16BE", "UTF-16LE", "UTF-32", "UTF-32BE",
+    "UTF-32LE", "UTF-7", "UTF-8", "windows-1250", "windows-1251", "windows-1252", "windows-1253", "windows-1254",
+    "windows-1255", "windows-1256", "windows-1257", "windows-1258"
   ];
+
 
   StringBuffer allAttempts = StringBuffer();
   List<Map<String, String>> results = [];
