@@ -11,19 +11,18 @@ class AVBV extends StatefulWidget {
 }
 
 class _AVBVState extends State<AVBV> {
-  final TextEditingController _decodeController = TextEditingController();
-  final TextEditingController _encodeController = TextEditingController();
+  final TextEditingController _BV2AV = TextEditingController();
+  final TextEditingController _AV2BV = TextEditingController();
 
   // 解码并复制到剪贴板
   void _BV2AVAndCopy() async {
-    String input = _decodeController.text;
     try {
-      String decodedString =  bv2av(input);
-      await Clipboard.setData(ClipboardData(text: decodedString));
+      String AVString =  bv2av(_BV2AV.text);
+      await Clipboard.setData(ClipboardData(text: AVString));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('转换成功，已复制到剪贴板')),
       );
-      _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
+      _AV2BV.text = AVString; // 将解码后的值显示在上方输入框内
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('转换失败: $e')),
@@ -33,14 +32,13 @@ class _AVBVState extends State<AVBV> {
 
   // 编码并复制到剪贴板
   void _AV2BVAndCopy() async {
-    String input = _encodeController.text;
     try {
-      String encodedString =  bv2av(input);
-      await Clipboard.setData(ClipboardData(text: encodedString));
+      String BVString =  av2bv(_AV2BV.text);
+      await Clipboard.setData(ClipboardData(text: BVString));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('转换成功，已复制到剪贴板')),
       );
-      _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
+      _BV2AV.text = BVString; // 将编码后的值显示在下方输入框内
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('转换失败: $e')),
@@ -74,7 +72,7 @@ class _AVBVState extends State<AVBV> {
               icon: Icons.rotate_left,
               title: 'BV转AV',
               child: TextField(
-                controller: _decodeController,
+                controller: _BV2AV,
                 decoration: InputDecoration(
                   labelText: '输入BV号',
                   hintText:'例如：BV17x411w7KC',
@@ -98,7 +96,7 @@ class _AVBVState extends State<AVBV> {
               icon: Icons.rotate_right,
               title: 'AV转BV',
               child: TextField(
-                controller: _encodeController,
+                controller: _AV2BV,
                 decoration: InputDecoration(
                   labelText: '输入AV号',
                   hintText:'例如：170001',
