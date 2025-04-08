@@ -18,6 +18,7 @@ dependencies:
   google_fonts: any
   archive: any
   json2yaml: any
+  google_mlkit_barcode_scanning: any
   network_info_plus: any
   http: any
   share_handler: any
