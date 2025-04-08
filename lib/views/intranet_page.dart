@@ -78,8 +78,8 @@ class IntranetPage extends StatelessWidget {
               _buildFunctionItem(
                 context,
                 icon: Icons.transform,
-                title: '图片扫码',
-                subtitle: '识别图片中的码，支持识别多个',
+                title: '乱码恢复',
+                subtitle: '将乱码恢复成人类语言',
                 onTap: () {
                   Navigator.push(
                     context,
