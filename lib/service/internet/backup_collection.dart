@@ -21,7 +21,7 @@ Future<void> fetchAndSaveMedia(
     throw Exception("无法访问下载目录");
   }
 
-  final baseDir = Directory('${downloadsDirectory.path}/data/$id');
+  final baseDir = Directory('${downloadsDirectory.path}/Backup/$id');
   if (baseDir.existsSync()) {
     baseDir.deleteSync(recursive: true);
   }
