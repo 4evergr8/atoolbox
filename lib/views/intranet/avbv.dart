@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
-import '../../service/intranet/avbv.dart';
-import '/service/intranet/base64.dart'; // 用于 Base64 编解码
+import '/service/intranet/avbv.dart';
+
 
 class AVBV extends StatefulWidget {
   const AVBV({super.key});
@@ -21,12 +21,12 @@ class _AVBVState extends State<AVBV> {
       String decodedString =  bv2av(input);
       await Clipboard.setData(ClipboardData(text: decodedString));
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('解码成功，已复制到剪贴板')),
+        SnackBar(content: Text('转换成功，已复制到剪贴板')),
       );
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('解码失败: $e')),
+        SnackBar(content: Text('转换失败: $e')),
       );
     }
   }
@@ -38,12 +38,12 @@ class _AVBVState extends State<AVBV> {
       String encodedString =  bv2av(input);
       await Clipboard.setData(ClipboardData(text: encodedString));
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('编码成功，已复制到剪贴板')),
+        SnackBar(content: Text('转换成功，已复制到剪贴板')),
       );
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('编码失败: $e')),
+        SnackBar(content: Text('转换失败: $e')),
       );
     }
   }
@@ -54,7 +54,7 @@ class _AVBVState extends State<AVBV> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('编解码工具', style: theme.textTheme.headlineMedium),
+        title: Text('AVBV互转', style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -63,7 +63,7 @@ class _AVBVState extends State<AVBV> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '编解码工具',
+              'AVBV互转',
               style: theme.textTheme.headlineSmall,
             ),
             SizedBox(height: 20),
@@ -71,13 +71,13 @@ class _AVBVState extends State<AVBV> {
             // 第一组：解码
             _buildSettingCard(
               context,
-              icon: Icons.lock_open,
-              title: 'Base64 解码',
+              icon: Icons.rotate_left,
+              title: 'BV转AV',
               child: TextField(
                 controller: _decodeController,
                 decoration: InputDecoration(
-                  labelText: '输入 Base64 编码的字符串',
-                  hintText:'例如：SGVsbG8gV29ybGQh',
+                  labelText: '输入BV号',
+                  hintText:'例如：BV17x411w7KC',
                 ),
                 maxLines: null, // 允许多行输入
                 minLines: 3, // 最小行数
@@ -88,20 +88,20 @@ class _AVBVState extends State<AVBV> {
             ElevatedButton.icon(
               onPressed: _BV2AVAndCopy,
               icon: Icon(Icons.content_copy),
-              label: Text('解码并复制'),
+              label: Text('转换并复制'),
             ),
             SizedBox(height: 20),
 
             // 第二组：编码
             _buildSettingCard(
               context,
-              icon: Icons.lock,
-              title: 'Base64 编码',
+              icon: Icons.rotate_right,
+              title: 'AV转BV',
               child: TextField(
                 controller: _encodeController,
                 decoration: InputDecoration(
-                  labelText: '输入需要编码的字符串',
-                  hintText:'例如：Hello World!',
+                  labelText: '输入AV号',
+                  hintText:'例如：170001',
                 ),
                 maxLines: null, // 允许多行输入
                 minLines: 3, // 最小行数
@@ -112,7 +112,7 @@ class _AVBVState extends State<AVBV> {
             ElevatedButton.icon(
               onPressed: _AV2BVAndCopy,
               icon: Icon(Icons.content_copy),
-              label: Text('编码并复制'),
+              label: Text('转换并复制'),
             ),
           ],
         ),
