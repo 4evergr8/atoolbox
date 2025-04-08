@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
+import 'package:web_tools/widgets/popup_text.dart';
+import '../../test.dart';
 import '/service/intranet/base64.dart'; // 用于 Base64 编解码
 
 class EncodeDecode extends StatefulWidget {
@@ -17,8 +19,13 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   void _decodeAndCopy() async {
     String input = _decodeController.text;
     try {
-      String decodedString = await decodeBase64(input);
-      await Clipboard.setData(ClipboardData(text: decodedString));
+      final result = await recoverGarbledText(input);
+      showTextPopup(context, result);
+      await Clipboard.setData(ClipboardData(text: result));
+      String decodedString = await decodeBase64(result);
+
+
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('解码成功，已复制到剪贴板')),
       );
