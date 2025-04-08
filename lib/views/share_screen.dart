@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
+import '/service/intranet/qrcode.dart';
 import '/service/intranet/language_identify.dart';
 import '/service/internet/image_search.dart';
 import '/service/intranet/ocr.dart';
@@ -81,153 +82,174 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '接收的分享内容',
-              style: theme.textTheme.headlineSmall,
-            ),
-            SizedBox(height: 20),
-
-            if (widget.media.content != null)
-              Column(
-                children: [
-                  Text(
-                    "分享文本: ${widget.media.content}",
+            if (widget.media.content != null) ...[
+              Text(
+                '接收到的文本',
+                style: theme.textTheme.titleMedium,
+              ),
+              SizedBox(height: 12),
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: 120,
+                  maxHeight: 300,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: EdgeInsets.all(12),
+                child: SingleChildScrollView(
+                  child: SelectableText(
+                    widget.media.content!,
                     style: theme.textTheme.bodyMedium,
                   ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () async{
-                          if (widget.media.content != null) {
-
-                            final links = await extractAndSearchUrls(widget.media.content !);
-                            showLinkButtonsPopup(context, links);
-                          }
-                        },
-                        icon: Icon(Icons.link),
-                        label: Text('处理链接'),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () async{
-                          if (widget.media.content != null) {
-                            String detectedLang = await identifyLanguage(widget.media.content!);
-                            // 再调用翻译函数
-                            String result = await translateText(detectedLang,'zh',widget.media.content!);
-                            // 显示翻译结果
-                            showTextPopup(context,result);
-                          }
-                        },
-                        icon: Icon(Icons.translate),
-                        label: Text('翻译语句'),
-                      ),
-                    ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      if (widget.media.content != null) {
+                        final links = await extractAndSearchUrls(widget.media.content!);
+                        showLinkButtonsPopup(context, links);
+                      }
+                    },
+                    icon: Icon(Icons.link),
+                    label: Text('处理链接'),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      if (widget.media.content != null) {
+                        String lang = await identifyLanguage(widget.media.content!);
+                        String result = await translateText(lang, 'zh', widget.media.content!);
+                        showTextPopup(context, result);
+                      }
+                    },
+                    icon: Icon(Icons.translate),
+                    label: Text('翻译语句'),
                   ),
                 ],
-              )
-            else if (widget.media.attachments != null)
-              Column(
-                children: [
-                  ...(widget.media.attachments ?? []).map((attachment) {
-                    final path = attachment?.path;
-                    if (path != null && attachment?.type == SharedAttachmentType.image) {
-                      return Stack(
+              ),
+            ] else if (widget.media.attachments != null) ...[
+              ...(widget.media.attachments ?? []).map((attachment) {
+                final path = attachment?.path;
+                if (path != null && attachment?.type == SharedAttachmentType.image) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.grey.shade300),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Image.file(
+                          File(path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      _buildSettingCard(
+                        context,
+                        icon: Icons.link,
+                        title: 'Worker URL',
+                        child: TextField(
+                          controller: _workerUrlController,
+                          onChanged: (value) => setState(() => _workerUrl = value),
+                          decoration: InputDecoration(
+                            labelText: 'Worker URL',
+                            hintText: '请输入 Worker URL',
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Image.file(File(path)),  // 显示图片
-                          Positioned(
-                            top: 0, // 与图片上端对齐
-                            left: 0,
-                            right: 0,
-                            child: Column(
-                              children: [
-                                _buildSettingCard(
-                                  context,
-                                  icon: Icons.link,
-                                  title: 'Worker URL',
-                                  child: TextField(
-                                    controller: _workerUrlController,
-                                    onChanged: (value) => setState(() => _workerUrl = value),
-                                    decoration: InputDecoration(
-                                      labelText: 'Worker URL',
-                                      hintText: '请输入 Worker URL',
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: () async {
-                                        DialogUtils.showLoadingDialog(
-                                          context: context,
-                                          title: '上传中...',
-                                          content: '请稍候，正在上传图片...',
-                                        );
-                                        try {
-                                          final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(content: Text('图片上传成功，URL: $imageUrl')),
-                                          );
-                                          final result = generateReverseImageSearchUrls(imageUrl);
-                                          Navigator.of(context).pop();
-                                          showLinkButtonsPopup(context, result);
-                                        } catch (e) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(content: Text('图片上传失败: ${e.toString()}')),
-                                          );
-                                          Navigator.of(context).pop();
-                                        }
-                                      },
-                                      icon: Icon(Icons.search),
-                                      label: Text('搜索图片来源'),
-                                    ),
-                                    ElevatedButton.icon(
-                                      onPressed: () {
-                                        handleImageOCR(context, path, Language.chinese);
-                                      },
-                                      icon: Icon(Icons.translate),
-                                      label: Text('中文字符提取'),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: () {
-                                        handleImageOCR(context, path, Language.english);
-                                      },
-                                      icon: Icon(Icons.abc),
-                                      label: Text('拉丁字符提取'),
-                                    ),
-                                    ElevatedButton.icon(
-                                      onPressed: () {
-                                        handleImageOCR(context, path, Language.japanese);
-                                      },
-                                      icon: Icon(Icons.language),
-                                      label: Text('日文字符提取'),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          ElevatedButton.icon(
+                            onPressed: () async {
+                              DialogUtils.showLoadingDialog(
+                                context: context,
+                                title: '上传中...',
+                                content: '请稍候，正在上传图片...',
+                              );
+                              try {
+                                final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('图片上传成功，URL: $imageUrl')),
+                                );
+                                final result = generateReverseImageSearchUrls(imageUrl);
+                                showLinkButtonsPopup(context, result);
+                              } catch (e) {
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('图片上传失败: ${e.toString()}')),
+                                );
+                              }
+                            },
+                            icon: Icon(Icons.search),
+                            label: Text('搜索图片来源'),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () => handleImageOCR(context, path, Language.chinese),
+                            icon: Icon(Icons.translate),
+                            label: Text('中文字符提取'),
                           ),
                         ],
-                      );
-                    } else {
-                      return Text("${attachment?.type} Attachment: ${attachment?.path}");
-                    }
-                  }),
-                ],
-              ),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () => handleImageOCR(context, path, Language.english),
+                            icon: Icon(Icons.abc),
+                            label: Text('拉丁字符提取'),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () => handleImageOCR(context, path, Language.japanese),
+                            icon: Icon(Icons.language),
+                            label: Text('日文字符提取'),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () async {
+                              final result = await scanQRCodeFromImage(context, path);
+                              showTextPopup(context, result);
+                            },
+                            icon: Icon(Icons.qr_code),
+                            label: Text('图片扫码识别'),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () => handleImageOCR(context, path, Language.japanese),
+                            icon: Icon(Icons.language),
+                            label: Text('日文字符提取'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  return Text("${attachment?.type} 附件: ${attachment?.path}");
+                }
+              }),
+            ],
           ],
         ),
       ),
     );
   }
+
 
   Widget _buildSettingCard(
       BuildContext context, {
