@@ -32,3 +32,17 @@
 * 扫描设备端口
 * 图片文字提取（OCR）
 * 离线翻译（支持中、英、日、韩、俄互译，需要下载模型）
+
+## 支持的图片搜索引擎
+* [Google（综合）](https://www.google.com/searchbyimage?client=app&image_url=https://picsum.photos/200/200?random=1)
+* [Google Lens（综合）](https://lens.google.com/uploadbyurl?url=https://picsum.photos/200/200?random=1)
+* [Yandex.eu（综合）](https://yandex.eu/images/search?url=https://picsum.photos/200/200?random=1&rpt=imageview)
+* [Yandex.ru（综合）](https://yandex.ru/images/search?url=https://picsum.photos/200/200?random=1&rpt=imageview)
+* [Bing（综合）](https://www.bing.com/images/search?q=imgurl:https://picsum.photos/200/200?random=1&view=detailv2&iss=sbi)
+* [TinEye（综合）](https://tineye.com/search/?url=https://picsum.photos/200/200?random=1)
+* [3DIQDB（Cosplay等）](https://3d.iqdb.org/?url=https://picsum.photos/200/200?random=1)
+* [IQDB（画师作品，漫画）](https://iqdb.org/?url=https://picsum.photos/200/200?random=1)
+* [SauceNAO（画师作品，漫画）](https://saucenao.com/search.php?url=https://picsum.photos/200/200?random=1)
+* [ascii2d（画师作品，漫画）](https://ascii2d.net/search/url/https://picsum.photos/200/200?random=1)
+* [WAIT（动漫截图）](https://trace.moe/?url=https://picsum.photos/200/200?random=1)
+* [Trace.moe（动漫截图）](https://trace.moe/?url=https://picsum.photos/200/200?random=1)
