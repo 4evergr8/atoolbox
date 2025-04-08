@@ -60,9 +60,9 @@ class IntranetPage extends StatelessWidget {
               SizedBox(height: 16),
               _buildFunctionItem(
                 context,
-                icon: Icons.lock_open,
-                title: 'Base64解码',
-                subtitle: 'Base64编码与解码',
+                icon: Icons.rotate_90_degrees_ccw,
+                title: 'AVBV互转',
+                subtitle: 'AV号和BV号转换',
                 onTap: () {
                   Navigator.push(
                     context,
