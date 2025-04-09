@@ -12,7 +12,19 @@ class GarbledRecovery extends StatefulWidget {
 }
 
 class _GarbledRecoveryState extends State<GarbledRecovery> {
-  final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _inputController = TextEditingController(
+    text: '鐢辨湀瑕佸ソ濂藉涔犲ぉ澶╁悜涓?',
+  ); // 默认乱码文本
+  final TextEditingController _excludeController = TextEditingController(
+    text: r'[\u0020]',
+  ); // 默认排除空格
+  final TextEditingController _includeController = TextEditingController(
+    text: r'[\x00-\x1F\x80-\x9F\u003F\u00A0-\u00FF\u0370-\u03FF\u1A00-\u1A1F\u2000-\u2BFF\u2200-\u22FF\u2580-\u259F\uE000-\uF8FF\uF900-\uFAFF\uFFFD\u3400-\u4DBF]',
+  );
+
+  final TextEditingController _thresholdController = TextEditingController(
+    text: '3',
+  ); // 默认阈值
 
   void _recoverAndCopy() async {
     DialogUtils.showLoadingDialog(
@@ -20,8 +32,19 @@ class _GarbledRecoveryState extends State<GarbledRecovery> {
       title: '转换中...',
       content: '请稍候，正在恢复乱码...',
     );
-    final result = await recoverGarbledText(_inputController.text);
-    await Clipboard.setData(ClipboardData(text: result));
+
+    // 获取输入的排除字符、包含字符和阈值
+    String excludePattern = _excludeController.text;
+    String includePattern = _includeController.text;
+    int threshold = int.tryParse(_thresholdController.text) ?? 3; // 默认阈值为3
+
+    final result = await recoverGarbledText(
+      _inputController.text,
+      includePattern,
+      excludePattern,
+      threshold,
+    );
+
     Navigator.of(context).pop(); // 关闭加载对话框
     showTextPopup(context, result);
 
@@ -54,12 +77,61 @@ class _GarbledRecoveryState extends State<GarbledRecovery> {
                 controller: _inputController,
                 decoration: InputDecoration(
                   labelText: '请输入可能乱码的文本',
-                  hintText: '例如：锘挎槬鐪犱笉瑙夋檽锛屽澶勯椈鍟奸笩',
+                  hintText: '例如：鐢辨湀瑕佸ソ濂藉涔犲ぉ澶╁悜涓?',
                   border: OutlineInputBorder(),
                 ),
                 maxLines: null,
                 minLines: 6,
                 keyboardType: TextInputType.multiline,
+              ),
+            ),
+            SizedBox(height: 16),
+            _buildSettingCard(
+              context,
+              icon: Icons.filter_alt_outlined,
+              title: '排除字符',
+              child: TextField(
+                controller: _excludeController,
+                decoration: InputDecoration(
+                  labelText: '请输入排除的字符（正则）',
+                  hintText: '例如：[\\u0020]',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: null,
+                minLines: 1,
+                keyboardType: TextInputType.multiline,
+              ),
+            ),
+            SizedBox(height: 16),
+            _buildSettingCard(
+              context,
+              icon: Icons.filter_alt_outlined,
+              title: '包含字符',
+              child: TextField(
+                controller: _includeController,
+                decoration: InputDecoration(
+                  labelText: '请输入包含的字符（正则）',
+                  hintText: '例如：\\x00-\\x1F \\u003F \\u00A0-\\u00FF',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: null,
+                minLines: 1,
+                keyboardType: TextInputType.multiline,
+              ),
+            ),
+            SizedBox(height: 16),
+            _buildSettingCard(
+              context,
+              icon: Icons.settings,
+              title: '阈值',
+              child: TextField(
+                controller: _thresholdController,
+                decoration: InputDecoration(
+                  labelText: '请输入阈值（整数）',
+                  hintText: '例如：3',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
               ),
             ),
             SizedBox(height: 16),
