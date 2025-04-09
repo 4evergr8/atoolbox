@@ -1,12 +1,16 @@
 import 'dart:io';
 import 'package:charset_converter/charset_converter.dart';
 
-Future<String> recoverGarbledText(String input) async {
+Future<String> recoverGarbledText(
+  String input,
+  String include,
+  String exclude,
+  int score,
+) async {
   List<String> encodings = await CharsetConverter.availableCharsets();
 
   List<List<String>> file = [];
   List<List<String>> result = [];
-  int score = 0;
 
   final downloadsDirectory = Directory('/storage/emulated/0/Download');
   if (!downloadsDirectory.existsSync()) {
@@ -25,17 +29,18 @@ Future<String> recoverGarbledText(String input) async {
 
             int i = 0;
             for (var char in recovered.split('')) {
-              if (RegExp(
-                r'[\u4e00-\u8c7f\u3040-\u309f\u30a0-\u30ff\u31f0-\u31ff]',
-              ).hasMatch(char)) {
+              // 如果是排除的字符，就跳过
+              if (RegExp(exclude, unicode: true).hasMatch(char)) {
+                continue;
+              }
+              if (RegExp(include, unicode: true).hasMatch(char)) {
                 i += 1;
               }
             }
-            if (i > score) {
-              score = i;
+
+            if (i < score) {
               result.insert(0, [encA, encB, recovered]);
             }
-
           } catch (e) {
             file.add([encA, encB, '解码失败']);
           }
@@ -69,8 +74,5 @@ Future<String> recoverGarbledText(String input) async {
     buffer.toString(),
     mode: FileMode.write,
   ); // 覆盖写入
-  return buffer.toString()+score.toString();
+  return buffer.toString();
 }
-
-
-
