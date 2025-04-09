@@ -23,6 +23,7 @@ dependencies:
   http: any
   share_handler: any
   charset_converter : any
+  wakelock_plus: any
   url_launcher: any
   shared_preferences: any
   share_plus: any
