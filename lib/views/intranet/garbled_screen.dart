@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:web_tools/widgets/popup_text.dart';
+import '/widgets/popup_text.dart';
 import '/service/intranet/garbled_recovery.dart';
 import '/widgets/popup_infinity.dart'; // 弹窗展示恢复结果
 
