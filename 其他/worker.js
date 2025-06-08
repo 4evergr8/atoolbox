@@ -8,12 +8,29 @@ async function handleRequest(request, env) {
   const url = new URL(request.url);
   const path = url.pathname.split('/');
 
+  // 设置 CORS 头
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",  // 允许任何来源
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS", // 允许的方法
+    "Access-Control-Allow-Headers": "Content-Type", // 允许的请求头
+  };
+
+  // 处理 OPTIONS 请求（预检请求）
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders, // 添加 CORS 头
+    });
+  }
+
   if (request.method === 'POST' && path[1] === 'upload') {
-    return handleUpload(request, path[2], env);
+    const response = await handleUpload(request, path[2], env);
+    return new Response(response.body, { status: response.status, headers: corsHeaders });
   } else if (request.method === 'GET' && path[1] === 'download') {
-    return handleDownload(path[2], env);
+    const response = await handleDownload(path[2], env);
+    return new Response(response.body, { status: response.status, headers: corsHeaders });
   } else {
-    return new Response('Not Found', { status: 404 });
+    return new Response('Not Found', { status: 404, headers: corsHeaders });
   }
 }
 
