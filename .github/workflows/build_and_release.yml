@@ -23,15 +23,6 @@ jobs:
       - name: 构建 APK
         run: flutter build apk --split-per-abi --no-tree-shake-icons
 
-      - name: 创建 Release
-        id: create_release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: apk-release-${{ github.run_number }}
-          name: Release ${{ github.run_number }}
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 上传 APK 到 Release (tag: test)
         uses: softprops/action-gh-release@v2
         with:
@@ -42,4 +33,3 @@ jobs:
           files: build/app/outputs/flutter-apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
