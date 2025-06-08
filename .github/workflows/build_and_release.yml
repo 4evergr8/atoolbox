@@ -23,15 +23,13 @@ jobs:
       - name: 构建 APK
         run: flutter build apk --split-per-abi --no-tree-shake-icons
 
-      - name: 上传 APK 到 Release (tag: test)
+      - name: 上传 APK 到 Release (tag:test)
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: test                     # 必填，指定 tag
-          name: Test Release                # Release 名称（可选）
-          body: "自动构建上传 APK 文件"       # Release 描述（可选）
-          generate_release_notes: true     # 自动生成 notes（可选）
-          overwrite: true                  # 允许覆盖已有 tag
-          files: build/app/outputs/flutter-apk/*.apk  # 上传文件路径
+          tag_name: test
+          name: Test Release
+          generate_release_notes: true
+          overwrite: true
+          files: build/app/outputs/flutter-apk/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
