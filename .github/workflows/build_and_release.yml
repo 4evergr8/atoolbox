@@ -21,7 +21,7 @@ jobs:
         run: flutter pub get
 
       - name: 构建 APK
-        run: flutter build apk --release
+        run: flutter build apk --split-per-abi --no-tree-shake-icons
 
       - name: 创建 Release
         id: create_release
