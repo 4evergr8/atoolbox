@@ -1,0 +1,42 @@
+name: Build and Release Flutter APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Flutter APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取项目代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Flutter 环境
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0' # 根据你的 Flutter 版本修改
+
+      - name: 获取依赖
+        run: flutter pub get
+
+      - name: 构建 APK
+        run: flutter build apk --release
+
+      - name: 创建 Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-release-${{ github.run_number }}
+          name: Release ${{ github.run_number }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 上传 APK 到 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-release-${{ github.run_number }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
