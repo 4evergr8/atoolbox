@@ -32,7 +32,6 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: 上传 APK 到 Release (tag: test)
         uses: softprops/action-gh-release@v2
         with:
