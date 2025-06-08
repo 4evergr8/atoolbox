@@ -62,11 +62,11 @@ class AboutPage extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.music_note),
-                title: const Text('音乐分享'),
-                subtitle: const Text('我爱听的歌'),
+                title: const Text('软件交流群'),
+                subtitle: const Text('机器学习，我不学'),
                 onTap: () {
                   launchUrl(
-                    Uri.parse('https://github.com/4evergr8/Music'),
+                    Uri.parse('https://t.me/four_evergr_eight'),
                     mode: LaunchMode.externalApplication,
                   );
                 },
