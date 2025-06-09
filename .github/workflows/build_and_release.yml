@@ -27,7 +27,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: test
-          name: Test Release
+          name: "最新测试版"
           generate_release_notes: true
           overwrite: true
           files: build/app/outputs/flutter-apk/*.apk
