@@ -37,14 +37,20 @@
 
 
 <div align="center">
-  <img src="./assets/1.jpg" width="45%" style="margin-right: 5%;">
-  <img src="./assets/2.jpg" width="45%" style="margin-left: 5%;">
+  <img src="./assets/1.jpg" width="30%" style="margin-right: 5%;">
+  <img src="./assets/2.jpg" width="30%" style="margin-left: 5%;">
+<img src="./assets/3.jpg" width="30%" style="margin-right: 5%;">
 </div>
 
 <div align="center">
-  <img src="./assets/3.jpg" width="45%" style="margin-right: 5%;">
- 
+  
 </div>
+
+
+## 讨论群组
+
+
+[![Telegram](https://img.icons8.com/color/48/000000/telegram-app.png)](https://t.me/four_evergr_eight)
 
 
 ## 支持的图片搜索引擎
