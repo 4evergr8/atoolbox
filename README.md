@@ -32,6 +32,20 @@
 * 扫描设备端口
 * 图片文字提取（OCR）
 * 离线翻译（支持中、英、日、韩、俄互译，需要下载模型）
+## 软件截图
+
+
+
+<div align="center">
+  <img src="./assets/1.png" width="45%" style="margin-right: 5%;">
+  <img src="./assets/2.png" width="45%" style="margin-left: 5%;">
+</div>
+
+<div align="center">
+  <img src="./assets/3.png" width="45%" style="margin-right: 5%;">
+  <img src="./assets/4.png" width="45%" style="margin-left: 5%;">
+</div>
+
 
 ## 支持的图片搜索引擎
 * [Google（综合）](https://www.google.com/searchbyimage?client=app&image_url=https://picsum.photos/200/200?random=1)
