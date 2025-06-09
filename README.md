@@ -38,12 +38,12 @@
 
 <div align="center">
   <img src="./assets/1.jpg" width="45%" style="margin-right: 5%;">
-  <img src="./assets/2.png" width="45%" style="margin-left: 5%;">
+  <img src="./assets/2.jpg" width="45%" style="margin-left: 5%;">
 </div>
 
 <div align="center">
   <img src="./assets/3.jpg" width="45%" style="margin-right: 5%;">
-  <img src="./assets/4.jpg" width="45%" style="margin-left: 5%;">
+ 
 </div>
 
 
