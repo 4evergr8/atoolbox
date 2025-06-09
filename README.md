@@ -1,19 +1,20 @@
 <p align="center">
   <a href="https://www.google.com/search?q=Emoji+Kitchen" target="_blank">
-    <img src="./assets/aaa.png" alt="Logo" width=100 height=100>
+    <img src="./assets/aaa.png" alt="Logo" width="100" height="100">
   </a>
+</p>
 
 <h3 align="center">A Toolbox</h3>
 
-  <p align="center">
-    用Flutter框架制作的工具APP
-    <br>
-    图片搜索，离线翻译，文字识别，网络测速，DNS查询，扫码识别，内网扫描，收藏备份，视频下载
-    <br>
-    <a href="https://github.com/4evergr8/atoolbox/issues/new" target="_blank">🐞故障报告</a>
-    ·
-    <a href="https://github.com/4evergr8/atoolbox/issues/new" target="_blank">🏹功能请求</a>
-  </p>
+<p align="center">
+  用Flutter框架制作的工具APP
+  <br>
+  图片搜索，离线翻译，文字识别，网络测速，DNS查询，扫码识别，内网扫描，收藏备份，视频下载
+  <br>
+  <a href="https://github.com/4evergr8/atoolbox/issues/new" target="_blank">🐞故障报告</a>
+  ·
+  <a href="https://github.com/4evergr8/atoolbox/issues/new" target="_blank">🏹功能请求</a>
+</p>
 
 ## 主要功能
 ### 在线功能
