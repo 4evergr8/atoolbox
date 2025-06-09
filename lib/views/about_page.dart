@@ -61,7 +61,7 @@ class AboutPage extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.music_note),
+                leading: const Icon(Icons.group),
                 title: const Text('软件交流群'),
                 subtitle: const Text('机器学习，我不学'),
                 onTap: () {
