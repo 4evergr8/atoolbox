@@ -44,7 +44,7 @@ Future<void> fetchAndSaveVideo(
   final coverFile = File('${saveDir.path}/$id.jpg');
   await coverFile.writeAsBytes(coverRes.bodyBytes);
 
-  // 3. 获取视频下载地址并下载
+  // 3. 获取视频下载地址
   final playUrl = Uri.parse(
     'https://api.bilibili.com/x/player/playurl?bvid=$id&cid=$cid&qn=80',
   );
@@ -56,7 +56,14 @@ Future<void> fetchAndSaveVideo(
   final playJson = jsonDecode(playRes.body);
   final videoUrl = playJson['data']['durl'][0]['url'];
 
-  final videoRes = await http.get(Uri.parse(videoUrl), headers: headers);
+  // 4. 下载视频，添加 Referer 防止被拦截
+  final videoRes = await http.get(
+    Uri.parse(videoUrl),
+    headers: {
+      'user-agent': ua,
+      'referer': 'https://www.bilibili.com/video/$id',
+    },
+  );
   final videoFile = File('${saveDir.path}/$id.mp4');
   await videoFile.writeAsBytes(videoRes.bodyBytes);
 
