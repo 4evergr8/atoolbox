@@ -5,7 +5,6 @@ import 'intranet/base64.dart';
 import 'intranet/garbled_screen.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/qrcode.dart';
-import 'intranet/port_screen.dart';
 import 'intranet/address_screen.dart';
 
 class IntranetPage extends StatelessWidget {
@@ -119,20 +118,7 @@ class IntranetPage extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 16),
-              _buildFunctionItem(
-                context,
-                icon: Icons.import_export,
-                title: '端口扫描',
-                subtitle: '扫描设备端口',
-                onTap: () {
-                  // 假设跳转到路由器设置页面
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const PortScreen()),
-                  );
-                },
-              ),
+
               SizedBox(height: 16),
               _buildFunctionItem(
                 context,
