@@ -110,7 +110,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                       }
                     },
                     icon: Icon(Icons.link),
-                    label: Text('视频备份'),
+                    label: Text('封面搜图'),
                   ),
                   ElevatedButton.icon(
                     onPressed: () async {
