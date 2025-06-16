@@ -87,7 +87,7 @@ class _BackupScreenState extends State<BackupScreen> {
             SizedBox(height: 16),
             _buildSettingCard(
               context,
-              icon: Icons.perm_identity,
+              icon: Icons.video_collection,
               title: 'BV',
               child: TextField(
                 controller: _idController,
