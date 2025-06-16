@@ -31,9 +31,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
     super.initState();
     _workerUrlController = TextEditingController(text: _workerUrl);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.media.content != null) {
-        handleText(context);
-      }
+
     });
   }
 
@@ -43,13 +41,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
     super.dispose();
   }
 
-  Future<void> handleText(BuildContext context) async {
-    final url = widget.media.content;
-    if (url != null) {
-      final result = await extractAndSearchUrls(url);
-      showLinkButtonsPopup(context, result);
-    }
-  }
+
 
   // 处理图片的OCR功能
   Future<void> handleImageOCR(BuildContext context, String imagePath, Language language) async {
@@ -118,7 +110,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                       }
                     },
                     icon: Icon(Icons.link),
-                    label: Text('封面搜图'),
+                    label: Text('视频备份'),
                   ),
                   ElevatedButton.icon(
                     onPressed: () async {
@@ -130,31 +122,17 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                           content: '请稍候，正在备份视频...',
                         );
 
-
                         String BV = await extractBvId(widget.media.content!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(BV)),
+                        );
+
                         await fetchAndSaveVideo(context, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',BV );
                         Navigator.of(context).pop();
                       }
                     },
-                    icon: Icon(Icons.translate),
+                    icon: Icon(Icons.settings_backup_restore),
                     label: Text('视频备份'),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      if (widget.media.content != null) {
-                        String lang = await identifyLanguage(widget.media.content!);
-                        String result = await translateText(lang, 'zh', widget.media.content!);
-                        showTextPopup(context, result);
-                      }
-                    },
-                    icon: Icon(Icons.translate),
-                    label: Text('翻译语句'),
                   ),
                 ],
               ),
