@@ -1,99 +1,102 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:archive/archive.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:json2yaml/json2yaml.dart';
 import 'package:flutter/material.dart';
 
-Future<void> fetchAndSaveMedia(
-  BuildContext context,
-  String ua,
-  String id,
-) async {
+Future<void> fetchAndSaveVideo(
+    BuildContext context,
+    String ua,
+    String id,
+    ) async {
   final headers = {'user-agent': ua};
-
-  int pageNumber = 1;
-  bool hasMore = true;
 
   final downloadsDirectory = Directory('/storage/emulated/0/Download');
   if (!downloadsDirectory.existsSync()) {
     throw Exception("无法访问下载目录");
   }
 
-  final baseDir = Directory('${downloadsDirectory.path}/Backup/$id');
-  if (baseDir.existsSync()) {
-    baseDir.deleteSync(recursive: true);
+  final saveDir = Directory('${downloadsDirectory.path}/Backup/$id');
+  if (saveDir.existsSync()) {
+    saveDir.deleteSync(recursive: true);
   }
-  baseDir.createSync(recursive: true);
+  saveDir.createSync(recursive: true);
 
-  while (hasMore) {
-    final params = {'media_id': id, 'pn': '$pageNumber', 'ps': '40'};
-
-    final url = Uri.parse(
-      'https://api.bilibili.com/x/v3/fav/resource/list',
-    ).replace(queryParameters: params);
-
-    final res = await http.get(url, headers: headers);
-    final status = res.statusCode;
-    if (status != 200) throw Exception('http.get error: statusCode= $status');
-
-    final responseBody = jsonDecode(res.body);
-    final medias = responseBody['data']['medias'] as List;
-
-    if (medias.length < 40) {
-      hasMore = false;
-    }
-
-    final pageDir = Directory('${baseDir.path}/page_$pageNumber');
-    if (!pageDir.existsSync()) {
-      pageDir.createSync(recursive: true);
-    }
-
-    final jsonFile = File('${pageDir.path}/response.json');
-    jsonFile.writeAsStringSync(jsonEncode(responseBody));
-
-    final yamlString = json2yaml(responseBody);
-    final yamlFile = File('${pageDir.path}/response.yaml');
-    yamlFile.writeAsStringSync(yamlString);
-
-    for (var media in medias) {
-      final mediaId = media['id'].toString();
-      final coverUrl = media['cover'];
-      final coverRes = await http.get(Uri.parse(coverUrl));
-      final coverFile = File('${pageDir.path}/$mediaId.jpg');
-      await coverFile.writeAsBytes(coverRes.bodyBytes);
-    }
-
-    pageNumber++;
+  // 获取视频信息
+  final infoUrl = Uri.parse(
+    'https://api.bilibili.com/x/web-interface/view?bvid=$id',
+  );
+  final infoRes = await http.get(infoUrl, headers: headers);
+  if (infoRes.statusCode != 200) {
+    throw Exception('获取视频信息失败: ${infoRes.statusCode}');
   }
 
-  await Future.delayed(Duration(seconds: 1));
+  final infoJson = jsonDecode(infoRes.body);
+  final data = infoJson['data'];
+  final cid = data['cid'].toString();
+  final coverUrl = data['pic'];
 
-  final zipPath = '${downloadsDirectory.path}/$id.zip';
-  final zipFile = File(zipPath);
-  final archive = Archive();
+  // 1. 保存视频信息
+  final infoFile = File('${saveDir.path}/$id.json');
+  infoFile.writeAsStringSync(jsonEncode(infoJson));
 
-  await for (final file in baseDir.list(recursive: true, followLinks: false)) {
-    if (file is File) {
-      final relativePath = file.path.substring(baseDir.parent.path.length + 1);
-      final bytes = await file.readAsBytes();
-      archive.addFile(ArchiveFile(relativePath, bytes.length, bytes));
-    }
+  // 2. 下载封面图
+  final coverRes = await http.get(Uri.parse(coverUrl));
+  final coverFile = File('${saveDir.path}/$id.jpg');
+  await coverFile.writeAsBytes(coverRes.bodyBytes);
+
+  // 3. 获取视频下载地址并下载
+  final playUrl = Uri.parse(
+    'https://api.bilibili.com/x/player/playurl?bvid=$id&cid=$cid&qn=80',
+  );
+  final playRes = await http.get(playUrl, headers: headers);
+  if (playRes.statusCode != 200) {
+    throw Exception('获取播放地址失败: ${playRes.statusCode}');
   }
 
-  final zipData = ZipEncoder().encode(archive);
-  await zipFile.writeAsBytes(zipData);
+  final playJson = jsonDecode(playRes.body);
+  final videoUrl = playJson['data']['durl'][0]['url'];
 
-  if (!zipFile.existsSync() || zipFile.lengthSync() == 0) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('创建压缩包出错: $zipPath')));
+  final videoRes = await http.get(Uri.parse(videoUrl), headers: headers);
+  final videoFile = File('${saveDir.path}/$id.mp4');
+  await videoFile.writeAsBytes(videoRes.bodyBytes);
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('已保存视频 $id')),
+  );
+}
+
+
+Future<String> fetchRedirectedUrl({required String url}) async {
+  final res = await http.get(Uri.parse(url), headers: {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36'});
+  return res.request?.url.toString() ?? url;
+}
+
+Future<String> extractBvId(String inputUrl) async {
+  RegExp urlRegex = RegExp(r'https?://\S+');
+  RegExp bvRegex = RegExp(r'BV\w+');
+
+  String? bv;
+  String? extractedUrl;
+
+  // 提取 URL
+  Match? urlMatch = urlRegex.firstMatch(inputUrl);
+  if (urlMatch != null) {
+    extractedUrl = urlMatch.group(0);
+  } else {
+    throw Exception('无法提取有效的 URL');
   }
 
-  ScaffoldMessenger.of(
-    context,
-  ).showSnackBar(SnackBar(content: Text('成功保存备份: $zipPath')));
+  // 判断是否为短链
+  if (extractedUrl!.contains('b23.tv')) {
+    String finalUrl = await fetchRedirectedUrl(url: extractedUrl);
+    bv = bvRegex.firstMatch(finalUrl)?.group(0);
+  } else {
+    bv = bvRegex.firstMatch(extractedUrl)?.group(0);
+  }
 
-  await Share.shareXFiles([XFile(zipPath)], text: '收藏夹ID：$id');
+  if (bv == null) {
+    throw Exception('无法提取 BV 号');
+  }
+
+  return bv;
 }
