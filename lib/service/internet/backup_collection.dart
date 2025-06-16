@@ -22,9 +22,7 @@ Future<void> fetchAndSaveVideo(
   saveDir.createSync(recursive: true);
 
   // 获取视频信息
-  final infoUrl = Uri.parse(
-    'https://api.bilibili.com/x/web-interface/view?bvid=$id',
-  );
+  final infoUrl = Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$id');
   final infoRes = await http.get(infoUrl, headers: headers);
   if (infoRes.statusCode != 200) {
     throw Exception('获取视频信息失败: ${infoRes.statusCode}');
@@ -32,45 +30,52 @@ Future<void> fetchAndSaveVideo(
 
   final infoJson = jsonDecode(infoRes.body);
   final data = infoJson['data'];
-  final cid = data['cid'].toString();
   final coverUrl = data['pic'];
 
-  // 1. 保存视频信息
+  // 保存视频信息
   final infoFile = File('${saveDir.path}/$id.json');
   infoFile.writeAsStringSync(jsonEncode(infoJson));
 
-  // 2. 下载封面图
+  // 下载封面图
   final coverRes = await http.get(Uri.parse(coverUrl));
   final coverFile = File('${saveDir.path}/$id.jpg');
   await coverFile.writeAsBytes(coverRes.bodyBytes);
 
-  // 3. 获取视频下载地址
-  final playUrl = Uri.parse(
-    'https://api.bilibili.com/x/player/playurl?bvid=$id&cid=$cid&qn=80',
-  );
-  final playRes = await http.get(playUrl, headers: headers);
-  if (playRes.statusCode != 200) {
-    throw Exception('获取播放地址失败: ${playRes.statusCode}');
+  // 获取所有分P（cid 列表）
+  final pages = data['pages'] as List;
+  for (var page in pages) {
+    final cid = page['cid'].toString();
+
+    // 获取播放地址
+    final playUrl = Uri.parse(
+      'https://api.bilibili.com/x/player/playurl?bvid=$id&cid=$cid&qn=80',
+    );
+    final playRes = await http.get(playUrl, headers: headers);
+    if (playRes.statusCode != 200) {
+      print('获取播放地址失败 cid=$cid');
+      continue;
+    }
+
+    final playJson = jsonDecode(playRes.body);
+    final videoUrl = playJson['data']['durl'][0]['url'];
+
+    // 下载视频
+    final videoRes = await http.get(
+      Uri.parse(videoUrl),
+      headers: {
+        ...headers,
+        'referer': 'https://www.bilibili.com/video/$id'
+      },
+    );
+    final videoFile = File('${saveDir.path}/${id}_$cid.flv');
+    await videoFile.writeAsBytes(videoRes.bodyBytes);
   }
-
-  final playJson = jsonDecode(playRes.body);
-  final videoUrl = playJson['data']['durl'][0]['url'];
-
-  // 4. 下载视频，添加 Referer 防止被拦截
-  final videoRes = await http.get(
-    Uri.parse(videoUrl),
-    headers: {
-      'user-agent': ua,
-      'referer': 'https://www.bilibili.com/video/$id',
-    },
-  );
-  final videoFile = File('${saveDir.path}/$id.mp4');
-  await videoFile.writeAsBytes(videoRes.bodyBytes);
 
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(content: Text('已保存视频 $id')),
   );
 }
+
 
 
 Future<String> fetchRedirectedUrl({required String url}) async {
