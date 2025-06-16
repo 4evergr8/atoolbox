@@ -44,7 +44,7 @@ class _BackupScreenState extends State<BackupScreen> {
     );
 
     // 执行备份操作
-    await fetchAndSaveMedia(context,ua, id);
+    await fetchAndSaveVideo(context,ua, id);
 
     // 关闭备份中的弹窗
     Navigator.of(context).pop();
@@ -88,12 +88,12 @@ class _BackupScreenState extends State<BackupScreen> {
             _buildSettingCard(
               context,
               icon: Icons.perm_identity,
-              title: 'ID',
+              title: 'BV',
               child: TextField(
                 controller: _idController,
                 decoration: InputDecoration(
-                  labelText: 'ID',
-                  hintText: '请输入收藏夹ID',
+                  labelText: 'BV',
+                  hintText: '请输入BV号',
                 ),
               ),
             ),
