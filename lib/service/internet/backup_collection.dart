@@ -72,13 +72,12 @@ Future<String> fetchRedirectedUrl({required String url}) async {
 }
 
 Future<String> extractBvId(String inputUrl) async {
+  // 正则表达式用于提取有效的 URL
   RegExp urlRegex = RegExp(r'https?://\S+');
   RegExp bvRegex = RegExp(r'BV\w+');
-
   String? bv;
   String? extractedUrl;
-
-  // 提取 URL
+  // 从输入字符串中提取有效的 URL
   Match? urlMatch = urlRegex.firstMatch(inputUrl);
   if (urlMatch != null) {
     extractedUrl = urlMatch.group(0);
@@ -86,11 +85,14 @@ Future<String> extractBvId(String inputUrl) async {
     throw Exception('无法提取有效的 URL');
   }
 
-  // 判断是否为短链
+  // 检查是否包含 b23.tv
   if (extractedUrl!.contains('b23.tv')) {
+    // 获取跳转后的链接
     String finalUrl = await fetchRedirectedUrl(url: extractedUrl);
+    // 从最终 URL 中提取 BV 号
     bv = bvRegex.firstMatch(finalUrl)?.group(0);
   } else {
+    // 如果不包含 b23.tv，直接从输入链接中提取 BV 号
     bv = bvRegex.firstMatch(extractedUrl)?.group(0);
   }
 
