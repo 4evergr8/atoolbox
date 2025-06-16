@@ -5,7 +5,6 @@ import 'intranet/base64.dart';
 import 'intranet/garbled_screen.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/qrcode.dart';
-import 'intranet/translate_screen.dart';
 import 'intranet/port_screen.dart';
 import 'intranet/address_screen.dart';
 
@@ -145,21 +144,6 @@ class IntranetPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const OfflineOCRScreen(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 16),
-              _buildFunctionItem(
-                context,
-                icon: Icons.translate,
-                title: '离线翻译',
-                subtitle: '离线翻译，支持检测语言',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TranslateScreen(),
                     ),
                   );
                 },
