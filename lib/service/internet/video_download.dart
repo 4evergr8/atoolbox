@@ -8,7 +8,9 @@ Future<void> fetchAndSaveVideo(
     String ua,
     String id,
     ) async {
-  final headers = {'user-agent': ua};
+  final headers = {
+    'User-Agent': ua,
+  };
 
   final downloadsDirectory = Directory('/storage/emulated/0/Download');
   if (!downloadsDirectory.existsSync()) {
@@ -41,39 +43,50 @@ Future<void> fetchAndSaveVideo(
   final coverFile = File('${saveDir.path}/$id.jpg');
   await coverFile.writeAsBytes(coverRes.bodyBytes);
 
-  // 获取所有分P（cid 列表）
+  // 遍历所有分P，逐个下载视频（单片段，没合并）
   final pages = data['pages'] as List;
   for (var page in pages) {
     final cid = page['cid'].toString();
 
-    // 获取播放地址
-    final playUrl = Uri.parse(
-      'https://api.bilibili.com/x/player/playurl?bvid=$id&cid=$cid&qn=80',
-    );
+    final params = {
+      'bvid': id,
+      'cid': cid,
+      'fnval': '1',
+      'fnver': '0',
+    };
+
+    final playUrl = Uri.parse('https://api.bilibili.com/x/player/playurl').replace(queryParameters: params);
+
     final playRes = await http.get(playUrl, headers: headers);
     if (playRes.statusCode != 200) {
-      print('获取播放地址失败 cid=$cid');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('获取播放地址失败 cid=$cid')));
       continue;
     }
 
     final playJson = jsonDecode(playRes.body);
+    if (playJson['code'] != 0 || playJson['data'] == null || playJson['data']['durl'] == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('播放地址无效 cid=$cid')));
+      continue;
+    }
+
     final videoUrl = playJson['data']['durl'][0]['url'];
 
-    // 下载视频
-    final videoRes = await http.get(
-      Uri.parse(videoUrl),
-      headers: {
-        ...headers,
-        'referer': 'https://www.bilibili.com/video/$id'
-      },
-    );
+    final downloadHeaders = {
+      'User-Agent': ua,
+      'Referer': 'https://www.bilibili.com/video/$id',
+    };
+
+    final videoRes = await http.get(Uri.parse(videoUrl), headers: downloadHeaders);
+    if (videoRes.statusCode != 200) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('视频下载失败 cid=$cid')));
+      continue;
+    }
+
     final videoFile = File('${saveDir.path}/${id}_$cid.flv');
     await videoFile.writeAsBytes(videoRes.bodyBytes);
   }
 
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('已保存视频 $id')),
-  );
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('已保存视频 $id')));
 }
 
 
