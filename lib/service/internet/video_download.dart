@@ -53,6 +53,7 @@ Future<void> fetchAndSaveVideo(
       'cid': cid,
       'fnval': '1',
       'fnver': '0',
+      'qn': '64',
     };
 
     final playUrl = Uri.parse('https://api.bilibili.com/x/player/playurl').replace(queryParameters: params);
@@ -82,7 +83,7 @@ Future<void> fetchAndSaveVideo(
       continue;
     }
 
-    final videoFile = File('${saveDir.path}/${id}_$cid.flv');
+    final videoFile = File('${saveDir.path}/${id}_$cid.mp4');
     await videoFile.writeAsBytes(videoRes.bodyBytes);
   }
 
