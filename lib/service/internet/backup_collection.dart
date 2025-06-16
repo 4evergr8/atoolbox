@@ -67,8 +67,26 @@ Future<void> fetchAndSaveVideo(
 
 
 Future<String> fetchRedirectedUrl({required String url}) async {
-  final res = await http.get(Uri.parse(url), headers: {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36'});
-  return res.request?.url.toString() ?? url;
+  HttpClient httpClient = HttpClient();
+  HttpClientRequest request = await httpClient.getUrl(Uri.parse(url));
+  request.followRedirects = false; // 禁用自动重定向
+  HttpClientResponse response = await request.close();
+
+  // 如果响应是重定向，获取新的 URL
+  if (response.isRedirect) {
+    String? location = response.headers.value(HttpHeaders.locationHeader);
+    if (location != null) {
+      // 如果是相对路径，需要解析为绝对路径
+      Uri originalUri = Uri.parse(url);
+      Uri newUri = originalUri.resolve(location);
+      httpClient.close();
+      return newUri.toString(); // 返回解析后的绝对路径
+    }
+  }
+
+  // 如果没有重定向，直接返回原始 URL
+  httpClient.close();
+  return url;
 }
 
 Future<String> extractBvId(String inputUrl) async {
