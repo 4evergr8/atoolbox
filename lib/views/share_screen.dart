@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
+import '/service/internet/backup_collection.dart';
 import '/service/intranet/qrcode.dart';
 import '/service/intranet/language_identify.dart';
 import '/service/internet/image_search.dart';
 import '/service/intranet/ocr.dart';
 import '/widgets/popup_infinity.dart';
-import 'intranet/ocr_screen.dart'; // 确保导入了 performOCR 函数和 Language 枚举
+import 'intranet/ocr_screen.dart';
 import '/service/internet/thumbnail_search.dart';
 import '/widgets/popup_links.dart';
 import '/widgets/popup_text.dart';
@@ -117,8 +118,33 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                       }
                     },
                     icon: Icon(Icons.link),
-                    label: Text('处理链接'),
+                    label: Text('封面搜图'),
                   ),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      if (widget.media.content != null) {
+
+                        DialogUtils.showLoadingDialog(
+                          context: context,
+                          title: '下载中...',
+                          content: '请稍候，正在备份视频...',
+                        );
+
+
+                        String BV = await extractBvId(widget.media.content!);
+                        await fetchAndSaveVideo(context, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',BV );
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    icon: Icon(Icons.translate),
+                    label: Text('视频备份'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
                   ElevatedButton.icon(
                     onPressed: () async {
                       if (widget.media.content != null) {
