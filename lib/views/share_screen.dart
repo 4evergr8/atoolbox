@@ -123,10 +123,6 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                         );
 
                         String BV = await extractBvId(widget.media.content!);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(BV)),
-                        );
-
                         await fetchAndSaveVideo(context, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',BV );
                         Navigator.of(context).pop();
                       }
