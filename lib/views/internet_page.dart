@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'internet/video_screen.dart';
 import 'internet/backup_screen.dart';
 import 'internet/ptr_screen.dart';
 import 'internet/netspeed_screen.dart';
@@ -64,28 +63,13 @@ class InternetPage extends StatelessWidget {
               _buildFunctionItem(
                 context,
                 icon: Icons.settings_backup_restore,
-                title: '收藏夹备份',
-                subtitle: '哔哩哔哩收藏夹备份，仅支持公开收藏夹',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BackupScreen(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(height: 16),
-              _buildFunctionItem(
-                context,
-                icon: Icons.video_camera_front,
                 title: '视频备份',
                 subtitle: '哔哩哔哩视频备份，无需登录',
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const VideoScreen(),
+                      builder: (context) => const BackupScreen(),
                     ),
                   );
                 },
