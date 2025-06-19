@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '/service/internet/video_download.dart';
 import '/service/intranet/qrcode.dart';
 import '/service/internet/image_search.dart';
@@ -122,7 +123,9 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                         );
 
                         String BV = await extractBvId(widget.media.content!);
-                        await fetchAndSaveVideo(context, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',BV );
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        final ua = prefs.getString('ua') ?? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
+                        await fetchAndSaveVideo(context, ua,BV );
                         Navigator.of(context).pop();
                       }
                     },
