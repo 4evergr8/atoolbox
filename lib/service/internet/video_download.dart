@@ -34,9 +34,11 @@ Future<void> fetchAndSaveVideo(
   final data = infoJson['data'];
   final coverUrl = data['pic'];
 
-  // 保存视频信息
+// 保存视频信息（格式化为多行）
   final infoFile = File('${saveDir.path}/$id.json');
-  infoFile.writeAsStringSync(jsonEncode(infoJson));
+  final encoder = JsonEncoder.withIndent('  ');
+  infoFile.writeAsStringSync(encoder.convert(infoJson));
+
 
   // 下载封面图
   final coverRes = await http.get(Uri.parse(coverUrl));
