@@ -2,6 +2,9 @@ name: Build and Release Flutter APK
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - compile  # 监听 compile 分支
 
 jobs:
   build:
@@ -9,8 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 拉取项目代码
+      - name: 拉取 main 分支代码（即使是 compile 触发）
         uses: actions/checkout@v4
+        with:
+          ref: main  # 👈 指定拉取 main 分支
 
       - name: 设置 Flutter 环境
         uses: subosito/flutter-action@v2
