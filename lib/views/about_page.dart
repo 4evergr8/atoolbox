@@ -37,17 +37,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              ListTile(
-                leading: const Icon(Icons.video_collection),
-                title: const Text('哔哩哔哩'),
-                subtitle: const Text('可以给UP投个币吗🪙'),
-                onTap: () {
-                  launchUrl(
-                    Uri.parse('https://space.bilibili.com/3546816836537000'),
-                    mode: LaunchMode.externalApplication,
-                  );
-                },
-              ),
+
 
               ListTile(
                 leading: const Icon(Icons.code),
