@@ -48,8 +48,9 @@ async function handleUpload(request, key, env, corsHeaders) {
   }
 
   const content = await file.arrayBuffer();
-  // 直接使用上传文件的 MIME 类型
-  const contentType = file.type || 'application/octet-stream';
+
+  // 强制使用标准图片 MIME 类型，确保搜图网站识别
+  const contentType = detectMimeType(file.name);
 
   await env.R2_BUCKET.put(key, content, { httpMetadata: { contentType } });
   return new Response('文件上传成功', { status: 200, headers: corsHeaders });
@@ -63,11 +64,22 @@ async function handleDownload(key, env, corsHeaders) {
   }
 
   const headers = new Headers(corsHeaders);
-  headers.set('Content-Type', object.httpMetadata?.contentType || 'application/octet-stream');
+  // 使用存储的 Content-Type 或根据扩展名判断
+  const contentType = object.httpMetadata?.contentType || detectMimeType(key);
+  headers.set('Content-Type', contentType);
   headers.set('Content-Length', object.size);
 
-  // 设置文件名，保证浏览器和搜图网站识别
+  // 设置文件名和 inline，确保识别
   headers.set('Content-Disposition', `inline; filename="${key}"`);
 
   return new Response(object.body, { status: 200, headers });
+}
+
+// 根据文件名后缀检测 MIME 类型
+function detectMimeType(filename) {
+  const lower = filename.toLowerCase();
+  if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'image/jpeg';
+  if (lower.endsWith('.png')) return 'image/png';
+  if (lower.endsWith('.gif')) return 'image/gif';
+  return 'application/octet-stream';
 }
