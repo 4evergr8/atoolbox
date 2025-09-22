@@ -6,9 +6,14 @@ import 'package:http/http.dart' as http;
 
 Future<String> searchLocalImage(File imageFile, String workerUrl) async {
   // 生成随机 5 位小写字母 + 时间戳作为 key
+    // 生成随机 key + 时间戳 + 扩展名
   String randomKey = generateRandomKey();
   String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-  String key = '$randomKey$timestamp';
+
+  // 从文件路径取扩展名（含.）
+  String extension = imageFile.path.split('.').last;
+  String key = '$randomKey$timestamp.$extension';
+
 
 
   String uploadUrl = '$workerUrl/upload/$key';
