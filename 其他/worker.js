@@ -8,14 +8,14 @@ async function handleRequest(request, env) {
   const url = new URL(request.url);
   const path = url.pathname.split('/');
 
-  // 统一的跨域头
+  // 统一跨域头
   const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",              // 允许所有来源
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS", // 允许的方法
-    "Access-Control-Allow-Headers": "Content-Type",  // 允许的请求头
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
   };
 
-  // 处理预检请求
+  // 预检请求
   if (request.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: corsHeaders });
   }
@@ -41,13 +41,14 @@ async function handleUpload(request, key, env, corsHeaders) {
     return new Response('没有上传文件', { status: 400, headers: corsHeaders });
   }
 
-  // 限制最大文件大小 3MB
+  // 限制最大文件大小 5MB
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
   if (file.size > MAX_FILE_SIZE) {
     return new Response('文件过大，最大允许 5MB', { status: 413, headers: corsHeaders });
   }
 
   const content = await file.arrayBuffer();
+  // 直接使用上传文件的 MIME 类型
   const contentType = file.type || 'application/octet-stream';
 
   await env.R2_BUCKET.put(key, content, { httpMetadata: { contentType } });
@@ -64,6 +65,9 @@ async function handleDownload(key, env, corsHeaders) {
   const headers = new Headers(corsHeaders);
   headers.set('Content-Type', object.httpMetadata?.contentType || 'application/octet-stream');
   headers.set('Content-Length', object.size);
+
+  // 设置文件名，保证浏览器和搜图网站识别
+  headers.set('Content-Disposition', `inline; filename="${key}"`);
 
   return new Response(object.body, { status: 200, headers });
 }
