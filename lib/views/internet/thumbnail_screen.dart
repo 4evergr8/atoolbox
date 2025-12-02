@@ -11,7 +11,7 @@ class ThumbnailSearchScreen extends StatefulWidget {
 }
 
 class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
-  String _searchKeyword = 'BV1ba4y1H7tp'; // 默认搜索关键词
+  String _searchKeyword = 'BV1GJ411x7h7'; // 默认搜索关键词
   late TextEditingController _searchController;
 
   @override
