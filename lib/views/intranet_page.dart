@@ -62,7 +62,7 @@ class IntranetPage extends StatelessWidget {
                 context,
                 icon: Icons.qr_code,
                 title: '图片扫码',
-                subtitle: '识别图片中的码，支持识别多个',
+                subtitle: '识别图片中的条码和二维码，支持识别多个',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -77,7 +77,7 @@ class IntranetPage extends StatelessWidget {
                 context,
                 icon: Icons.transform,
                 title: '乱码恢复',
-                subtitle: '将乱码恢复成人类语言',
+                subtitle: '尝试将乱码恢复成人类语言',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -108,7 +108,7 @@ class IntranetPage extends StatelessWidget {
                 context,
                 icon: Icons.wifi_find,
                 title: '局域网扫描',
-                subtitle: '扫描局域网内的设备',
+                subtitle: '扫描局域网内的其他设备',
                 onTap: () {
                   Navigator.push(
                     context,
