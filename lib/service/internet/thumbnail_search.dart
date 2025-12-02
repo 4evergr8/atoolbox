@@ -25,7 +25,7 @@ Future<String> fetchRedirectedUrl({required String url}) async {
   return url;
 }
 
-Future<List<List<String>>?> extractAndSearchUrls(String input) async {
+Future<List<List<String>>> extractAndSearchUrls(String input) async {
   try {
     RegExp urlRegex = RegExp(r'https?://\S+');
     RegExp bvRegex = RegExp(r'BV[0-9A-Za-z]{10}');
@@ -58,7 +58,7 @@ Future<List<List<String>>?> extractAndSearchUrls(String input) async {
     // ====== ❌ 四种情况都失败 → BV 无法提取 → 输入无效 ======
     if (bv == null) {
       // ⚠️ 直接返回 null，让 UI 层弹 snackbar
-      return null;
+      return [];
     }
 
     // ========== 请求 B 站 API ==========
@@ -68,7 +68,7 @@ Future<List<List<String>>?> extractAndSearchUrls(String input) async {
     var jsonResponse = jsonDecode(apiResponse.body);
 
     if (jsonResponse['code'] != 0) {
-      return null; // 返回 null，UI 提示错误
+      return []; // 返回 null，UI 提示错误
     }
 
     // ========== 取封面 ==========
@@ -91,7 +91,7 @@ Future<List<List<String>>?> extractAndSearchUrls(String input) async {
     ];
   } catch (e) {
     // 程序异常也返回 null，让 UI 给 snackbar
-    return null;
+    return [];
   }
 }
 
