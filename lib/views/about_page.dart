@@ -83,35 +83,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
-                          '源代码作者为KimiAI和ChatGPT，感谢二位开发者的付出。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8), // 添加段落间距
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          '此软件使用IntelliJ IDEA作为编译器。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8), // 添加段落间距
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          'Github Copilot插件彻底干亖了Cursor，不仅免费，还有三种模式可选。',
+                          '源代码作者为Kimi和ChatGPT，感谢二位开发者的付出。',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -173,76 +145,7 @@ class AboutPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8), // 添加段落间距
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          '语言检测功能来自google_mlkit_language_id。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8), // 添加段落间距
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          '离线翻译功能来自google_mlkit_translation。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8), // 添加段落间距
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          '离线扫码功能来自google_mlkit_barcode_scanning。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8), // 添加段落间距
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          '软件内图标来自GoogleMaterialIcons。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8), // 添加段落间距
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          '软件图标和我的头像均使用GoogleEmojiKitchen制作。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
+
                 ],
               )
 
