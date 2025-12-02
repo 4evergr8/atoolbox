@@ -105,7 +105,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                   ElevatedButton.icon(
                     onPressed: () async {
                       if (widget.media.content != null) {
-                        final links = await extractAndSearchUrls(widget.media.content!,context);
+                        final links = await extractAndSearchUrls(widget.media.content!);
                         showLinkButtonsPopup(context, links);
                       }
                     },
