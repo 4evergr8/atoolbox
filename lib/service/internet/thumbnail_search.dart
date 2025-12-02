@@ -25,10 +25,7 @@ Future<String> fetchRedirectedUrl({required String url}) async {
   return url;
 }
 
-Future<List<List<String>>?> extractAndSearchUrls(
-    String input,
-    BuildContext context,
-    ) async {
+Future<List<List<String>>?> extractAndSearchUrls(String input) async {
   try {
     RegExp urlRegex = RegExp(r'https?://\S+');
     RegExp bvRegex = RegExp(r'BV[0-9A-Za-z]{10}');
@@ -36,33 +33,31 @@ Future<List<List<String>>?> extractAndSearchUrls(
     String? url;
     String? bv;
 
-    // ========== 情况 4：纯 BV ==========
+    // ========== 情况 4：纯 BV 输入 ==========
     bv = bvRegex.firstMatch(input)?.group(0);
     if (bv != null && input.trim() == bv) {
-      // 已经拿到 BV
+      // 纯 BV，已经提取到 bv，不需要 URL
     } else {
-      // ========== 情况 1 或 2：文本有 URL ==========
+      // ========== 情况 1 或 2：文本中包含 URL ==========
       Match? urlMatch = urlRegex.firstMatch(input);
       if (urlMatch != null) {
         url = urlMatch.group(0);
       }
 
-      // ========== 情况 3：b23.tv ==========
+      // ========== 情况 3：b23.tv 重定向 ==========
       if (url != null && url.contains("b23.tv")) {
         url = await fetchRedirectedUrl(url: url);
       }
 
-      // URL 中尝试提 BV
+      // URL 中提取 BV
       if (bv == null && url != null) {
         bv = bvRegex.firstMatch(url)?.group(0);
       }
     }
 
-    // ========== ❌ BV 仍然不存在：输入错误 ==========
+    // ====== ❌ 四种情况都失败 → BV 无法提取 → 输入无效 ======
     if (bv == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("输入错误，请输入 BV号 或 B 站链接")),
-      );
+      // ⚠️ 直接返回 null，让 UI 层弹 snackbar
       return null;
     }
 
@@ -70,19 +65,16 @@ Future<List<List<String>>?> extractAndSearchUrls(
     var apiResponse = await http.get(
       Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$bv'),
     );
-
     var jsonResponse = jsonDecode(apiResponse.body);
 
     if (jsonResponse['code'] != 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("API 获取失败，可能是无效的 BV")),
-      );
-      return null;
+      return null; // 返回 null，UI 提示错误
     }
 
-    // ========== 提取封面 ==========
+    // ========== 取封面 ==========
     String picUrl = jsonResponse['data']['pic'];
 
+    // ========== 构造反搜链接 ==========
     return [
       ['Google', 'https://www.google.com/searchbyimage?client=app&image_url=$picUrl'],
       ['Google Lens', 'https://lens.google.com/uploadbyurl?url=$picUrl'],
@@ -90,20 +82,15 @@ Future<List<List<String>>?> extractAndSearchUrls(
       ['Yandex.ru', 'https://yandex.ru/images/search?url=$picUrl&rpt=imageview'],
       ['Bing', 'https://www.bing.com/images/search?q=imgurl:$picUrl&view=detailv2&iss=sbi'],
       ['TinEye', 'https://tineye.com/search/?url=$picUrl'],
-
       ['3DIQDB', 'https://3d.iqdb.org/?url=$picUrl'],
-
       ['IQDB', 'https://iqdb.org/?url=$picUrl'],
       ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
       ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
-
       ['WAIT', 'https://trace.moe/?url=$picUrl'],
       ['Trace.moe', 'https://trace.moe/?url=$picUrl'],
     ];
   } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("发生未知错误")),
-    );
+    // 程序异常也返回 null，让 UI 给 snackbar
     return null;
   }
 }
