@@ -11,7 +11,7 @@ class ThumbnailSearchScreen extends StatefulWidget {
 }
 
 class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
-  String _searchKeyword = 'https://b23.tv/pigt3PQ'; // 默认搜索关键词
+  String _searchKeyword = 'BV1ba4y1H7tp'; // 默认搜索关键词
   late TextEditingController _searchController;
 
   @override
@@ -63,7 +63,7 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
             ElevatedButton(
               onPressed: () async {
                 // 触发异步搜索函数
-                final result = await extractAndSearchUrls(_searchKeyword);
+                final result = await extractAndSearchUrls(_searchKeyword,context);
                 showLinkButtonsPopup(context,result);
 
               },
