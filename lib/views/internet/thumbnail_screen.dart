@@ -63,7 +63,7 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
             ElevatedButton(
               onPressed: () async {
                 // 触发异步搜索函数
-                final result = await extractAndSearchUrls(_searchKeyword,context);
+                final result = await extractAndSearchUrls(_searchKeyword);
                 showLinkButtonsPopup(context,result);
 
               },
