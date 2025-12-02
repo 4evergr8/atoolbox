@@ -25,72 +25,89 @@ Future<String> fetchRedirectedUrl({required String url}) async {
   return url;
 }
 
-Future<List<List<String>>> extractAndSearchUrls(String inputUrl) async {
-  // 正则表达式用于提取有效的 URL
-  RegExp urlRegex = RegExp(r'https?://\S+');
-  RegExp bvRegex = RegExp(r'BV\w+');
+Future<List<List<String>>?> extractAndSearchUrls(
+    String input,
+    BuildContext context,
+    ) async {
+  try {
+    RegExp urlRegex = RegExp(r'https?://\S+');
+    RegExp bvRegex = RegExp(r'BV[0-9A-Za-z]{10}');
 
-  String? bv;
-  String? extractedUrl;
+    String? url;
+    String? bv;
 
-  // 从输入字符串中提取有效的 URL
-  Match? urlMatch = urlRegex.firstMatch(inputUrl);
-  if (urlMatch != null) {
-    extractedUrl = urlMatch.group(0);
-  } else {
-    throw Exception('无法提取有效的 URL');
+    // ========== 情况 4：纯 BV ==========
+    bv = bvRegex.firstMatch(input)?.group(0);
+    if (bv != null && input.trim() == bv) {
+      // 已经拿到 BV
+    } else {
+      // ========== 情况 1 或 2：文本有 URL ==========
+      Match? urlMatch = urlRegex.firstMatch(input);
+      if (urlMatch != null) {
+        url = urlMatch.group(0);
+      }
+
+      // ========== 情况 3：b23.tv ==========
+      if (url != null && url.contains("b23.tv")) {
+        url = await fetchRedirectedUrl(url: url);
+      }
+
+      // URL 中尝试提 BV
+      if (bv == null && url != null) {
+        bv = bvRegex.firstMatch(url)?.group(0);
+      }
+    }
+
+    // ========== ❌ BV 仍然不存在：输入错误 ==========
+    if (bv == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("输入错误，请输入 BV号 或 B 站链接")),
+      );
+      return null;
+    }
+
+    // ========== 请求 B 站 API ==========
+    var apiResponse = await http.get(
+      Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$bv'),
+    );
+
+    var jsonResponse = jsonDecode(apiResponse.body);
+
+    if (jsonResponse['code'] != 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("API 获取失败，可能是无效的 BV")),
+      );
+      return null;
+    }
+
+    // ========== 提取封面 ==========
+    String picUrl = jsonResponse['data']['pic'];
+
+    return [
+      ['Google', 'https://www.google.com/searchbyimage?client=app&image_url=$picUrl'],
+      ['Google Lens', 'https://lens.google.com/uploadbyurl?url=$picUrl'],
+      ['Yandex.eu', 'https://yandex.eu/images/search?url=$picUrl&rpt=imageview'],
+      ['Yandex.ru', 'https://yandex.ru/images/search?url=$picUrl&rpt=imageview'],
+      ['Bing', 'https://www.bing.com/images/search?q=imgurl:$picUrl&view=detailv2&iss=sbi'],
+      ['TinEye', 'https://tineye.com/search/?url=$picUrl'],
+
+      ['3DIQDB', 'https://3d.iqdb.org/?url=$picUrl'],
+
+      ['IQDB', 'https://iqdb.org/?url=$picUrl'],
+      ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
+      ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
+
+      ['WAIT', 'https://trace.moe/?url=$picUrl'],
+      ['Trace.moe', 'https://trace.moe/?url=$picUrl'],
+    ];
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("发生未知错误")),
+    );
+    return null;
   }
-
-  // 检查是否包含 b23.tv
-  if (extractedUrl!.contains('b23.tv')) {
-    // 获取跳转后的链接
-    String finalUrl = await fetchRedirectedUrl(url: extractedUrl);
-    // 从最终 URL 中提取 BV 号
-    bv = bvRegex.firstMatch(finalUrl)?.group(0);
-  } else {
-    // 如果不包含 b23.tv，直接从输入链接中提取 BV 号
-    bv = bvRegex.firstMatch(extractedUrl)?.group(0);
-  }
-
-  if (bv == null) {
-    throw Exception('无法提取 BV 号');
-  }
-
-  // 使用 Bilibili API 获取视频信息
-  var apiResponse = await http.get(
-      Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$bv'));
-  var jsonResponse = jsonDecode(apiResponse.body);
-
-  if (jsonResponse['code'] != 0) {
-    throw Exception('Bilibili API 请求失败');
-  }
-
-  // 提取视频封面图片链接
-  String picUrl = jsonResponse['data']['pic'];
-
-  // 构造反向图片搜索链接
-  List<List<String>> searchUrls = [
-    ['Google', 'https://www.google.com/searchbyimage?client=app&image_url=$picUrl'],
-    ['Google Lens', 'https://lens.google.com/uploadbyurl?url=$picUrl'],
-    ['Yandex.eu', 'https://yandex.eu/images/search?url=$picUrl&rpt=imageview'],
-    ['Yandex.ru', 'https://yandex.ru/images/search?url=$picUrl&rpt=imageview'],
-    ['Bing', 'https://www.bing.com/images/search?q=imgurl:$picUrl&view=detailv2&iss=sbi'],
-    ['TinEye', 'https://tineye.com/search/?url=$picUrl'],
-
-    ['3DIQDB', 'https://3d.iqdb.org/?url=$picUrl'],
-
-    ['IQDB', 'https://iqdb.org/?url=$picUrl'],
-    ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
-    ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
-    ['WAIT', 'https://trace.moe/?url=$picUrl'],
-    ['Trace.moe', 'https://trace.moe/?url=$picUrl'],
-
-
-
-  ];
-  return searchUrls;
-
 }
+
 
 void main() async {
   String inputUrl = '剩下的从法国v会比较那么快   aahttps://b23.tv/pigt3PQ ';
