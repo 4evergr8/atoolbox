@@ -92,7 +92,7 @@ class _BackupScreenState extends State<BackupScreen> {
               child: TextField(
                 controller: _idController,
                 decoration: InputDecoration(
-                  labelText: 'BV',
+                  labelText: 'BV1GJ411x7h7',
                   hintText: '请输入BV号',
                 ),
               ),
