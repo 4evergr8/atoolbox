@@ -102,23 +102,6 @@ class IntranetPage extends StatelessWidget {
                   );
                 },
               ),
-
-              SizedBox(height: 16),
-              _buildFunctionItem(
-                context,
-                icon: Icons.wifi_find,
-                title: '局域网扫描',
-                subtitle: '扫描局域网内的其他设备',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddressScreen(),
-                    ),
-                  );
-                },
-              ),
-
               SizedBox(height: 16),
               _buildFunctionItem(
                 context,
