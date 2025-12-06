@@ -41,8 +41,8 @@ class AboutPage extends StatelessWidget {
 
               ListTile(
                 leading: const Icon(Icons.code),
-                title: const Text('Github'),
-                subtitle: const Text('软件源代码'),
+                title: const Text('软件源代码'),
+                subtitle: const Text('Github'),
                 onTap: () {
                   launchUrl(
                     Uri.parse('https://github.com/4evergr8/atoolbox'),
@@ -52,19 +52,19 @@ class AboutPage extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.group),
-                title: const Text('软件交流群'),
-                subtitle: const Text('机器学习，我不学'),
+                title: const Text('软件下载'),
+                subtitle: const Text('迅雷云盘'),
                 onTap: () {
                   launchUrl(
-                    Uri.parse('https://t.me/four_evergr_eight'),
+                    Uri.parse('https://pan.xunlei.com/s/VOflulv2n-a8wkxd2ZUGmnVjA1?pwd=j3qy'),
                     mode: LaunchMode.externalApplication,
                   );
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.web),
-                title: const Text('GithubPages'),
-                subtitle: const Text('个人网页'),
+                title: const Text('搜图网站'),
+                subtitle: const Text('GithubPages'),
                 onTap: () {
                   launchUrl(
                     Uri.parse('https://4evergr8.github.io'),
