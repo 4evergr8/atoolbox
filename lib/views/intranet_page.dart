@@ -5,7 +5,6 @@ import 'intranet/base64.dart';
 import 'intranet/garbled_screen.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/qrcode.dart';
-import 'intranet/address_screen.dart';
 
 class IntranetPage extends StatelessWidget {
   const IntranetPage({super.key});
