@@ -56,7 +56,7 @@ class AboutPage extends StatelessWidget {
                 subtitle: const Text('迅雷云盘'),
                 onTap: () {
                   launchUrl(
-                    Uri.parse('https://pan.xunlei.com/s/VOflulv2n-a8wkxd2ZUGmnVjA1?pwd=j3qy'),
+                    Uri.parse('https://pan.xunlei.com/s/VOj1TKF_2RmVJiFb4Kmgf859A1?pwd=67ec'),
                     mode: LaunchMode.externalApplication,
                   );
                 },
