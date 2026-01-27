@@ -64,17 +64,18 @@ void main() async {
 
 List<List<String>> generateReverseImageSearchUrls(String picUrl) {
   List<List<String>> searchUrls = [
-    ['Google', 'https://www.google.com/searchbyimage?client=app&image_url=$picUrl'],
     ['Google Lens', 'https://lens.google.com/uploadbyurl?url=$picUrl'],
-    ['Yandex.eu', 'https://yandex.eu/images/search?url=$picUrl&rpt=imageview'],
     ['Yandex.ru', 'https://yandex.ru/images/search?url=$picUrl&rpt=imageview'],
-    ['Bing', 'https://www.bing.com/images/search?q=imgurl:$picUrl&view=detailv2&iss=sbi'],
+    ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
+    ['Lenso.ai', 'https://lenso.ai/en/search-by-url?url=$picUrl&utm_source=sbi'],
     ['TinEye', 'https://tineye.com/search/?url=$picUrl'],
+    ['Google', 'https://www.google.com/searchbyimage?client=app&image_url=$picUrl'],
+
 
     ['3DIQDB', 'https://3d.iqdb.org/?url=$picUrl'],
 
     ['IQDB', 'https://iqdb.org/?url=$picUrl'],
-    ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
+
     ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
     ['WAIT', 'https://trace.moe/?url=$picUrl'],
     ['Trace.moe', 'https://trace.moe/?url=$picUrl'],
