@@ -51,17 +51,6 @@ class AboutPage extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.group),
-                title: const Text('软件下载'),
-                subtitle: const Text('迅雷云盘'),
-                onTap: () {
-                  launchUrl(
-                    Uri.parse('https://pan.xunlei.com/s/VOj1TKF_2RmVJiFb4Kmgf859A1?pwd=67ec'),
-                    mode: LaunchMode.externalApplication,
-                  );
-                },
-              ),
-              ListTile(
                 leading: const Icon(Icons.web),
                 title: const Text('搜图网站'),
                 subtitle: const Text('GithubPages'),
