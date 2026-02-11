@@ -17,7 +17,7 @@ Future<void> fetchAndSaveVideo(
     throw Exception("无法访问下载目录");
   }
 
-  final saveDir = Directory('${downloadsDirectory.path}/Backup/$id');
+  final saveDir = Directory('${downloadsDirectory.path}/.备份');
   if (saveDir.existsSync()) {
     saveDir.deleteSync(recursive: true);
   }
