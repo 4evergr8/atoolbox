@@ -10,8 +10,8 @@ class EncodeDecode extends StatefulWidget {
 }
 
 class _EncodeDecodeScreenState extends State<EncodeDecode> {
-  final TextEditingController _decodeController = TextEditingController();
-  final TextEditingController _encodeController = TextEditingController();
+  final TextEditingController _decodeController = TextEditingController(text: '5L2g5aW9'); // 设置默认解码值
+  final TextEditingController _encodeController = TextEditingController(text: '你好'); // 设置默认编码值
 
   // 解码并复制到剪贴板
   void _decodeAndCopy() async {
