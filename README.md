@@ -67,3 +67,12 @@
 * [ascii2d（画师作品，漫画）](https://ascii2d.net/search/url/https://picsum.photos/200/200?random=1)
 * [WAIT（动漫截图）](https://trace.moe/?url=https://picsum.photos/200/200?random=1)
 * [Trace.moe（动漫截图）](https://trace.moe/?url=https://picsum.photos/200/200?random=1)
+
+
+
+
+## 编译
+
+* 本项目采用GithubAction进行编译
+* Fork或Import本项目,在Action选项卡内运行Build and Release Flutter APK  
+* 等待成功运行完成后在Release里寻找最新测试版并下载对应架构的APK
