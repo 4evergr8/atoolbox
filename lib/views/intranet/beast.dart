@@ -10,9 +10,9 @@ class BeastEncodeDecode extends StatefulWidget {
 }
 
 class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
-  final TextEditingController _cipherController = TextEditingController(); // 密文
-  final TextEditingController _plainController = TextEditingController(); // 明文
-  final TextEditingController _dictController = TextEditingController(); // 字典
+  final TextEditingController _cipherController = TextEditingController(text: '理的说的说说说道说说理道的理道理的的说道'); // 密文
+  final TextEditingController _plainController = TextEditingController(text: '你好'); // 明文
+  final TextEditingController _dictController = TextEditingController(text: '说的道理'); // 字典
 
   // 加密并复制
   void _encryptAndCopy() async {
@@ -84,7 +84,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
                 controller: _cipherController,
                 decoration: const InputDecoration(
                   labelText: '请输入密文',
-                  hintText: '例如：呜~啊喵...',
+                  hintText: '你好',
                 ),
                 maxLines: null,
                 minLines: 3,
@@ -107,7 +107,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
                 controller: _dictController,
                 decoration: const InputDecoration(
                   labelText: '请输入字典',
-                  hintText: '例如：喵呜啊~',
+                  hintText: '说的道理',
                 ),
                 maxLength: 4,
               ),
@@ -123,7 +123,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
                 controller: _plainController,
                 decoration: const InputDecoration(
                   labelText: '请输入明文',
-                  hintText: '例如：你好',
+                  hintText: '你好',
                 ),
                 maxLines: null,
                 minLines: 3,
