@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'internet/url_decode.dart';
 import 'intranet/avbv.dart';
 import 'intranet/base64.dart';
+import 'intranet/beast.dart';
 import 'intranet/garbled_screen.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/qrcode.dart';
