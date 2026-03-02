@@ -134,6 +134,20 @@ class AboutPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8), // 添加段落间距
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
+                    children: [
+                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
+                      const SizedBox(width: 8), // 圆点和文字之间的间距
+                      Expanded(
+                        child: Text(
+                          '兽音译者用能来自CATT-L/MeowTranslator',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ],
+                  ),
 
                 ],
               )
