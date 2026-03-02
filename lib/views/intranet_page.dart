@@ -59,6 +59,21 @@ class IntranetPage extends StatelessWidget {
               SizedBox(height: 16),
               _buildFunctionItem(
                 context,
+                icon: Icons.lock_open,
+                title: '兽音译者',
+                subtitle: '兽音译者编码与解码',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BeastEncodeDecode(),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16),
+              _buildFunctionItem(
+                context,
                 icon: Icons.qr_code,
                 title: '图片扫码',
                 subtitle: '识别图片中的条码和二维码，支持识别多个',
