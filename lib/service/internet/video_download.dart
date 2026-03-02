@@ -18,10 +18,9 @@ Future<void> fetchAndSaveVideo(
   }
 
   final saveDir = Directory('${downloadsDirectory.path}/.备份');
-  if (saveDir.existsSync()) {
-    saveDir.deleteSync(recursive: true);
+  if (!saveDir.existsSync()) {
+    saveDir.createSync(recursive: true);
   }
-  saveDir.createSync(recursive: true);
 
   // 获取视频信息
   final infoUrl = Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$id');
