@@ -79,9 +79,6 @@ List<List<String>> generateReverseImageSearchUrls(String picUrl) {
     ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
     ['WAIT', 'https://trace.moe/?url=$picUrl'],
     ['Trace.moe', 'https://trace.moe/?url=$picUrl'],
-
-
-
   ];
   return searchUrls;
 }
