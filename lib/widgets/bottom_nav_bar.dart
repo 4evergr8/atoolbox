@@ -48,11 +48,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             label: '在线',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.network_check),
+            icon: Icon(Icons.cloud_off),
             label: '离线',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
+            icon: Icon(Icons.perm_identity),
             label: '关于',
           ),
         ],
