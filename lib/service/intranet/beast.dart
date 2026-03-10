@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class MeowTranslator {
   late List<String> charMap;
 
