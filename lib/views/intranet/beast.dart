@@ -78,7 +78,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
             // 密文输入
             _buildSettingCard(
               context,
-              icon: Icons.lock_open,
+              icon: Icons.password,
               title: '密文',
               child: TextField(
                 controller: _cipherController,
@@ -117,7 +117,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
             // 明文输入
             _buildSettingCard(
               context,
-              icon: Icons.lock,
+              icon: Icons.text_fields,
               title: '明文',
               child: TextField(
                 controller: _plainController,
