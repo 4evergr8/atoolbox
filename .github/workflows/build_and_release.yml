@@ -28,13 +28,8 @@ jobs:
       - name: 构建 APK
         run: flutter build apk --split-per-abi --no-tree-shake-icons
 
-      - name: 上传 APK 到 Release (tag:test)
-        uses: softprops/action-gh-release@v2
+      - name: 上传 APK 作为 artifact
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: test
-          name: "最新测试版"
-          generate_release_notes: true
-          overwrite: true
-          files: build/app/outputs/flutter-apk/*.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: flutter-apk
+          path: build/app/outputs/flutter-apk/*.apk
