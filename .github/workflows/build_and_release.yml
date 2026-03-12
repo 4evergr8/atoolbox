@@ -29,7 +29,7 @@ jobs:
         run: flutter build apk --split-per-abi --no-tree-shake-icons
 
       - name: 上传 APK 作为 artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: flutter-apk
           path: build/app/outputs/flutter-apk/*.apk
