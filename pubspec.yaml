@@ -15,26 +15,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: any
-  archive: any
-  json2yaml: any
-  google_mlkit_barcode_scanning: any
-  network_info_plus: any
-  http: any
-  share_handler: any
-  charset_converter : any
-  wakelock_plus: any
-  url_launcher: any
-  shared_preferences: any
-  share_plus: any
-  flutter_launcher_icons: any
-  path_provider: any
-  image_picker: any
-  share_handler_platform_interface: any
-  google_mlkit_text_recognition: any
-  path: any
-  open_file: any
-  flutter_native_splash: any
+  google_fonts: ^8.1.0
+  archive: ^4.0.9
+  json2yaml: ^3.0.1
+  google_mlkit_barcode_scanning: ^0.14.2
+  network_info_plus: ^8.1.0
+  http: ^1.6.0
+  share_handler: ^0.0.25
+  charset_converter : ^2.4.0
+  wakelock_plus: ^1.6.1
+  url_launcher: ^6.3.2
+  shared_preferences: ^2.5.5
+  share_plus: ^13.1.0
+  flutter_launcher_icons: ^0.14.4
+  path_provider: ^2.1.5
+  image_picker: ^1.2.2
+  share_handler_platform_interface: ^0.0.6
+  google_mlkit_text_recognition: ^0.15.1
+  path: ^1.9.1
+  open_file: ^3.5.11
+  flutter_native_splash: ^2.4.7
 
 flutter:
   uses-material-design: true
