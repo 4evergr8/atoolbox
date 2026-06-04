@@ -34,7 +34,7 @@ dependencies:
   google_mlkit_text_recognition: ^0.15.1
   path: ^1.9.1
   open_file: ^3.5.11
-  flutter_native_splash: ^2.4.7
+  flutter_native_splash: ^2.4.8
 
 flutter:
   uses-material-design: true
