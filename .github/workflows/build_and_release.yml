@@ -7,8 +7,6 @@ jobs:
   build:
     name: Build Flutter APK
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: 拉取 main 分支代码
