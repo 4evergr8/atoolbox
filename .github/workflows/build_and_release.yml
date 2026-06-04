@@ -29,22 +29,7 @@ jobs:
 
 
       - name: 上传 arm64-v8a APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: flutter-app-arm64-v8a
           path: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
-          retention-days: 5
-
-      - name: 上传 armeabi-v7a APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: flutter-app-armeabi-v7a
-          path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
-          retention-days: 5
-
-      - name: 上传 x86_64 APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: flutter-app-x86_64
-          path: build/app/outputs/flutter-apk/app-x86_64-release.apk
-          retention-days: 5
+          archive: false
