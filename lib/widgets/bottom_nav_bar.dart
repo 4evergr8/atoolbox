@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '/views/internet_page.dart';
 import '/views/intranet_page.dart';
 import '/service/share_handler.dart';
-import '/views/about_page.dart'; // 引用处理分享的逻辑
+import '/views/about_page.dart';
 
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -14,6 +15,9 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
+
+  BannerAd? _bannerAd;
+  bool _isAdLoaded = false;
 
   static final List<Widget> _widgetOptions = <Widget>[
     InternetPage(),
@@ -30,17 +34,67 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     super.initState();
-    // 初始化分享内容的接收
+
     ShareHandlerService().initPlatformState(context);
+
+    _loadAd();
+  }
+
+  void _loadAd() async {
+    final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(
+      MediaQuery.sizeOf(context).width.truncate(),
+    );
+
+    if (size == null) return;
+
+    BannerAd(
+      adUnitId: "ca-app-pub-3940256099942544/9214589741",
+      request: const AdRequest(),
+      size: size,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _bannerAd = ad as BannerAd;
+            _isAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          ad.dispose();
+          setState(() {
+            _bannerAd = null;
+            _isAdLoaded = false;
+          });
+        },
+      ),
+    ).load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // 获取当前主题
     final theme = Theme.of(context);
 
     return Scaffold(
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: Column(
+        children: [
+          Expanded(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+
+          if (_isAdLoaded && _bannerAd != null)
+            SizedBox(
+              width: _bannerAd!.size.width.toDouble(),
+              height: _bannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            ),
+        ],
+      ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -57,12 +111,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: theme.colorScheme.secondary, // 使用主题中的颜色
-        unselectedItemColor: theme.colorScheme.onSurface, // 使用主题中的未选中颜色
-        backgroundColor: theme.colorScheme.surface, // 使用主题中的背景颜色
+        selectedItemColor: theme.colorScheme.secondary,
+        unselectedItemColor: theme.colorScheme.onSurface,
+        backgroundColor: theme.colorScheme.surface,
         onTap: _onItemTapped,
       ),
     );
   }
 }
-
