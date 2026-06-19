@@ -142,7 +142,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
-                          '兽音译者用能来自CATT-L/MeowTranslator',
+                          '兽音译者功能来自CATT-L/MeowTranslator',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
