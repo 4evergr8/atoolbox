@@ -72,8 +72,7 @@ class _InternetPageState extends State<InternetPage> {
   void _handleAdThenNavigate(VoidCallback action) {
     _adStateIndex++;
 
-    // 0 = 显示广告
-    if (_adStateIndex % 2 == 0 && _isAdReady && _interstitialAd != null) {
+    if (_adStateIndex % 3 == 0 && _isAdReady && _interstitialAd != null) {
       _pendingAction = action;
       _interstitialAd!.show();
     } else {
