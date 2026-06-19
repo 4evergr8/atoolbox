@@ -1,46 +1,121 @@
-int calculateGarbledScore(String input) {
-  int score = 0;
+import 'package:flutter/material.dart';
+import '/views/internet_page.dart';
+import '/views/intranet_page.dart';
+import '/service/share_handler.dart';
+import '/views/about_page.dart';
 
-  final include = r'''[
-  \x00-\x1F         # 控制字符（不可见，含 \u001A）
-  \u003F            # 问号 (?)
-  \u00A0-\u00FF     # 拉丁补充（包含 ¿、¼、¶ 等）
-  \u0370-\u03FF     # 希腊及科普特字母
-  \u1A00-\u1A1F     # 布吉文等（东南亚小语种）
-  \u2000-\u2BFF     # 各类符号（标点、货币、箭头、技术符号等）
-  \u2200-\u22FF     # 数学运算符号
-  \u2580-\u259F     # Block Elements（░ ▒ ▓ █ 等）
-  \uE000-\uF8FF     # 私有区（PUA）
-  \uF900-\uFAFF     # CJK 兼容汉字
-  \uFFFD            # 替代字符（�）
-  \u3400-\u4DBF     # CJK 扩展 A 区
-]''';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-  final exclude = r'[\u0020]'; // 只排除普通空格 U+0020
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
 
-
-
-  final garbledPattern = RegExp(include);
-
-
-  // 排除字符（例如：普通空格）
-  final excludePattern = RegExp(exclude); // 只排除普通空格 U+0020
-
-  for (var char in input.split('')) {
-    // 如果是排除的字符，就跳过
-    if (excludePattern.hasMatch(char)) {
-      continue;
-    }
-    if (garbledPattern.hasMatch(char)) {
-      score += 1;
-    }
-  }
-
-  return score;
+  @override
+  _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-void main() {
-  String recovered = "�길쐢誤곩�也썲 �阿졾ㄹ鸚⒴릲訝?";
-  int score = calculateGarbledScore(recovered);
-  print("乱码字符数: $score");
+class _BottomNavBarState extends State<BottomNavBar> {
+  int _selectedIndex = 0;
+
+  BannerAd? _bannerAd;
+  bool _isAdLoaded = false;
+
+  static final List<Widget> _widgetOptions = <Widget>[
+    InternetPage(),
+    IntranetPage(),
+    AboutPage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    ShareHandlerService().initPlatformState(context);
+
+    _loadAd();
+  }
+
+  void _loadAd() async {
+    final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(
+      MediaQuery.sizeOf(context).width.truncate(),
+    );
+
+    if (size == null) return;
+
+    BannerAd(
+      adUnitId: "ca-app-pub-3940256099942544/9214589741",
+      request: const AdRequest(),
+      size: size,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _bannerAd = ad as BannerAd;
+            _isAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          ad.dispose();
+          setState(() {
+            _bannerAd = null;
+            _isAdLoaded = false;
+          });
+        },
+      ),
+    ).load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+
+          if (_isAdLoaded && _bannerAd != null)
+            SizedBox(
+              width: _bannerAd!.size.width.toDouble(),
+              height: _bannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            ),
+        ],
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.cloud),
+            label: '在线',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.cloud_off),
+            label: '离线',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.perm_identity),
+            label: '关于',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: theme.colorScheme.secondary,
+        unselectedItemColor: theme.colorScheme.onSurface,
+        backgroundColor: theme.colorScheme.surface,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
 }
