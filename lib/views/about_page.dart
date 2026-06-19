@@ -53,10 +53,10 @@ class AboutPage extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.web),
                 title: const Text('搜图网站'),
-                subtitle: const Text('GithubPages'),
+                subtitle: const Text('Blogger'),
                 onTap: () {
                   launchUrl(
-                    Uri.parse('https://4evergr8.github.io'),
+                    Uri.parse('https://fourevergreight.blogspot.com/p/image.html'),
                     mode: LaunchMode.externalApplication,
                   );
                 },
@@ -65,20 +65,6 @@ class AboutPage extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start, // 设置为左对齐
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
-                    children: [
-                      Icon(Icons.circle_notifications, size: 15), // 更小的圆点
-                      const SizedBox(width: 8), // 圆点和文字之间的间距
-                      Expanded(
-                        child: Text(
-                          '源代码作者为Kimi和ChatGPT，感谢二位开发者的付出。',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8), // 添加段落间距
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center, // 确保圆点和文字对齐
                     children: [
