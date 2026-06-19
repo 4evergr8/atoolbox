@@ -31,7 +31,7 @@ class _InternetPageState extends State<InternetPage> {
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: "ca-app-pub-3940256099942544/1033173712",
+      adUnitId: "ca-app-pub-9247927382433166/3109732268",
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
