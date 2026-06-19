@@ -23,10 +23,7 @@ class InternetPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '需要联网',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+              Text('需要联网', style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: 20),
               _buildFunctionItem(
                 context,
@@ -35,12 +32,7 @@ class InternetPage extends StatelessWidget {
                 subtitle: '寻找图片的出处',
                 onTap: () {
                   // 假设跳转到设置页面
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ImageSearchScreen(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ImageSearchScreen()));
                 },
               ),
               SizedBox(height: 16),
@@ -51,12 +43,7 @@ class InternetPage extends StatelessWidget {
                 subtitle: '寻找视频封面的出处，目前仅支持哔哩哔哩',
                 onTap: () {
                   // 假设跳转到关于页面
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ThumbnailSearchScreen(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ThumbnailSearchScreen()));
                 },
               ),
               SizedBox(height: 16),
@@ -66,12 +53,7 @@ class InternetPage extends StatelessWidget {
                 title: '视频备份',
                 subtitle: '哔哩哔哩视频备份，无需登录',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BackupScreen(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const BackupScreen()));
                 },
               ),
               SizedBox(height: 16),
@@ -81,12 +63,7 @@ class InternetPage extends StatelessWidget {
                 title: '网速测试',
                 subtitle: '网络下载速度测试',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SpeedTestScreen(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SpeedTestScreen()));
                 },
               ),
               SizedBox(height: 16),
@@ -96,10 +73,7 @@ class InternetPage extends StatelessWidget {
                 title: 'DNS 查询',
                 subtitle: '加密DNS查询测试',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const DNSScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DNSScreen()));
                 },
               ),
               SizedBox(height: 16),
@@ -109,10 +83,7 @@ class InternetPage extends StatelessWidget {
                 title: 'IP反查域名',
                 subtitle: 'DoHPTR查询测试',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const PTRScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PTRScreen()));
                 },
               ),
             ],
