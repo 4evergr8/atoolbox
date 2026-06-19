@@ -69,14 +69,12 @@ class _InternetPageState extends State<InternetPage> {
     );
   }
 
-  bool _shouldShowAd() {
-    return Random().nextInt(5) == 0; // 1/5 概率
-  }
+
 
   void _handleNavigation(VoidCallback action) {
     _pendingAction = action;
 
-    if (_isAdReady && _interstitialAd != null && _shouldShowAd()) {
+    if (_isAdReady && _interstitialAd != null ) {
       _interstitialAd!.show();
     } else {
       _pendingAction!.call();
