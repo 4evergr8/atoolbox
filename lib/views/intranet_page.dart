@@ -31,7 +31,7 @@ class _IntranetPageState extends State<IntranetPage> {
 
   void _loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: "ca-app-pub-3940256099942544/1033173712",
+      adUnitId: "ca-app-pub-9247927382433166/3109732268",
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -72,7 +72,7 @@ class _IntranetPageState extends State<IntranetPage> {
   void _handleAdThenNavigate(VoidCallback action) {
     _adStateIndex++;
 
-    if (_adStateIndex % 2 == 0 && _isAdReady && _interstitialAd != null) {
+    if (_adStateIndex % 3 == 0 && _isAdReady && _interstitialAd != null) {
       _pendingAction = action;
       _interstitialAd!.show();
     } else {
