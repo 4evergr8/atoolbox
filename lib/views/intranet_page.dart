@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'internet/url_decode.dart';
 import 'intranet/avbv.dart';
 import 'intranet/base64.dart';
@@ -24,10 +25,7 @@ class IntranetPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '无需联网',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+              Text('无需联网', style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: 20),
               _buildFunctionItem(
                 context,
@@ -36,10 +34,7 @@ class IntranetPage extends StatelessWidget {
                 subtitle: 'URL解码与编辑',
                 onTap: () {
                   // 假设跳转到路由器设置页面
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const URLDecode()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const URLDecode()));
                 },
               ),
               SizedBox(height: 16),
@@ -49,12 +44,7 @@ class IntranetPage extends StatelessWidget {
                 title: 'Base64解码',
                 subtitle: 'Base64编码与解码',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EncodeDecode(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const EncodeDecode()));
                 },
               ),
               SizedBox(height: 16),
@@ -64,12 +54,7 @@ class IntranetPage extends StatelessWidget {
                 title: '兽音译者',
                 subtitle: '兽音译者编码与解码',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BeastEncodeDecode(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const BeastEncodeDecode()));
                 },
               ),
               SizedBox(height: 16),
@@ -79,12 +64,7 @@ class IntranetPage extends StatelessWidget {
                 title: '图片扫码',
                 subtitle: '识别图片中的条码和二维码，支持识别多个',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const QRCodeScan(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const QRCodeScan()));
                 },
               ),
               SizedBox(height: 16),
@@ -94,12 +74,7 @@ class IntranetPage extends StatelessWidget {
                 title: '乱码恢复',
                 subtitle: '尝试将乱码恢复成人类语言',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const GarbledRecovery(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const GarbledRecovery()));
                 },
               ),
               SizedBox(height: 16),
@@ -109,12 +84,7 @@ class IntranetPage extends StatelessWidget {
                 title: 'AVBV互转',
                 subtitle: 'AV号和BV号转换',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AVBV(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AVBV()));
                 },
               ),
               SizedBox(height: 16),
@@ -124,12 +94,7 @@ class IntranetPage extends StatelessWidget {
                 title: '离线OCR',
                 subtitle: '从图片中提取文字',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const OfflineOCRScreen(),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const OfflineOCRScreen()));
                 },
               ),
             ],
