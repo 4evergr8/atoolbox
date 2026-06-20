@@ -20,7 +20,7 @@ class AboutPage extends StatelessWidget {
               // 头像
               CircleAvatar(
                 radius: 60,
-                backgroundImage: const AssetImage('assets/profile.png'),
+                backgroundImage: const AssetImage('assets/aaa.png'),
               ),
               const SizedBox(height: 20),
 
