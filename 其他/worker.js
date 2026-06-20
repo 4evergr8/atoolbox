@@ -1,85 +1,72 @@
 export default {
-  async fetch(request, env) {
-    return handleRequest(request, env);
-  },
+    async fetch(request, env) {
+        return handleRequest(request, env);
+    },
 };
 
 async function handleRequest(request, env) {
-  const url = new URL(request.url);
-  const path = url.pathname.split('/');
+    const url = new URL(request.url);
+    const path = url.pathname.split('/');
 
-  // 统一跨域头
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-  };
+    const corsHeaders = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    };
 
-  // 预检请求
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: corsHeaders });
-  }
-
-  try {
-    if (request.method === 'POST' && path[1] === 'upload') {
-      return await handleUpload(request, path[2], env, corsHeaders);
+    if (request.method === 'OPTIONS') {
+        return new Response(null, { status: 204, headers: corsHeaders });
     }
-    if (request.method === 'GET' && path[1] === 'download') {
-      return await handleDownload(path[2], env, corsHeaders);
+
+    try {
+        if (request.method === 'POST' && path[1] === 'upload') {
+            return await handleUpload(request, path[2], env, corsHeaders);
+        }
+        if (request.method === 'GET' && path[1] === 'download') {
+            return await handleDownload(path[2], env, corsHeaders);
+        }
+        return new Response('未找到接口', { status: 404, headers: corsHeaders });
+    } catch (e) {
+        return new Response(`服务器错误: ${e.message}`, { status: 500, headers: corsHeaders });
     }
-    return new Response('未找到接口', { status: 404, headers: corsHeaders });
-  } catch (e) {
-    return new Response(`服务器错误: ${e.message}`, { status: 500, headers: corsHeaders });
-  }
 }
 
-// 上传文件
 async function handleUpload(request, key, env, corsHeaders) {
-  const formData = await request.formData();
-  const file = formData.get('file');
-  if (!file) {
-    return new Response('没有上传文件', { status: 400, headers: corsHeaders });
-  }
+    const formData = await request.formData();
+    const file = formData.get('file');
+    if (!file) {
+        return new Response('没有上传文件', { status: 400, headers: corsHeaders });
+    }
 
-  // 限制最大文件大小 5MB
-  const MAX_FILE_SIZE = 5 * 1024 * 1024;
-  if (file.size > MAX_FILE_SIZE) {
-    return new Response('文件过大，最大允许 5MB', { status: 413, headers: corsHeaders });
-  }
+    const MAX_FILE_SIZE = 5 * 1024 * 1024;
+    if (file.size > MAX_FILE_SIZE) {
+        return new Response('文件过大，最大允许 5MB', { status: 413, headers: corsHeaders });
+    }
 
-  const content = await file.arrayBuffer();
+    const content = await file.arrayBuffer();
 
-  // 强制使用标准图片 MIME 类型，确保搜图网站识别
-  const contentType = detectMimeType(file.name);
+    const finalKey = `temp/${key}`;
 
-  await env.R2_BUCKET.put(key, content, { httpMetadata: { contentType } });
-  return new Response('文件上传成功', { status: 200, headers: corsHeaders });
+    await env.R2_BUCKET.put(finalKey, content, {
+        httpMetadata: {
+            contentType: "image/png"
+        }
+    });
+
+    return new Response('文件上传成功', { status: 200, headers: corsHeaders });
 }
 
-// 下载文件
 async function handleDownload(key, env, corsHeaders) {
-  const object = await env.R2_BUCKET.get(key);
-  if (!object) {
-    return new Response('文件不存在', { status: 404, headers: corsHeaders });
-  }
+    const finalKey = `temp/${key}`;
+    const object = await env.R2_BUCKET.get(finalKey);
 
-  const headers = new Headers(corsHeaders);
-  // 使用存储的 Content-Type 或根据扩展名判断
-  const contentType = object.httpMetadata?.contentType || detectMimeType(key);
-  headers.set('Content-Type', contentType);
-  headers.set('Content-Length', object.size);
+    if (!object) {
+        return new Response('文件不存在', { status: 404, headers: corsHeaders });
+    }
 
-  // 设置文件名和 inline，确保识别
-  headers.set('Content-Disposition', `inline; filename="${key}"`);
+    const headers = new Headers(corsHeaders);
 
-  return new Response(object.body, { status: 200, headers });
-}
+    headers.set('Content-Type', "image/png");
 
-// 根据文件名后缀检测 MIME 类型
-function detectMimeType(filename) {
-  const lower = filename.toLowerCase();
-  if (lower.endsWith('.jpg') || lower.endsWith('.jpeg')) return 'image/jpeg';
-  if (lower.endsWith('.png')) return 'image/png';
-  if (lower.endsWith('.gif')) return 'image/gif';
-  return 'application/octet-stream';
+    return new Response(object.body, { status: 200, headers });
 }
