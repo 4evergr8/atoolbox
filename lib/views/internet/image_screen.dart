@@ -17,7 +17,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
   String _imageUrl = 'https://picsum.photos/200/200?random=1'; // 默认图片链接
   File? _imageFile; // 用于存储选择的本地图片文件
   bool _isImageSelected = false; // 标记是否选择了图片
-  String _workerUrl = 'https://image.4evergr8.workers.dev'; // 默认 Worker 链接
+  String _workerUrl = 'https://image-6eu.pages.dev'; // 默认 Worker 链接
 
   // 提升 TextEditingController 到类级别
   late TextEditingController _imageUrlController;
