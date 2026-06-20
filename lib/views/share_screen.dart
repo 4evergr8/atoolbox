@@ -24,7 +24,7 @@ class ShareReceiverPage extends StatefulWidget {
 
 class _ShareReceiverPageState extends State<ShareReceiverPage> {
   late TextEditingController _workerUrlController;
-  String _workerUrl = 'https://image.4evergr8.workers.dev'; // 默认 Worker URL
+  String _workerUrl = 'https://image-6eu.pages.dev'; // 默认 Worker URL
 
   @override
   void initState() {
