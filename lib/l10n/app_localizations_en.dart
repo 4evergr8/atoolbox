@@ -115,4 +115,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get note5 => 'Animal language translator comes from CATT-L/MeowTranslator';
+
+  @override
+  String get ocr_fail => 'OCR识别失败';
+
+  @override
+  String get share_process => '分享内容处理';
+
+  @override
+  String get get_text => '接收到的文本';
+
+  @override
+  String get downloading => '下载中...';
+
+  @override
+  String get downloading_vid => '请稍候，正在备份视频...';
+
+  @override
+  String get uploading => '上传中...';
+
+  @override
+  String get uploading_pic => '请稍候，正在上传图片...';
+
+  @override
+  String get upload_success => '图片上传成功，URL: ';
+
+  @override
+  String get upload_fail => '图片上传失败:';
+
+  @override
+  String get ocr_zh => '中文字符提取';
+
+  @override
+  String get ocr_en => '拉丁字符提取';
+
+  @override
+  String get ocr_ja => '日文字符提取';
+
+  @override
+  String get qr_code => '图片扫码识别';
 }
