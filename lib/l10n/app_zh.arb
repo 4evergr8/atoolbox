@@ -34,8 +34,20 @@
   "note2":"本地搜图功能借助了CloudflareWorker和R2存储桶。",
   "note3":"在线搜图功能灵感来源于搜图Bot酱。",
   "note4":"OCR功能来自google_mlkit_text_recognition。",
-  "note5":"兽音译者功能来自CATT-L/MeowTranslator"
-
+  "note5":"兽音译者功能来自CATT-L/MeowTranslator",
+  "ocr_fail":"OCR识别失败",
+  "share_process":"分享内容处理",
+  "get_text":"接收到的文本",
+  "downloading":"下载中...",
+  "downloading_vid":"请稍候，正在备份视频...",
+"uploading":"上传中...",
+"uploading_pic":"请稍候，正在上传图片...",
+"upload_success":"图片上传成功，URL: ",
+"upload_fail":"图片上传失败:",
+"ocr_zh":"中文字符提取",
+"ocr_en":"拉丁字符提取",
+"ocr_ja":"日文字符提取",
+"qr_code":"图片扫码识别"
 
 
 
