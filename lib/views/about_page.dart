@@ -25,7 +25,7 @@ class AboutPage extends StatelessWidget {
               const SizedBox(height: 20),
 
               Text(
-                '4evergr8',
+                'PicOrigin',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 10),
@@ -45,7 +45,7 @@ class AboutPage extends StatelessWidget {
                 subtitle: const Text('Github'),
                 onTap: () {
                   launchUrl(
-                    Uri.parse('https://github.com/4evergr8/atoolbox'),
+                    Uri.parse('https://github.com/4evergr8/FlutterPicOrigin'),
                     mode: LaunchMode.externalApplication,
                   );
                 },
