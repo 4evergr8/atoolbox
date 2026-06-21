@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
+import 'package:atoolbox/l10n/app_localizations.dart';
 import 'internet/url_decode.dart';
 import 'intranet/avbv.dart';
 import 'intranet/base64.dart';
