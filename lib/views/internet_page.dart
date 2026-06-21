@@ -7,7 +7,7 @@ import 'internet/image_screen.dart';
 import 'internet/netspeed_screen.dart';
 import 'internet/ptr_screen.dart';
 import 'internet/thumbnail_screen.dart';
-
+import 'package:atoolbox/l10n/app_localizations.dart';
 class InternetPage extends StatefulWidget {
   const InternetPage({super.key});
 
@@ -85,7 +85,7 @@ class _InternetPageState extends State<InternetPage> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('在线', style: theme.textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.online, style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: Padding(
@@ -94,14 +94,14 @@ class _InternetPageState extends State<InternetPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('需要联网', style: Theme.of(context).textTheme.headlineSmall),
+              Text(AppLocalizations.of(context)!.need_connection, style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: 20),
 
               _buildFunctionItem(
                 context,
                 icon: Icons.image,
-                title: '以图搜图',
-                subtitle: '寻找图片的出处',
+                title: AppLocalizations.of(context)!.reverse,
+                subtitle: AppLocalizations.of(context)!.find_sourse,
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const ImageSearchScreen()));
@@ -114,8 +114,8 @@ class _InternetPageState extends State<InternetPage> {
               _buildFunctionItem(
                 context,
                 icon: Icons.search,
-                title: '视频封面搜图',
-                subtitle: '寻找视频封面的出处，目前仅支持哔哩哔哩',
+                title: AppLocalizations.of(context)!.artwork,
+                subtitle: AppLocalizations.of(context)!.artwork_sourse,
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const ThumbnailSearchScreen()));
@@ -128,8 +128,8 @@ class _InternetPageState extends State<InternetPage> {
               _buildFunctionItem(
                 context,
                 icon: Icons.settings_backup_restore,
-                title: '视频备份',
-                subtitle: '哔哩哔哩视频备份，无需登录',
+                title: AppLocalizations.of(context)!.backup,
+                subtitle: AppLocalizations.of(context)!.backup_video,
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const BackupScreen()));
@@ -142,8 +142,8 @@ class _InternetPageState extends State<InternetPage> {
               _buildFunctionItem(
                 context,
                 icon: Icons.speed,
-                title: '网速测试',
-                subtitle: '网络下载速度测试',
+                title: AppLocalizations.of(context)!.speedtest,
+                subtitle: AppLocalizations.of(context)!.test_down,
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const SpeedTestScreen()));
@@ -156,8 +156,8 @@ class _InternetPageState extends State<InternetPage> {
               _buildFunctionItem(
                 context,
                 icon: Icons.dns,
-                title: 'DNS 查询',
-                subtitle: '加密DNS查询测试',
+                title: AppLocalizations.of(context)!.dns,
+                subtitle: AppLocalizations.of(context)!.dns_test,
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const DNSScreen()));
@@ -170,8 +170,8 @@ class _InternetPageState extends State<InternetPage> {
               _buildFunctionItem(
                 context,
                 icon: Icons.web,
-                title: 'IP反查域名',
-                subtitle: 'DoHPTR查询测试',
+                title: AppLocalizations.of(context)!.ip,
+                subtitle: AppLocalizations.of(context)!.ip_reverse,
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const PTRScreen()));
