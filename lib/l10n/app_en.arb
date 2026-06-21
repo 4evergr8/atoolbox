@@ -34,5 +34,22 @@
   "note2": "Local image search uses Cloudflare Workers and R2 storage bucket.",
   "note3": "Online image search is inspired by the SauceNAO bot.",
   "note4": "OCR functionality is based on google_mlkit_text_recognition.",
-  "note5": "Animal language translator comes from CATT-L/MeowTranslator"
+  "note5": "Animal language translator comes from CATT-L/MeowTranslator",
+   "ocr_fail":"OCR识别失败",
+    "share_process":"分享内容处理",
+    "get_text":"接收到的文本",
+    "downloading":"下载中...",
+    "downloading_vid":"请稍候，正在备份视频...",
+  "uploading":"上传中...",
+  "uploading_pic":"请稍候，正在上传图片...",
+  "upload_success":"图片上传成功，URL: ",
+  "upload_fail":"图片上传失败:",
+  "ocr_zh":"中文字符提取",
+  "ocr_en":"拉丁字符提取",
+  "ocr_ja":"日文字符提取",
+  "qr_code":"图片扫码识别"
+
+
+
+
 }
