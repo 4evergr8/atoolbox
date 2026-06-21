@@ -6,10 +6,9 @@ import 'package:http/http.dart' as http;
 
 Future<String> searchLocalImage(File imageFile, String workerUrl) async {
   String randomKey = generateRandomKey();
-  String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-
-
-  String key = '$timestamp$randomKey-APP';
+  int timestamp = DateTime.now().millisecondsSinceEpoch;
+  timestamp=9999999999999-timestamp;
+  String key = '${timestamp.toString().padLeft(14, '0')}$randomKey-APP';
 
 
 
