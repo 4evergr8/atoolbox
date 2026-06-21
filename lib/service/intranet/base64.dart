@@ -6,7 +6,7 @@ Future<String> decodeBase64(String base64String) async {
     String utf8Decoded = utf8.decode(base64DecodedBytes);
     return utf8Decoded;
   } catch (e) {
-    throw Exception('解码失败: $e');
+    throw Exception(e);
   }
 }
 
@@ -17,6 +17,6 @@ Future<String> encodeToBase64(String utf8String) async {
     String base64Encoded = base64Encode(utf8Bytes);
     return base64Encoded;
   } catch (e) {
-    throw Exception('编码失败: $e');
+    throw Exception(e);
   }
 }
