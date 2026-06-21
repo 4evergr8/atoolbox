@@ -10,9 +10,9 @@
     <br>
     图片搜索，文字识别，IP反查，DNS查询，扫码识别，视频下载
     <br>
-    <a href="https://github.com/4evergr8/atoolbox/issues/new">🐞故障报告</a>
+    <a href="https://github.com/4evergr8/FlutterPicOrigin/issues/new">🐞故障报告</a>
     ·
-    <a href="https://github.com/4evergr8/atoolbox/issues/new">🏹功能请求</a>
+    <a href="https://github.com/4evergr8/FlutterPicOrigin/issues/new">🏹功能请求</a>
   </p>
 
 ## 主要功能
