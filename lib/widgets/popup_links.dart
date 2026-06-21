@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
-
+import 'package:atoolbox/l10n/app_localizations.dart';
 // 弹窗函数
 void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
   final theme = Theme.of(context);
@@ -10,7 +10,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('链接选项', style: theme.textTheme.headlineSmall),
+        title: Text(AppLocalizations.of(context)!.link_options, style: theme.textTheme.headlineSmall),
         content: ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.6, // 弹窗宽度占屏幕宽度的 60%
@@ -33,7 +33,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                             await launchUrl(uri, mode: LaunchMode.externalApplication);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('无法打开链接 ${link[1]}')),
+                              SnackBar(content: Text('${AppLocalizations.of(context)!.can_not_open_link} ${link[1]}')),
                             );
                           }
                         },
@@ -42,7 +42,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                           Clipboard.setData(ClipboardData(text: link[1])).then((_) {
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('链接已复制: ${link[1]}')),
+                              SnackBar(content: Text('${AppLocalizations.of(context)!.link_copied} ${link[1]}')),
                             );
                           });
                         },
@@ -61,7 +61,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                       Navigator.of(context).pop(); // 关闭弹窗
                     },
                     icon: Icon(Icons.check), // 添加确认图标
-                    label: Text('了解'),
+                    label: Text(AppLocalizations.of(context)!.dismiss),
                   ),
                 ],
               ),
