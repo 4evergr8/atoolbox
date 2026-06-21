@@ -1,6 +1,6 @@
+import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
@@ -8,7 +8,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('关于', style: Theme.of(context).textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.about, style: Theme.of(context).textTheme.headlineMedium),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Padding(
@@ -31,7 +31,7 @@ class AboutPage extends StatelessWidget {
               const SizedBox(height: 10),
               // 开发者简介
               Text(
-                '此软件来源于无聊时的瞎想',
+                AppLocalizations.of(context)!.from,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -41,7 +41,7 @@ class AboutPage extends StatelessWidget {
 
               ListTile(
                 leading: const Icon(Icons.code),
-                title: const Text('软件源代码'),
+                title: Text(AppLocalizations.of(context)!.source_code),
                 subtitle: const Text('Github'),
                 onTap: () {
                   launchUrl(
@@ -52,7 +52,7 @@ class AboutPage extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.web),
-                title: const Text('搜图网站'),
+                title: Text(AppLocalizations.of(context)!.website),
                 subtitle: const Text('Blogger'),
                 onTap: () {
                   launchUrl(
@@ -72,7 +72,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
-                          '软件使用了Flutter框架和Dart语言。',
+                          AppLocalizations.of(context)!.note1,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -86,7 +86,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
-                          '本地搜图功能借助了CloudflareWorker和R2存储桶。',
+                          AppLocalizations.of(context)!.note2,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -100,7 +100,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
-                          '在线搜图功能灵感来源于搜图Bot酱。',
+                          AppLocalizations.of(context)!.note3,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -114,7 +114,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
-                          'OCR功能来自google_mlkit_text_recognition。',
+                          AppLocalizations.of(context)!.note4,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -128,7 +128,7 @@ class AboutPage extends StatelessWidget {
                       const SizedBox(width: 8), // 圆点和文字之间的间距
                       Expanded(
                         child: Text(
-                          '兽音译者功能来自CATT-L/MeowTranslator',
+                          AppLocalizations.of(context)!.note5,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
