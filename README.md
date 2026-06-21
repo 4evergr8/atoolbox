@@ -1,9 +1,8 @@
 <p align="center">
-  <a href="https://www.google.com/search?q=Emoji+Kitchen">
     <img src="./assets/aaa.png" alt="Logo" width=100 height=100>
-  </a>
+  
 
-<h3 align="center">A Toolbox</h3>
+<h3 align="center">PicOrigin</h3>
 
   <p align="center">
     用Flutter框架制作的工具APP
