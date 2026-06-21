@@ -3,7 +3,7 @@
 
     <application
 
-            android:label="A Toolbox"
+            android:label="PicOrigin"
             android:name="${applicationName}"
             android:icon="@mipmap/ic_launcher">
         <meta-data
