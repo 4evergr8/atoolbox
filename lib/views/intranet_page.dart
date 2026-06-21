@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:atoolbox/l10n/app_localizations.dart';
 import 'internet/url_decode.dart';
-import 'intranet/avbv.dart';
 import 'intranet/base64.dart';
 import 'intranet/beast.dart';
 import 'intranet/garbled_screen.dart';
@@ -85,7 +84,7 @@ class _IntranetPageState extends State<IntranetPage> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('离线', style: theme.textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.offline, style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: Padding(
@@ -165,19 +164,7 @@ class _IntranetPageState extends State<IntranetPage> {
                 },
               ),
 
-              SizedBox(height: 16),
 
-              _buildFunctionItem(
-                context,
-                icon: Icons.rotate_90_degrees_ccw,
-                title: 'AVBV互转',
-                subtitle: 'AV号和BV号转换',
-                onTap: () {
-                  _handleAdThenNavigate(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AVBV()));
-                  });
-                },
-              ),
 
               SizedBox(height: 16),
 
