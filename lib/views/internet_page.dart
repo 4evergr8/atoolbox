@@ -1,13 +1,12 @@
+import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'internet/backup_screen.dart';
-import 'internet/dns_screen.dart';
 import 'internet/image_screen.dart';
 import 'internet/netspeed_screen.dart';
-import 'internet/ptr_screen.dart';
 import 'internet/thumbnail_screen.dart';
-import 'package:atoolbox/l10n/app_localizations.dart';
+
 class InternetPage extends StatefulWidget {
   const InternetPage({super.key});
 
@@ -147,34 +146,6 @@ class _InternetPageState extends State<InternetPage> {
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const SpeedTestScreen()));
-                  });
-                },
-              ),
-
-              SizedBox(height: 16),
-
-              _buildFunctionItem(
-                context,
-                icon: Icons.dns,
-                title: AppLocalizations.of(context)!.dns,
-                subtitle: AppLocalizations.of(context)!.dns_test,
-                onTap: () {
-                  _handleAdThenNavigate(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DNSScreen()));
-                  });
-                },
-              ),
-
-              SizedBox(height: 16),
-
-              _buildFunctionItem(
-                context,
-                icon: Icons.web,
-                title: AppLocalizations.of(context)!.ip,
-                subtitle: AppLocalizations.of(context)!.ip_reverse,
-                onTap: () {
-                  _handleAdThenNavigate(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const PTRScreen()));
                   });
                 },
               ),
