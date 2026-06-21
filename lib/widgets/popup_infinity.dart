@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-
+import 'package:atoolbox/l10n/app_localizations.dart';
 
 class DialogUtils {
   static Future<void> showLoadingDialog({
@@ -33,7 +33,7 @@ class DialogUtils {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.cancel),
-              label: Text('取消'),
+              label: Text(AppLocalizations.of(context)!.cancel),
             ),
           ],
         );
