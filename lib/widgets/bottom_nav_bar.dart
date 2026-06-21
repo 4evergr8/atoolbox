@@ -3,6 +3,7 @@ import '/views/internet_page.dart';
 import '/views/intranet_page.dart';
 import '/service/share_handler.dart';
 import '/views/about_page.dart'; // 引用处理分享的逻辑
+import 'package:atoolbox/l10n/app_localizations.dart';
 
 
 class BottomNavBar extends StatefulWidget {
@@ -42,18 +43,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.cloud),
-            label: '在线',
+            icon: const Icon(Icons.cloud),
+            label: AppLocalizations.of(context)!.online,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.cloud_off),
-            label: '离线',
+            icon: const Icon(Icons.cloud_off),
+            label: AppLocalizations.of(context)!.offline,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.perm_identity),
-            label: '关于',
+            icon: const Icon(Icons.perm_identity),
+            label: AppLocalizations.of(context)!.about,
           ),
         ],
         currentIndex: _selectedIndex,
