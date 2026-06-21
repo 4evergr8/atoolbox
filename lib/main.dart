@@ -1,3 +1,4 @@
+import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -74,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
       barrierDismissible: false, // 禁止点击外部关闭
       builder: (context) {
         return AlertDialog(
-          title: const Text('欢迎'),
-          content: const Text('欢迎使用，点击下方按钮查看使用方法。'),
+          title: Text(AppLocalizations.of(context)!.welcome),
+          content:  Text(AppLocalizations.of(context)!.welcome_full),
           actions: [
             ElevatedButton.icon(
               onPressed: () async {
@@ -90,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).pop(); // 关闭弹窗
               },
               icon: Icon(Icons.web),
-              label: Text('了解更多'),
+              label: Text(AppLocalizations.of(context)!.more),
             ),
           ],
         );
