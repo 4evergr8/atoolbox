@@ -1,13 +1,15 @@
+import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void showTextPopup(BuildContext context, String initialText) {
   final theme = Theme.of(context);
-  final List<String> tokens = initialText
-      .replaceAll('\n', ' \n ') // 保留换行符作为单独的 token
-      .split(RegExp(r'\s+')) // 按空格和换行拆分
-      .where((element) => element.isNotEmpty)
-      .toList();
+  final List<String> tokens =
+      initialText
+          .replaceAll('\n', ' \n ') // 保留换行符作为单独的 token
+          .split(RegExp(r'\s+')) // 按空格和换行拆分
+          .where((element) => element.isNotEmpty)
+          .toList();
 
   final Set<int> selectedIndices = {};
 
@@ -19,7 +21,7 @@ void showTextPopup(BuildContext context, String initialText) {
           bool isSelecting = false;
 
           return AlertDialog(
-            title: Text('详细信息', style: theme.textTheme.headlineSmall),
+            title: Text(AppLocalizations.of(context)!.detail_info, style: theme.textTheme.headlineSmall),
             content: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.6,
@@ -75,13 +77,19 @@ void showTextPopup(BuildContext context, String initialText) {
                           key: GlobalObjectKey(index),
                           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           decoration: BoxDecoration(
-                            color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+                            color:
+                                isSelected
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
                             token,
                             style: TextStyle(
-                              color: isSelected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
+                              color:
+                                  isSelected
+                                      ? Theme.of(context).colorScheme.onPrimary
+                                      : Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                         ),
@@ -99,19 +107,19 @@ void showTextPopup(BuildContext context, String initialText) {
                       .join(' ')
                       .replaceAll(' \n ', '\n'); // 恢复换行
                   Clipboard.setData(ClipboardData(text: selectedText));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('已复制选中的内容')),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.selected_copied)));
                 },
                 icon: Icon(Icons.copy),
-                label: Text('复制'),
+                label: Text(AppLocalizations.of(context)!.copy),
               ),
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 icon: Icon(Icons.check),
-                label: Text('确定'),
+                label: Text(AppLocalizations.of(context)!.conform),
               ),
             ],
           );
