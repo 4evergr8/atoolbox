@@ -310,6 +310,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Animal language translator comes from CATT-L/MeowTranslator'**
   String get note5;
+
+  /// No description provided for @ocr_fail.
+  ///
+  /// In en, this message translates to:
+  /// **'OCR识别失败'**
+  String get ocr_fail;
+
+  /// No description provided for @share_process.
+  ///
+  /// In en, this message translates to:
+  /// **'分享内容处理'**
+  String get share_process;
+
+  /// No description provided for @get_text.
+  ///
+  /// In en, this message translates to:
+  /// **'接收到的文本'**
+  String get get_text;
+
+  /// No description provided for @downloading.
+  ///
+  /// In en, this message translates to:
+  /// **'下载中...'**
+  String get downloading;
+
+  /// No description provided for @downloading_vid.
+  ///
+  /// In en, this message translates to:
+  /// **'请稍候，正在备份视频...'**
+  String get downloading_vid;
+
+  /// No description provided for @uploading.
+  ///
+  /// In en, this message translates to:
+  /// **'上传中...'**
+  String get uploading;
+
+  /// No description provided for @uploading_pic.
+  ///
+  /// In en, this message translates to:
+  /// **'请稍候，正在上传图片...'**
+  String get uploading_pic;
+
+  /// No description provided for @upload_success.
+  ///
+  /// In en, this message translates to:
+  /// **'图片上传成功，URL: '**
+  String get upload_success;
+
+  /// No description provided for @upload_fail.
+  ///
+  /// In en, this message translates to:
+  /// **'图片上传失败:'**
+  String get upload_fail;
+
+  /// No description provided for @ocr_zh.
+  ///
+  /// In en, this message translates to:
+  /// **'中文字符提取'**
+  String get ocr_zh;
+
+  /// No description provided for @ocr_en.
+  ///
+  /// In en, this message translates to:
+  /// **'拉丁字符提取'**
+  String get ocr_en;
+
+  /// No description provided for @ocr_ja.
+  ///
+  /// In en, this message translates to:
+  /// **'日文字符提取'**
+  String get ocr_ja;
+
+  /// No description provided for @qr_code.
+  ///
+  /// In en, this message translates to:
+  /// **'图片扫码识别'**
+  String get qr_code;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
