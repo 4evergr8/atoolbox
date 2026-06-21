@@ -69,12 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             ElevatedButton.icon(
               onPressed: () async {
-                final uri = Uri.parse('https://github.com/4evergr8/atoolbox');
+                final uri = Uri.parse('https://github.com/4evergr8/FlutterPicOrigin');
                 if (await canLaunchUrl(uri)) {
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('https://github.com/4evergr8/atoolbox')),
+                    SnackBar(content: Text('https://github.com/4evergr8/FlutterPicOrigin')),
                   );
                 }
                 Navigator.of(context).pop(); // 关闭弹窗
