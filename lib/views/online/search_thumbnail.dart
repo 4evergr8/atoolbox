@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/thumbnail_search.dart';
 import 'package:picorigin/widget.dart';
 
@@ -27,6 +28,17 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
     super.dispose();
   }
 
+  // 从剪贴板粘贴
+  void _pasteFromClipboard() async {
+    String text = await clipboard_paste();
+    if (text.isNotEmpty) {
+      setState(() {
+        _searchController.text = text;
+        _searchKeyword = text;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -43,7 +55,7 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('寻找封面出处', style: theme.textTheme.headlineSmall),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.link,
@@ -51,24 +63,28 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
               child: TextField(
                 controller: _searchController, // 使用类级别的控制器
                 onChanged: (value) => setState(() => _searchKeyword = value),
-                decoration: InputDecoration(labelText: '支持视频链接、BV号、b23短链'),
+                decoration: const InputDecoration(labelText: '支持视频链接、BV号、b23短链'),
               ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                // 触发异步搜索函数
-                final result = await extractAndSearchUrls(_searchKeyword);
-                showLinkButtonsPopup(context, result);
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min, // 使内容紧凑
-                children: [
-                  Icon(Icons.search), // 添加搜索图标
-                  SizedBox(width: 8), // 图标和文本之间的间距
-                  Text('搜索'), // 按钮文本
-                ],
-              ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    // 触发异步搜索函数
+                    final result = await extractAndSearchUrls(_searchKeyword);
+                    showLinkButtonsPopup(context, result);
+                  },
+                  icon: const Icon(Icons.search), // 添加搜索图标
+                  label: const Text('搜索'), // 按钮文本
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _pasteFromClipboard,
+                  icon: const Icon(Icons.assignment_returned),
+                  label: const Text('粘贴'),
+                ),
+              ],
             ),
           ],
         ),
@@ -95,11 +111,11 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
             Row(
               children: [
                 Icon(icon, size: 24),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Text(title, style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             child,
           ],
         ),
