@@ -46,33 +46,31 @@ String generateRandomKey() {
   return List.generate(5, (index) => characters[random.nextInt(characters.length)]).join();
 }
 
-void main() async {
-  try {
-    File imageFile = File('D:/Project/WebTools/assets/aaa.jpg'); // 替换为你的图片路径
-    String workerUrl = 'https://your-worker-url.workers.dev'; // 替换为你的 Cloudflare Workers 地址
-    String imageUrl = await searchLocalImage(imageFile, workerUrl);
-    print('图片 URL: $imageUrl');
-  } catch (e) {
-    print('发生错误: $e');
-  }
-}
+// void main() async {
+//   try {
+//     File imageFile = File('D:/Project/WebTools/assets/aaa.jpg'); // 替换为你的图片路径
+//     String workerUrl = 'https://your-worker-url.workers.dev'; // 替换为你的 Cloudflare Workers 地址
+//     String imageUrl = await searchLocalImage(imageFile, workerUrl);
+//     print('图片 URL: $imageUrl');
+//   } catch (e) {
+//     print(e);
+//   }
+// }
 
 
 List<List<String>> generateReverseImageSearchUrls(String picUrl) {
   List<List<String>> searchUrls = [
     ['Google Lens', 'https://lens.google.com/uploadbyurl?url=$picUrl'],
     ['Yandex.ru', 'https://yandex.ru/images/search?url=$picUrl&rpt=imageview'],
-    ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
     ['Lenso.ai', 'https://lenso.ai/en/search-by-url?url=$picUrl&utm_source=sbi'],
-    ['TinEye', 'https://tineye.com/search/?url=$picUrl'],
     ['Google', 'https://www.google.com/searchbyimage?client=app&image_url=$picUrl'],
-
+    ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
+    ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
+    ['TinEye', 'https://tineye.com/search/?url=$picUrl'],
 
     ['3DIQDB', 'https://3d.iqdb.org/?url=$picUrl'],
-
     ['IQDB', 'https://iqdb.org/?url=$picUrl'],
-
-    ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
+    
     ['WAIT', 'https://trace.moe/?url=$picUrl'],
     ['Trace.moe', 'https://trace.moe/?url=$picUrl'],
   ];
