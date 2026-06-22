@@ -40,19 +40,15 @@ class _BackupScreenState extends State<BackupScreen> {
     String inputUrl = _idController.text;
     final close = await showLoadingDialogGlobal();
 
-    try {} catch (e) {
+    try {
+      final bvid = await extractBvid(inputUrl);
+      await fetchAndSaveVideo(ua, bvid);
+      await _saveSettings(ua, bvid);
+    } catch (e) {
       showSnackBarGlobal('$e');
     } finally {
       close();
     }
-    final bvid = await extractBvid(inputUrl);
-    await fetchAndSaveVideo( ua, bvid);
-
-    // 关闭备份中的弹窗
-    Navigator.of(context).pop();
-
-    // 保存设置
-    await _saveSettings(ua, bvid);
   }
 
   @override
