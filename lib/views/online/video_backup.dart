@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picorigin/service/video_download.dart';
+import 'package:picorigin/widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BackupScreen extends StatefulWidget {
@@ -35,10 +36,16 @@ class _BackupScreenState extends State<BackupScreen> {
 
   void _startBackup() async {
     String ua = _uaController.text;
-    String id = _idController.text;
+    String inputUrl = _idController.text;
+    final close = await showLoadingDialogGlobal();
 
-    // 执行备份操作
-    await fetchAndSaveVideo(context, ua, id);
+    try {} catch (e) {
+      showErrorSnackBarGlobal('$e');
+    } finally {
+      close();
+    }
+    final bvid = await extractBvId(inputUrl);
+    await fetchAndSaveVideo(context, ua, bvid);
 
     // 关闭备份中的弹窗
     Navigator.of(context).pop();
@@ -69,7 +76,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'UA',
               child: TextField(
                 controller: _uaController,
-                decoration: InputDecoration(labelText: 'UA', hintText: '请输入UserAgent'),
+                decoration: InputDecoration(labelText: 'UserAgent字符串', hintText: '请输入UserAgent'),
               ),
             ),
             SizedBox(height: 16),
@@ -79,7 +86,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'BV',
               child: TextField(
                 controller: _idController,
-                decoration: InputDecoration(labelText: 'BV1GJ411x7h7', hintText: '请输入BV号'),
+                decoration: InputDecoration(labelText: '支持视频链接、BV号、b23短链', hintText: '请输入BV号'),
               ),
             ),
             SizedBox(height: 20),
