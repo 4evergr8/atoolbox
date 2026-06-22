@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:atoolbox/l10n/app_localizations.dart';
 import '/service/intranet/qrcode.dart';
 import '/widgets/popup_infinity.dart';
 import '/widgets/popup_text.dart'; // 导入二维码识别函数
@@ -22,7 +23,7 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('二维码扫描', style: theme.textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.qr_code, style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -31,12 +32,12 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('二维码扫描', style: theme.textTheme.headlineSmall),
+            Text(AppLocalizations.of(context)!.qr_code, style: theme.textTheme.headlineSmall),
             SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.image,
-              title: '选择图片',
+              title: AppLocalizations.of(context)!.choose_pic,
               child:
                   _isImageSelected
                       ? Stack(
@@ -72,7 +73,7 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
                             });
                           }
                         },
-                        child: Text('选择图片'),
+                        child: Text(AppLocalizations.of(context)!.choose_pic),
                       ),
             ),
             SizedBox(height: 20),
@@ -80,8 +81,8 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
               onPressed: () async {
                 DialogUtils.showLoadingDialog(
                   context: context,
-                  title: '扫描中...',
-                  content: '请稍候，正在识别...',
+                  title: AppLocalizations.of(context)!.scanning,
+                  content: AppLocalizations.of(context)!.waiting,
                 );
                 if (_imageFile != null) {
                   final result = await scanQRCodeFromImage(context,_imageFile!.path,);
@@ -91,7 +92,7 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
                 } else {
                   ScaffoldMessenger.of(
                     context,
-                  ).showSnackBar(SnackBar(content: Text('请选择一张图片')));
+                  ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.choose_pic)));
                 }
               },
               child: Row(
@@ -99,7 +100,7 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
                 children: [
                   Icon(Icons.qr_code), // 添加二维码图标
                   SizedBox(width: 8), // 图标和文本之间的间距
-                  Text('扫描二维码'), // 按钮文本
+                  Text(AppLocalizations.of(context)!.qr_code), // 按钮文本
                 ],
               ),
             ),
