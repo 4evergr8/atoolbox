@@ -93,8 +93,6 @@ class _InternetPageState extends State<InternetPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppLocalizations.of(context)!.need_connection, style: Theme.of(context).textTheme.headlineSmall),
-              SizedBox(height: 20),
 
               _buildFunctionItem(
                 context,
