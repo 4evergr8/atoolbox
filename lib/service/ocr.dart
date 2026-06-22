@@ -1,9 +1,7 @@
-import 'package:picorigin/views/offline/image_ocr.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'dart:io';
 
-
-
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:picorigin/views/offline/image_ocr.dart';
 
 Future<String> performOCR(File imageFile, Language language) async {
   TextRecognizer textRecognizer;
