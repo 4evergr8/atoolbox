@@ -138,7 +138,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
 
   Future<void> _startOCR() async {
     if (_imageFile == null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('请选择图片')));
+      showSnackBarGlobal('请选择图片');
       return;
     }
 
@@ -146,7 +146,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
       final recognizedText = await performOCR(_imageFile!, _selectedLanguage);
       showTextPopup(context, recognizedText);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('OCR识别失败: ${e.toString()}')));
+      showSnackBarGlobal(e.toString());
     }
   }
 
