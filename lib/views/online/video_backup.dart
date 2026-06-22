@@ -77,8 +77,6 @@ class _BackupScreenState extends State<BackupScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('备份设置', style: theme.textTheme.headlineSmall),
-            const SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.browser_updated,
