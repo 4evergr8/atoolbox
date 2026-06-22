@@ -104,12 +104,12 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                               prefs.getString('ua') ??
                               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
                           await fetchAndSaveVideo(ua, BV);
-                          Navigator.of(context).pop();
+                          close();
+                          showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
                         }
                       } catch (e) {
-                        showSnackBarGlobal("fail", '$e');
-                      } finally {
                         close();
+                        showSnackBarGlobal("fail", '$e');
                       }
                     },
                     icon: Icon(Icons.settings_backup_restore),
@@ -155,21 +155,13 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
 
                               try {
                                 final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
-                                Navigator.of(context).pop();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('${AppLocalizations.of(context)!.upload_success}$imageUrl')),
-                                );
+                                close();
+                                showSnackBarGlobal("success", imageUrl);
                                 final result = generateUrls(imageUrl);
                                 showLinkButtonsPopup(context, result);
                               } catch (e) {
-                                Navigator.of(context).pop();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('${AppLocalizations.of(context)!.upload_fail} ${e.toString()}'),
-                                  ),
-                                );
-                              } finally {
                                 close();
+                                showSnackBarGlobal("fail", '$e');
                               }
                             },
                             icon: Icon(Icons.search),
