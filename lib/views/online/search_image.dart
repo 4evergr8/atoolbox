@@ -147,10 +147,12 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
 
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
+                      close();
                       showSnackBarGlobal("success", imageUrl);
                       final result = generateUrls(imageUrl);
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
+                      close();
                       showSnackBarGlobal("fail", '$e');
                     }
                   } else {
