@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 class MeowTranslator {
   late List<String> charMap;
 
@@ -89,7 +90,6 @@ Future<String> encodeBeast(String dict, String plain) async {
   }
 }
 
-
 Future<String> decodeBeast(String cipher, String dict) async {
   try {
     final translator = MeowTranslator();
@@ -115,9 +115,7 @@ Future<String> decodeBeast(String cipher, String dict) async {
       translator.setCharMap(dict);
 
       // 按原协议拼接成标准密文
-      final standardCipher = translator.parseToMeow(
-        translator.hexToStr(translator.strToHex("")),
-      );
+      final standardCipher = translator.parseToMeow(translator.hexToStr(translator.strToHex("")));
 
       // ❗关键：不能这样构造内容，正确方式是直接补结构
       // 因为 parseToMeow 会重新编码
@@ -126,8 +124,7 @@ Future<String> decodeBeast(String cipher, String dict) async {
       final body = cipher;
       final map = translator.getCharMapToMeow();
 
-      final rebuiltCipher =
-          map[0] + map[1] + map[2] + body + map[3];
+      final rebuiltCipher = map[0] + map[1] + map[2] + body + map[3];
 
       translator.setCharMap(dict);
       return translator.parseToHuman(rebuiltCipher);
@@ -137,7 +134,6 @@ Future<String> decodeBeast(String cipher, String dict) async {
     // CASE 3: 都失败
     // =========================
     throw Exception("无法解密：缺少有效字典");
-
   } catch (e) {
     throw Exception("解密失败: $e");
   }
