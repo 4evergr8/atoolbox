@@ -153,5 +153,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ocr_ja => '日文字符提取';
 
   @override
-  String get qr_code => '图片扫码识别';
+  String get qr_code => '二维码扫描';
+
+  @override
+  String get choose_pic => '选择图片';
+
+  @override
+  String get scanning => '扫描中...';
+
+  @override
+  String get waiting => '请稍候...';
 }
