@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/main.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/ocr.dart';
 import 'package:picorigin/service/qrcode.dart';
@@ -94,7 +95,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                   ),
                   ElevatedButton.icon(
                     onPressed: () async {
-                      final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
+                      showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
                       try {
                         if (widget.media.content != null) {
@@ -104,11 +105,11 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                               prefs.getString('ua') ??
                               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
                           await fetchAndSaveVideo(ua, BV);
-                          close();
+                          scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
                           showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
                         }
                       } catch (e) {
-                        close();
+                        scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
                         showSnackBarGlobal("fail", '$e');
                       }
                     },
@@ -151,16 +152,16 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                         children: [
                           ElevatedButton.icon(
                             onPressed: () async {
-                              final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
+                              showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
                               try {
                                 final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
-                                close();
+                                scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
                                 showSnackBarGlobal("success", imageUrl);
                                 final result = generateUrls(imageUrl);
                                 showLinkButtonsPopup(context, result);
                               } catch (e) {
-                                close();
+                                scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
                                 showSnackBarGlobal("fail", '$e');
                               }
                             },
