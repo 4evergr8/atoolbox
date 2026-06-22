@@ -154,7 +154,6 @@ VoidCallback showSnackBarGlobal(String type, String text) {
   } else if (type == "success") {
     snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
-      duration: const Duration(seconds: 3),
       content: GestureDetector(
         onTap: () {
           Clipboard.setData(ClipboardData(text: text));
@@ -171,7 +170,6 @@ VoidCallback showSnackBarGlobal(String type, String text) {
   } else {
     snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
-      duration: const Duration(seconds: 2),
       content: GestureDetector(
         onTap: () {
           Clipboard.setData(ClipboardData(text: text));
