@@ -20,10 +20,10 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
       String decodedString = await base64_decode(_decodeController.text);
       await clipboardCopy(decodedString);
 
-      showSnackBarGlobal('成功，已复制到剪贴板');
+      showSnackBarGlobal("success",'已复制到剪贴板');
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
     } catch (e) {
-      showSnackBarGlobal('$e');
+      showSnackBarGlobal("fail",'$e');
     }
   }
 
@@ -33,10 +33,10 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     try {
       String encodedString = await base64_encode(input);
       await clipboardCopy(encodedString);
-      showSnackBarGlobal('成功，已复制到剪贴板');
+      showSnackBarGlobal("fail",'已复制到剪贴板');
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
-      showSnackBarGlobal('$e');
+      showSnackBarGlobal("fail",'$e');
     }
   }
 
