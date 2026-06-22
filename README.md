@@ -99,16 +99,7 @@ Search across multiple engines simultaneously to improve accuracy.
 
 ---
 
-### 🌐 5. 跨平台支持 / Cross Platform
-基于 Flutter 构建，可运行于：
 
-- Android
-- iOS（需自行构建）
-- Web（可选）
-
-Built with Flutter, supporting Android, iOS, and Web.
-
----
 
 ## 🚀 使用方法 / How to Use
 
