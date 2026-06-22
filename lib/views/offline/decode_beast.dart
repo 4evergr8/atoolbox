@@ -23,7 +23,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     String plain = _plainController.text;
 
     if (dict.length != 4) {
-      showSnackBarGlobal('字典必须为4个字符');
+      showSnackBarGlobal("fail",'字典必须为4个字符');
       return;
     }
 
@@ -31,9 +31,9 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
       String cipher = await beast_encode(dict, plain);
       _cipherController.text = cipher;
       await clipboardCopy(cipher);
-      showSnackBarGlobal('成功，已复制到剪贴板');
+      showSnackBarGlobal("success",'已复制到剪贴板');
     } catch (e) {
-      showSnackBarGlobal('加密失败: $e');
+      showSnackBarGlobal("fail",'$e');
     }
   }
 
@@ -45,9 +45,9 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
       String plain = await beast_decode(cipher);
       _plainController.text = plain;
       await clipboardCopy(plain);
-      showSnackBarGlobal('成功，已复制到剪贴板');
+      showSnackBarGlobal("success",'已复制到剪贴板');
     } catch (e) {
-      showSnackBarGlobal('$e');
+      showSnackBarGlobal("fail",'$e');
     }
   }
 
