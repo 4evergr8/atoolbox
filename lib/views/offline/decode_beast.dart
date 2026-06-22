@@ -80,9 +80,6 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('兽音加解密工具', style: theme.textTheme.headlineSmall),
-            const SizedBox(height: 20),
-
             // 字典输入
             _buildSettingCard(
               context,
