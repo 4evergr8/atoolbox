@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/main.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/widget.dart';
@@ -40,16 +41,16 @@ class _BackupScreenState extends State<BackupScreen> {
   void _startBackup() async {
     String ua = _uaController.text;
     String inputUrl = _idController.text;
-    final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
+    showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
     try {
       final bvid = await extractBvid(inputUrl);
       await fetchAndSaveVideo(ua, bvid);
-      close();
+      scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
       showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
       await _saveSettings(ua, bvid);
     } catch (e) {
-      close();
+      scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
       showSnackBarGlobal("fail", '$e');
     }
   }
