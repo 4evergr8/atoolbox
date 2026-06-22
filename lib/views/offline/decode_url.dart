@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
-
-// 把字符串写入剪贴板
-Future<void> clipboardCopy(String text) async {
-  // 实际由外部实现或结合 flutter/services 的 Clipboard.setData
-}
-
-// 从剪贴板读取字符串
-Future<String> clipboardPaste() async {
-  return ''; // 实际由外部传入的剪贴板逻辑实现
-}
+import 'package:picorigin/service/clipboard.dart';
 
 class URLDecode extends StatefulWidget {
   const URLDecode({super.key});
