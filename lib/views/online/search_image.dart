@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/main.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/widget.dart';
 
@@ -143,16 +144,16 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
               onPressed: () async {
                 if (_isLocalImage) {
                   if (_imageFile != null) {
-                    final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
+                    showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
-                      close();
+                      scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
                       showSnackBarGlobal("success", imageUrl);
                       final result = generateUrls(imageUrl);
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
-                      close();
+                      scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
                       showSnackBarGlobal("fail", '$e');
                     }
                   } else {
