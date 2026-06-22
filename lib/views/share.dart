@@ -95,7 +95,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                   ),
                   ElevatedButton.icon(
                     onPressed: () async {
-                      showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
+                      final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
                       try {
                         if (widget.media.content != null) {
@@ -105,11 +105,11 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                               prefs.getString('ua') ??
                               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
                           await fetchAndSaveVideo(ua, BV);
-                          scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+                         close();
                           showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
                         }
                       } catch (e) {
-                        scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+                       close();
                         showSnackBarGlobal("fail", '$e');
                       }
                     },
@@ -152,16 +152,16 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                         children: [
                           ElevatedButton.icon(
                             onPressed: () async {
-                              showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
+                              final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
                               try {
                                 final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
-                                scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+                               close();
                                 showSnackBarGlobal("success", imageUrl);
                                 final result = generateUrls(imageUrl);
                                 showLinkButtonsPopup(context, result);
                               } catch (e) {
-                                scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+                               close();
                                 showSnackBarGlobal("fail", '$e');
                               }
                             },
