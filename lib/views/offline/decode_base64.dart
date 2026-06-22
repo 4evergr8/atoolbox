@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/decode.dart';
+import 'package:picorigin/widget.dart';
 
 class EncodeDecode extends StatefulWidget {
   const EncodeDecode({super.key});
@@ -19,10 +20,10 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
       String decodedString = await base64_decode(_decodeController.text);
       await clipboardCopy(decodedString);
 
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('解码成功，已复制到剪贴板')));
+      showSnackBarGlobal('成功，已复制到剪贴板');
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('解码失败: $e')));
+      showSnackBarGlobal('$e');
     }
   }
 
@@ -32,10 +33,10 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     try {
       String encodedString = await base64_encode(input);
       await clipboardCopy(encodedString);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('编码成功，已复制到剪贴板')));
+      showSnackBarGlobal('成功，已复制到剪贴板');
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('编码失败: $e')));
+      showSnackBarGlobal('$e');
     }
   }
 
