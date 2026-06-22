@@ -50,7 +50,8 @@
 "qr_code":"二维码扫描",
 "choose_pic":"选择图片",
 "scanning":"扫描中...",
-"waiting":"请稍候..."
+"waiting":"请稍候...",
+"success_video":"视频备份完成"
 
 
 
