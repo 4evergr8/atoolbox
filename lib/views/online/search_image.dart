@@ -56,8 +56,6 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('图片搜索', style: theme.textTheme.headlineSmall),
-            SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.cloud,
