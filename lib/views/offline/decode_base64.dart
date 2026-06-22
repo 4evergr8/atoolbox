@@ -17,7 +17,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   void _decodeAndCopy() async {
     try {
       String decodedString = await base64_decode(_decodeController.text);
-      await clipboard_copy(decodedString);
+      await clipboardCopy(decodedString);
 
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('解码成功，已复制到剪贴板')));
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
@@ -31,7 +31,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     String input = _encodeController.text;
     try {
       String encodedString = await base64_encode(input);
-      await clipboard_copy(encodedString);
+      await clipboardCopy(encodedString);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('编码成功，已复制到剪贴板')));
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
@@ -41,7 +41,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
 
   // 粘贴到解码输入框
   void _pasteToDecode() async {
-    String text = await clipboard_paste();
+    String text = await clipboardPaste();
     if (text.isNotEmpty) {
       _decodeController.text = text;
     }
@@ -49,7 +49,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
 
   // 粘贴到编码输入框
   void _pasteToEncode() async {
-    String text = await clipboard_paste();
+    String text = await clipboardPaste();
     if (text.isNotEmpty) {
       _encodeController.text = text;
     }
