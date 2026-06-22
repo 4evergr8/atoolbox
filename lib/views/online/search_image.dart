@@ -145,6 +145,7 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                   if (_imageFile != null) {
                     final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
+
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
                       showSnackBarGlobal("success",imageUrl);
@@ -152,9 +153,7 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
                       showSnackBarGlobal("fail",'$e');
-                    } finally {
-                      close();
-                    }
+                    } 
                   } else {
                     // 提示用户选择图片
                     showSnackBarGlobal("fail",'请选择一张图片');
