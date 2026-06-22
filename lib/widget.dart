@@ -17,7 +17,6 @@ VoidCallback showSnackBarGlobal(String type, String text) {
 
   if (type == "load") {
     snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
       duration: const Duration(hours: 1),
       content: Row(
         children: [
@@ -36,7 +35,6 @@ VoidCallback showSnackBarGlobal(String type, String text) {
     );
   } else if (type == "success") {
     snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
       content: GestureDetector(
         onTap: () {
           Clipboard.setData(ClipboardData(text: text));
@@ -56,7 +54,6 @@ VoidCallback showSnackBarGlobal(String type, String text) {
     );
   } else {
     snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
       content: GestureDetector(
         onTap: () {
           Clipboard.setData(ClipboardData(text: text));
