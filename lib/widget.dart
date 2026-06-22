@@ -40,10 +40,9 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                               if (await canLaunchUrl(uri)) {
                                 await launchUrl(uri, mode: LaunchMode.externalApplication);
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('${AppLocalizations.of(context)!.can_not_open_link} ${link[1]}'),
-                                  ),
+                                showSnackBarGlobal(
+                                  "fail",
+                                  '${AppLocalizations.of(context)!.can_not_open_link} ${link[1]}',
                                 );
                               }
                             },
