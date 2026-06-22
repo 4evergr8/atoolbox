@@ -15,7 +15,7 @@ Future<String> scanQRCodeFromImage(
     await barcodeScanner.close();
 
     if (barcodes.isEmpty) {
-      showSnackBarGlobal('没有识别到二维码');
+      showSnackBarGlobal("fail",'没有识别到二维码');
       return '没有识别到二维码';
     }
 
@@ -24,7 +24,7 @@ Future<String> scanQRCodeFromImage(
 
     return result;
   } catch (e) {
-    showSnackBarGlobal('$e');
+    showSnackBarGlobal("fail",'$e');
     return '二维码识别失败: $e';
   }
 }
