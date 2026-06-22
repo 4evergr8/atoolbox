@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:picorigin/service/clipboard.dart';
 
 class URLDecode extends StatefulWidget {
   const URLDecode({super.key});
@@ -62,7 +61,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
       }
     }
     final editedUrl = parts.join('');
-    await Clipboard.setData(ClipboardData(text:editedUrl));
+    await Clipboard.setData(ClipboardData(text: editedUrl));
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('链接已复制到剪贴板')));
   }
 
