@@ -7,9 +7,84 @@ import 'package:picorigin/views/offline.dart';
 import 'package:picorigin/views/online.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? _controller;
+VoidCallback showSnackBarGlobal(String type, String text) {
+  final ctx = navigatorKey.currentContext;
+  if (ctx == null) return () {};
+
+  late SnackBar snackBar;
+
+  if (type == "load") {
+    snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      duration: const Duration(hours: 1),
+      content: Row(
+        children: [
+          SizedBox(
+            width: 14,
+            height: 14,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: Theme.of(ctx).colorScheme.primary,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(child: Text(text)),
+        ],
+      ),
+    );
+  } else if (type == "success") {
+    snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: GestureDetector(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: text));
+        },
+        child: Row(
+          children: [
+            Icon(
+              Icons.check_circle,
+              size: 16,
+              color: Theme.of(ctx).colorScheme.primary,
+            ),
+            const SizedBox(width: 3),
+            Expanded(child: Text(text)),
+          ],
+        ),
+      ),
+    );
+  } else {
+    snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: GestureDetector(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: text));
+        },
+        child: Row(
+          children: [
+            Icon(
+              Icons.error,
+              size: 16,
+              color: Theme.of(ctx).colorScheme.error,
+            ),
+            const SizedBox(width: 8),
+            Expanded(child: Text(text)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  final messenger = ScaffoldMessenger.of(ctx);
+
+  messenger.removeCurrentSnackBar();
+  final controller = messenger.showSnackBar(snackBar);
+
+  return () {
+    controller.close();
+  };
+}
 // 弹窗函数
 void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
   final theme = Theme.of(context);
@@ -125,71 +200,6 @@ class BottomNavBarState extends State<BottomNavBar> {
   }
 }
 
-VoidCallback showSnackBarGlobal(String type, String text) {
-  final messenger = scaffoldMessengerKey.currentState;
-  if (messenger == null) return () {};
-
-  final context = messenger.context;
-
-  late SnackBar snackBar;
-
-  if (type == "load") {
-    snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
-      duration: const Duration(hours: 1),
-      content: Row(
-        children: [
-          SizedBox(
-            width: 14,
-            height: 14,
-            child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.primary),
-          ),
-          const SizedBox(width: 8),
-          Expanded(child: Text(text)),
-        ],
-      ),
-    );
-  } else if (type == "success") {
-    snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
-      content: GestureDetector(
-        onTap: () {
-          Clipboard.setData(ClipboardData(text: text));
-        },
-        child: Row(
-          children: [
-            Icon(Icons.check_circle, size: 16, color: Theme.of(context).colorScheme.primary),
-            const SizedBox(width: 3),
-            Expanded(child: Text(text)),
-          ],
-        ),
-      ),
-    );
-  } else {
-    snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
-      content: GestureDetector(
-        onTap: () {
-          Clipboard.setData(ClipboardData(text: text));
-        },
-        child: Row(
-          children: [
-            Icon(Icons.error, size: 16, color: Theme.of(context).colorScheme.error),
-            const SizedBox(width: 8),
-            Expanded(child: Text(text)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  messenger.removeCurrentSnackBar();
-  _controller = messenger.showSnackBar(snackBar);
-
-  return () {
-    _controller?.close();
-  };
-}
 
 void showTextPopup(BuildContext context, String initialText) {
   final theme = Theme.of(context);
