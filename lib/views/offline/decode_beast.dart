@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/decode.dart';
 import 'package:picorigin/widget.dart';
@@ -30,7 +31,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     try {
       String cipher = await beast_encode(dict, plain);
       _cipherController.text = cipher;
-      await clipboardCopy(cipher);
+      await Clipboard.setData(ClipboardData(text:cipher));
       showSnackBarGlobal("success",'已复制到剪贴板');
     } catch (e) {
       showSnackBarGlobal("fail",'$e');
@@ -44,7 +45,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     try {
       String plain = await beast_decode(cipher);
       _plainController.text = plain;
-      await clipboardCopy(plain);
+      await Clipboard.setData(ClipboardData(text:plain));
       showSnackBarGlobal("success",'已复制到剪贴板');
     } catch (e) {
       showSnackBarGlobal("fail",'$e');
@@ -53,7 +54,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
 
   // 粘贴到密文输入框
   void _pasteToCipher() async {
-    String text = await clipboardPaste();
+    String text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       _cipherController.text = text;
     }
@@ -61,7 +62,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
 
   // 粘贴到明文输入框
   void _pasteToPlain() async {
-    String text = await clipboardPaste();
+    String text =(await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       _plainController.text = text;
     }
