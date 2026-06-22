@@ -1,8 +1,6 @@
-import 'package:picorigin/views/share.dart';
 import 'package:flutter/material.dart';
+import 'package:picorigin/views/share.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
-
-
 
 // ShareHandlerService 负责初始化和监听分享内容
 class ShareHandlerService {
@@ -14,22 +12,14 @@ class ShareHandlerService {
 
     if (media != null && (media!.content != null || media!.attachments != null)) {
       // 如果有分享内容，跳转到分享页面
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ShareReceiverPage(media: media!),
-        ),
-      );
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShareReceiverPage(media: media!)));
     }
 
     handler.sharedMediaStream.listen((SharedMedia newMedia) {
       media = newMedia;
       if (media != null && (media!.content != null || media!.attachments != null)) {
         // 如果有新的分享内容，跳转到分享页面
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ShareReceiverPage(media: media!),
-          ),
-        );
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShareReceiverPage(media: media!)));
       }
     });
   }
