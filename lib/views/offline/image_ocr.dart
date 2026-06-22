@@ -1,10 +1,8 @@
 import 'dart:io'; // 用于处理文件
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart'; // 用于选择本地图片
-
-import '/widgets/popup_text.dart';
-import '../../service/ocr.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:picorigin/service/ocr.dart';
+import 'package:picorigin/widget.dart'; // 用于选择本地图片
 
 enum Language { chinese, english, japanese }
 

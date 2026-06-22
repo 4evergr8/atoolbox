@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picorigin/service/thumbnail_search.dart';
-import 'package:picorigin/widgets/popup_links.dart';
+import 'package:picorigin/widget.dart';
 
 class ThumbnailSearchScreen extends StatefulWidget {
   const ThumbnailSearchScreen({super.key});

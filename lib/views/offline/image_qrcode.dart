@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/service/qrcode.dart';
-import 'package:picorigin/widgets/popup_text.dart';
+import 'package:picorigin/widget.dart';
 
 class QRCodeScan extends StatefulWidget {
   const QRCodeScan({super.key});

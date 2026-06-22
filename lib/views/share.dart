@@ -2,18 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/ocr.dart';
 import 'package:picorigin/service/qrcode.dart';
 import 'package:picorigin/service/thumbnail_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/views/offline/image_ocr.dart';
 import 'package:picorigin/widget.dart';
-import 'package:picorigin/widgets/popup_links.dart';
-import 'package:picorigin/widgets/popup_text.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../service/image_search.dart';
 
 // ShareReceiverPage 负责显示和处理分享内容
 class ShareReceiverPage extends StatefulWidget {
