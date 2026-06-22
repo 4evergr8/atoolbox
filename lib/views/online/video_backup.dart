@@ -45,11 +45,12 @@ class _BackupScreenState extends State<BackupScreen> {
     try {
       final bvid = await extractBvid(inputUrl);
       await fetchAndSaveVideo(ua, bvid);
+      close();
+      showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
       await _saveSettings(ua, bvid);
     } catch (e) {
-      showSnackBarGlobal("fail", '$e');
-    } finally {
       close();
+      showSnackBarGlobal("fail", '$e');
     }
   }
 
