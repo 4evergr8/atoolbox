@@ -38,9 +38,6 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('离线OCR识别', style: theme.textTheme.headlineSmall),
-            SizedBox(height: 20),
-
             // 图片选择块
             _buildSettingCard(
               context,
