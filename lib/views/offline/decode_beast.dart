@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/decode.dart';
 import 'package:picorigin/widget.dart';
-
-
 
 class BeastEncodeDecode extends StatefulWidget {
   const BeastEncodeDecode({super.key});
@@ -24,17 +21,17 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     String plain = _plainController.text;
 
     if (dict.length != 4) {
-      showSnackBarGlobal("fail",'字典必须为4个字符');
+      showSnackBarGlobal("fail", '字典必须为4个字符');
       return;
     }
 
     try {
       String cipher = await beast_encode(dict, plain);
       _cipherController.text = cipher;
-      await Clipboard.setData(ClipboardData(text:cipher));
-      showSnackBarGlobal("success",'已复制到剪贴板');
+      await Clipboard.setData(ClipboardData(text: cipher));
+      showSnackBarGlobal("success", '已复制到剪贴板');
     } catch (e) {
-      showSnackBarGlobal("fail",'$e');
+      showSnackBarGlobal("fail", '$e');
     }
   }
 
@@ -45,10 +42,10 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     try {
       String plain = await beast_decode(cipher);
       _plainController.text = plain;
-      await Clipboard.setData(ClipboardData(text:plain));
-      showSnackBarGlobal("success",'已复制到剪贴板');
+      await Clipboard.setData(ClipboardData(text: plain));
+      showSnackBarGlobal("success", '已复制到剪贴板');
     } catch (e) {
-      showSnackBarGlobal("fail",'$e');
+      showSnackBarGlobal("fail", '$e');
     }
   }
 
@@ -62,7 +59,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
 
   // 粘贴到明文输入框
   void _pasteToPlain() async {
-    String text =(await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
+    String text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       _plainController.text = text;
     }
