@@ -17,7 +17,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   // 解码并复制到剪贴板
   void _decodeAndCopy() async {
     try {
-      String decodedString = await base64_decode(_decodeController.text);
+      String decodedString = await decodeBase64(_decodeController.text);
       await Clipboard.setData(ClipboardData(text: decodedString));
 
       showSnackBarGlobal("success", '已复制到剪贴板');
@@ -31,7 +31,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   void _encodeAndCopy() async {
     String input = _encodeController.text;
     try {
-      String encodedString = await base64_encode(input);
+      String encodedString = await encodeBase64(input);
       await Clipboard.setData(ClipboardData(text: encodedString));
       showSnackBarGlobal("fail", '已复制到剪贴板');
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
