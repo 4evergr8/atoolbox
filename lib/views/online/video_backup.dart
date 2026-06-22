@@ -55,7 +55,7 @@ class _BackupScreenState extends State<BackupScreen> {
 
   // 粘贴内容到BV输入框
   void _pasteFromClipboard() async {
-    String text = await clipboard_paste();
+    String text = await clipboardPaste();
     if (text.isNotEmpty) {
       _idController.text = text;
     }
