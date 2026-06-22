@@ -145,25 +145,24 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                   if (_imageFile != null) {
                     final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
-
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
-                      showSnackBarGlobal("success",imageUrl);
+                      showSnackBarGlobal("success", imageUrl);
                       final result = generateUrls(imageUrl);
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
-                      showSnackBarGlobal("fail",'$e');
-                    } 
+                      showSnackBarGlobal("fail", '$e');
+                    }
                   } else {
                     // 提示用户选择图片
-                    showSnackBarGlobal("fail",'请选择一张图片');
+                    showSnackBarGlobal("fail", '请选择一张图片');
                   }
                 } else {
                   try {
                     final result = generateUrls(_imageUrl);
                     showLinkButtonsPopup(context, result);
                   } catch (e) {
-                    showSnackBarGlobal("fail","$e");
+                    showSnackBarGlobal("fail", "$e");
                   }
                 }
               },
