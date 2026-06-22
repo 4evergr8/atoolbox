@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/decode.dart';
 import 'package:picorigin/widget.dart';
 
@@ -19,12 +18,12 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   void _decodeAndCopy() async {
     try {
       String decodedString = await base64_decode(_decodeController.text);
-      await Clipboard.setData(ClipboardData(text:decodedString));
+      await Clipboard.setData(ClipboardData(text: decodedString));
 
-      showSnackBarGlobal("success",'已复制到剪贴板');
+      showSnackBarGlobal("success", '已复制到剪贴板');
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
     } catch (e) {
-      showSnackBarGlobal("fail",'$e');
+      showSnackBarGlobal("fail", '$e');
     }
   }
 
@@ -33,11 +32,11 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     String input = _encodeController.text;
     try {
       String encodedString = await base64_encode(input);
-      await Clipboard.setData(ClipboardData(text:encodedString));
-      showSnackBarGlobal("fail",'已复制到剪贴板');
+      await Clipboard.setData(ClipboardData(text: encodedString));
+      showSnackBarGlobal("fail", '已复制到剪贴板');
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
-      showSnackBarGlobal("fail",'$e');
+      showSnackBarGlobal("fail", '$e');
     }
   }
 
