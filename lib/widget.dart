@@ -77,10 +77,10 @@ class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
 
   @override
-  _BottomNavBarState createState() => _BottomNavBarState();
+  BottomNavBarState createState() => BottomNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[InternetPage(), IntranetPage(), AboutPage()];
@@ -149,7 +149,7 @@ Future<VoidCallback> showLoadingDialogGlobal() async {
   return () => overlayEntry.remove();
 }
 
-void showErrorSnackBarGlobal(String message) {
+void showSnackBarGlobal(String message) {
   final ctx = navigatorKey.currentContext;
   if (ctx == null) return;
 
