@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart';
+import 'package:picorigin/widget.dart';
 
 Future<String> scanQRCodeFromImage(
     BuildContext context,
@@ -14,7 +15,7 @@ Future<String> scanQRCodeFromImage(
     await barcodeScanner.close();
 
     if (barcodes.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('没有识别到二维码')));
+      showSnackBarGlobal('没有识别到二维码');
       return '没有识别到二维码';
     }
 
@@ -23,7 +24,7 @@ Future<String> scanQRCodeFromImage(
 
     return result;
   } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('二维码识别失败: $e')));
+    showSnackBarGlobal('$e');
     return '二维码识别失败: $e';
   }
 }
