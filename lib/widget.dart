@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
-import 'package:picorigin/main.dart';
 import 'package:picorigin/service/share_handler.dart';
 import 'package:picorigin/views/about.dart';
 import 'package:picorigin/views/offline.dart';
 import 'package:picorigin/views/online.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? _controller;
 // 弹窗函数
 void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
   final theme = Theme.of(context);
@@ -124,45 +126,73 @@ class BottomNavBarState extends State<BottomNavBar> {
   }
 }
 
-Future<VoidCallback> showLoadingDialogGlobal() async {
-  final overlay = navigatorKey.currentState?.overlay;
-  if (overlay == null) return () {};
+VoidCallback showSnackBarGlobal(String type, String text) {
+  final messenger = scaffoldMessengerKey.currentState;
+  if (messenger == null) return () {};
 
-  late OverlayEntry overlayEntry;
-  overlayEntry = OverlayEntry(
-    builder:
-        (_) => Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Material(
-            color: Colors.transparent,
-            child: LinearProgressIndicator(
-              minHeight: 4,
-              backgroundColor: Theme.of(navigatorKey.currentContext!).colorScheme.primaryContainer,
-            ),
+  final context = messenger.context;
+
+
+  late SnackBar snackBar;
+
+  if (type == "load") {
+    snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      duration: const Duration(days: 1),
+      content: Row(
+        children: [
+          SizedBox(
+            width: 14,
+            height: 14,
+            child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.primary),
           ),
-        ),
-  );
-
-  overlay.insert(overlayEntry);
-  return () => overlayEntry.remove();
-}
-
-void showSnackBarGlobal(String message) {
-  final ctx = navigatorKey.currentContext;
-  if (ctx == null) return;
-
-  ScaffoldMessenger.of(ctx).showSnackBar(
-    SnackBar(
+          const SizedBox(width: 8),
+          Expanded(child: Text(text)),
+        ],
+      ),
+    );
+  } else if (type == "success") {
+    snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      duration: const Duration(seconds: 3),
       content: GestureDetector(
         onTap: () {
-          Clipboard.setData(ClipboardData(text: message));
+          Clipboard.setData(ClipboardData(text: text));
         },
-        child: Text(message),
+        child: Row(
+          children: [
+            Icon(Icons.check_circle, size: 16, color: Theme.of(context).colorScheme.primary),
+            const SizedBox(width: 3),
+            Expanded(child: Text(text)),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  } else {
+    snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      duration: const Duration(seconds: 2),
+      content: GestureDetector(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: text));
+        },
+        child: Row(
+          children: [
+            Icon(Icons.error, size: 16, color: Theme.of(context).colorScheme.error),
+            const SizedBox(width: 8),
+            Expanded(child: Text(text)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  messenger.removeCurrentSnackBar();
+  _controller = messenger.showSnackBar(snackBar);
+
+  return () {
+    _controller?.close();
+  };
 }
 
 void showTextPopup(BuildContext context, String initialText) {
