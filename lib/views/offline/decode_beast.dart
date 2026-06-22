@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // 用于操作剪贴板
+import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/decode.dart';
+
+
 
 class BeastEncodeDecode extends StatefulWidget {
   const BeastEncodeDecode({super.key});
@@ -27,7 +29,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     try {
       String cipher = await beast_encode(dict, plain);
       _cipherController.text = cipher;
-      await Clipboard.setData(ClipboardData(text: cipher));
+      await clipboardCopy(cipher);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('加密成功，已复制到剪贴板')));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('加密失败: $e')));
@@ -41,10 +43,26 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     try {
       String plain = await beast_decode(cipher);
       _plainController.text = plain;
-      await Clipboard.setData(ClipboardData(text: plain));
+      await clipboardCopy(plain);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('解密成功，已复制到剪贴板')));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('解密失败: $e')));
+    }
+  }
+
+  // 粘贴到密文输入框
+  void _pasteToCipher() async {
+    String text = await clipboardPaste();
+    if (text.isNotEmpty) {
+      _cipherController.text = text;
+    }
+  }
+
+  // 粘贴到明文输入框
+  void _pasteToPlain() async {
+    String text = await clipboardPaste();
+    if (text.isNotEmpty) {
+      _plainController.text = text;
     }
   }
 
@@ -78,10 +96,20 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: _decryptAndCopy,
-              icon: const Icon(Icons.content_copy),
-              label: const Text('解密并复制'),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _decryptAndCopy,
+                  icon: const Icon(Icons.content_copy),
+                  label: const Text('解密并复制'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _pasteToCipher,
+                  icon: const Icon(Icons.assignment_returned),
+                  label: const Text('粘贴'),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
 
@@ -111,10 +139,20 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: _encryptAndCopy,
-              icon: const Icon(Icons.content_copy),
-              label: const Text('加密并复制'),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _encryptAndCopy,
+                  icon: const Icon(Icons.content_copy),
+                  label: const Text('加密并复制'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _pasteToPlain,
+                  icon: const Icon(Icons.assignment_returned),
+                  label: const Text('粘贴'),
+                ),
+              ],
             ),
           ],
         ),
