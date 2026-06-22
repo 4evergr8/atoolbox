@@ -10,10 +10,10 @@ class ImageSearchScreen extends StatefulWidget {
   const ImageSearchScreen({super.key});
 
   @override
-  _ImageSearchScreenState createState() => _ImageSearchScreenState();
+  ImageSearchScreenState createState() => ImageSearchScreenState();
 }
 
-class _ImageSearchScreenState extends State<ImageSearchScreen> {
+class ImageSearchScreenState extends State<ImageSearchScreen> {
   bool _isLocalImage = true; // 默认为搜索本地图片文件
   String _imageUrl = 'https://picsum.photos/200/200?random=1'; // 默认图片链接
   File? _imageFile; // 用于存储选择的本地图片文件
@@ -148,7 +148,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('图片上传成功，URL: $imageUrl')));
-                      final result = generateReverseImageSearchUrls(imageUrl);
+                      final result = generateUrls(imageUrl);
                       Navigator.of(context).pop();
 
                       showLinkButtonsPopup(context, result);
@@ -163,7 +163,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                   }
                 } else {
                   try {
-                    final result = generateReverseImageSearchUrls(_imageUrl);
+                    final result = generateUrls(_imageUrl);
                     showLinkButtonsPopup(context, result);
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('出现错误: ${e.toString()}')));
