@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/widget.dart';
-
 
 class ImageSearchScreen extends StatefulWidget {
   const ImageSearchScreen({super.key});
@@ -143,28 +143,28 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
               onPressed: () async {
                 if (_isLocalImage) {
                   if (_imageFile != null) {
-                    final close = await showLoadingDialogGlobal();
+                    final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
-                      showSnackBarGlobal('图片上传成功，URL: $imageUrl');
+                      showSnackBarGlobal("success",imageUrl);
                       final result = generateUrls(imageUrl);
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
-                      showSnackBarGlobal(e.toString());
+                      showSnackBarGlobal("fail",'$e');
                     } finally {
                       close();
                     }
                   } else {
                     // 提示用户选择图片
-                    showSnackBarGlobal('请选择一张图片');
+                    showSnackBarGlobal("fail",'请选择一张图片');
                   }
                 } else {
                   try {
                     final result = generateUrls(_imageUrl);
                     showLinkButtonsPopup(context, result);
                   } catch (e) {
-                    showSnackBarGlobal(e.toString());
+                    showSnackBarGlobal("fail","$e");
                   }
                 }
               },
