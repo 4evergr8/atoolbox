@@ -147,26 +147,24 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
 
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('图片上传成功，URL: $imageUrl')));
+                      showSnackBarGlobal('图片上传成功，URL: $imageUrl');
                       final result = generateUrls(imageUrl);
-                      Navigator.of(context).pop();
-
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('出现错误: ${e.toString()}')));
+                      showSnackBarGlobal(e.toString());
                     } finally {
                       close();
                     }
                   } else {
                     // 提示用户选择图片
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('请选择一张图片')));
+                    showSnackBarGlobal('请选择一张图片');
                   }
                 } else {
                   try {
                     final result = generateUrls(_imageUrl);
                     showLinkButtonsPopup(context, result);
                   } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('出现错误: ${e.toString()}')));
+                    showSnackBarGlobal(e.toString());
                   }
                 }
               },
