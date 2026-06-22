@@ -1,4 +1,5 @@
 import 'dart:io'; // 用于处理文件
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:picorigin/service/ocr.dart';
@@ -138,7 +139,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
 
   Future<void> _startOCR() async {
     if (_imageFile == null) {
-      showSnackBarGlobal("fail",'请选择图片');
+      showSnackBarGlobal("fail", '请选择图片');
       return;
     }
 
@@ -146,7 +147,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
       final recognizedText = await performOCR(_imageFile!, _selectedLanguage);
       showTextPopup(context, recognizedText);
     } catch (e) {
-      showSnackBarGlobal("fail","$e");
+      showSnackBarGlobal("fail", "$e");
     }
   }
 
