@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/decode.dart';
 import 'package:picorigin/widget.dart';
@@ -18,7 +19,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   void _decodeAndCopy() async {
     try {
       String decodedString = await base64_decode(_decodeController.text);
-      await clipboardCopy(decodedString);
+      await Clipboard.setData(ClipboardData(text:decodedString));
 
       showSnackBarGlobal("success",'已复制到剪贴板');
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
@@ -32,7 +33,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     String input = _encodeController.text;
     try {
       String encodedString = await base64_encode(input);
-      await clipboardCopy(encodedString);
+      await Clipboard.setData(ClipboardData(text:encodedString));
       showSnackBarGlobal("fail",'已复制到剪贴板');
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
@@ -42,7 +43,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
 
   // 粘贴到解码输入框
   void _pasteToDecode() async {
-    String text = await clipboardPaste();
+    String text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       _decodeController.text = text;
     }
@@ -50,7 +51,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
 
   // 粘贴到编码输入框
   void _pasteToEncode() async {
-    String text = await clipboardPaste();
+    String text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       _encodeController.text = text;
     }
