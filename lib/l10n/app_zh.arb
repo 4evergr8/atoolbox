@@ -47,7 +47,10 @@
 "ocr_zh":"中文字符提取",
 "ocr_en":"拉丁字符提取",
 "ocr_ja":"日文字符提取",
-"qr_code":"图片扫码识别"
+"qr_code":"二维码扫描",
+"choose_pic":"选择图片",
+"scanning":"扫描中...",
+"waiting":"请稍候..."
 
 
 
