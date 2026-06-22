@@ -1,6 +1,10 @@
+import 'package:PicOrigin/service/base64.dart';
+import 'package:PicOrigin/service/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // 用于操作剪贴板
-import '../../service/base64.dart'; // 用于 Base64 编解码
+
+
+
+
 
 class EncodeDecode extends StatefulWidget {
   const EncodeDecode({super.key});
@@ -15,17 +19,12 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
 
   // 解码并复制到剪贴板
   void _decodeAndCopy() async {
-
     try {
-
-
       String decodedString = await decodeBase64(_decodeController.text);
-      await Clipboard.setData(ClipboardData(text: decodedString));
-
-
+      await clipboard_copy(decodedString);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('解码成功，已复制到剪贴板')),
+        const SnackBar(content: Text('解码成功，已复制到剪贴板')),
       );
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
     } catch (e) {
@@ -40,15 +39,31 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     String input = _encodeController.text;
     try {
       String encodedString = await encodeToBase64(input);
-      await Clipboard.setData(ClipboardData(text: encodedString));
+      await clipboard_copy(encodedString);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('编码成功，已复制到剪贴板')),
+        const SnackBar(content: Text('编码成功，已复制到剪贴板')),
       );
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('编码失败: $e')),
       );
+    }
+  }
+
+  // 粘贴到解码输入框
+  void _pasteToDecode() async {
+    String text = await clipboard_paste();
+    if (text.isNotEmpty) {
+      _decodeController.text = text;
+    }
+  }
+
+  // 粘贴到编码输入框
+  void _pasteToEncode() async {
+    String text = await clipboard_paste();
+    if (text.isNotEmpty) {
+      _encodeController.text = text;
     }
   }
 
@@ -70,7 +85,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
               '编解码工具',
               style: theme.textTheme.headlineSmall,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // 第一组：解码
             _buildSettingCard(
@@ -79,22 +94,32 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
               title: 'Base64 解码',
               child: TextField(
                 controller: _decodeController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '输入 Base64 编码的字符串',
-                  hintText:'例如：SGVsbG8gV29ybGQh',
+                  hintText: '例如：SGVsbG8gV29ybGQh',
                 ),
                 maxLines: null, // 允许多行输入
                 minLines: 3, // 最小行数
                 expands: false, // 不自动填充剩余空间
               ),
             ),
-            SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: _decodeAndCopy,
-              icon: Icon(Icons.content_copy),
-              label: Text('解码并复制'),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _decodeAndCopy,
+                  icon: const Icon(Icons.content_copy),
+                  label: const Text('解码并复制'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _pasteToDecode,
+                  icon: const Icon(Icons.assignment_returned),
+                  label: const Text('粘贴'),
+                ),
+              ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // 第二组：编码
             _buildSettingCard(
@@ -103,20 +128,30 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
               title: 'Base64 编码',
               child: TextField(
                 controller: _encodeController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: '输入需要编码的字符串',
-                  hintText:'例如：Hello World!',
+                  hintText: '例如：Hello World!',
                 ),
                 maxLines: null, // 允许多行输入
                 minLines: 3, // 最小行数
                 expands: false, // 不自动填充剩余空间
               ),
             ),
-            SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: _encodeAndCopy,
-              icon: Icon(Icons.content_copy),
-              label: Text('编码并复制'),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _encodeAndCopy,
+                  icon: const Icon(Icons.content_copy),
+                  label: const Text('编码并复制'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _pasteToEncode,
+                  icon: const Icon(Icons.assignment_returned),
+                  label: const Text('粘贴'),
+                ),
+              ],
             ),
           ],
         ),
@@ -143,11 +178,11 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
             Row(
               children: [
                 Icon(icon, size: 24),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Text(title, style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             child,
           ],
         ),
@@ -155,4 +190,3 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     );
   }
 }
-
