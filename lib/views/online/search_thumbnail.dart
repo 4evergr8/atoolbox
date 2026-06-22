@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:picorigin/service/clipboard.dart';
+import 'package:flutter/services.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/widget.dart';
 
@@ -30,7 +30,7 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
 
   // 从剪贴板粘贴
   void _pasteFromClipboard() async {
-    String text = await clipboardPaste();
+    String text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       setState(() {
         _searchController.text = text;
