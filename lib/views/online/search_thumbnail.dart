@@ -54,8 +54,6 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('寻找封面出处', style: theme.textTheme.headlineSmall),
-            const SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.link,
