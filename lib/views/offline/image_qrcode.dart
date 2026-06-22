@@ -32,8 +32,6 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppLocalizations.of(context)!.qr_code, style: theme.textTheme.headlineSmall),
-            SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.image,
