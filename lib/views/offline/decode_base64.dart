@@ -70,8 +70,6 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-
             // 第一组：解码
             _buildSettingCard(
               context,
