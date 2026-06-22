@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:picorigin/widget.dart';
 
-Future<void> fetchAndSaveVideo(
-    String ua,
-    String id,
-    ) async {
-  final headers = {
-    'User-Agent': ua,
-  };
+Future<void> fetchAndSaveVideo(String ua, String id) async {
+  final headers = {'User-Agent': ua};
 
   final downloadsDirectory = Directory('/storage/emulated/0/Download');
   if (!downloadsDirectory.existsSync()) {
@@ -32,11 +28,10 @@ Future<void> fetchAndSaveVideo(
   final data = infoJson['data'];
   final coverUrl = data['pic'];
 
-// 保存视频信息（格式化为多行）
+  // 保存视频信息（格式化为多行）
   final infoFile = File('${saveDir.path}/$id.json');
   final encoder = JsonEncoder.withIndent('  ');
   infoFile.writeAsStringSync(encoder.convert(infoJson));
-
 
   // 下载封面图
   final coverRes = await http.get(Uri.parse(coverUrl));
@@ -48,35 +43,22 @@ Future<void> fetchAndSaveVideo(
   for (var page in pages) {
     final cid = page['cid'].toString();
 
-    final params = {
-      'bvid': id,
-      'cid': cid,
-      'fnval': '1',
-      'fnver': '0',
-      'qn': '64',
-    };
+    final params = {'bvid': id, 'cid': cid, 'fnval': '1', 'fnver': '0', 'qn': '64'};
 
     final playUrl = Uri.parse('https://api.bilibili.com/x/player/playurl').replace(queryParameters: params);
 
     final playRes = await http.get(playUrl, headers: headers);
 
-
     final playJson = jsonDecode(playRes.body);
-
 
     final videoUrl = playJson['data']['durl'][0]['url'];
 
-    final downloadHeaders = {
-      'User-Agent': ua,
-      'Referer': 'https://www.bilibili.com/video/$id',
-    };
+    final downloadHeaders = {'User-Agent': ua, 'Referer': 'https://www.bilibili.com/video/$id'};
 
     final videoRes = await http.get(Uri.parse(videoUrl), headers: downloadHeaders);
-
 
     final videoFile = File('${saveDir.path}/${id}_$cid.mp4');
     await videoFile.writeAsBytes(videoRes.bodyBytes);
   }
-  showSnackBarGlobal("success",'已保存视频 $id');
+  showSnackBarGlobal("success", '已保存视频 $id');
 }
-
