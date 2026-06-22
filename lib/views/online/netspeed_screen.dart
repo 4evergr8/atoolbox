@@ -108,9 +108,6 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('网速测试', style: theme.textTheme.headlineSmall),
-            SizedBox(height: 20),
-
             // 国内网络测试
             _buildSettingCard(
               context,
