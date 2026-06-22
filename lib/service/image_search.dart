@@ -1,6 +1,7 @@
-import 'dart:math';
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
 import 'package:http/http.dart' as http;
 
 // 1. 核心功能：根据图片 URL 拼凑各大引擎的反搜链接
@@ -20,8 +21,6 @@ List<List<String>> generateUrls(String picUrl) {
   ];
 }
 
-
-
 // 3. 核心功能：上传本地图片到 Cloudflare Worker 并返回下载/反搜链接
 Future<String> searchLocalImage(File imageFile, String workerUrl) async {
   const String characters = 'abcdefghijklmnopqrstuvwxyz';
@@ -34,11 +33,7 @@ Future<String> searchLocalImage(File imageFile, String workerUrl) async {
   List<int> imageBytes = await imageFile.readAsBytes();
 
   var request = http.MultipartRequest('POST', Uri.parse(uploadUrl))
-    ..files.add(http.MultipartFile.fromBytes(
-      'file',
-      imageBytes,
-      filename: imageFile.path.split('/').last,
-    ));
+    ..files.add(http.MultipartFile.fromBytes('file', imageBytes, filename: imageFile.path.split('/').last));
 
   var response = await request.send();
 
@@ -70,6 +65,7 @@ Future<String> fetchRedirectedUrl({required String url}) async {
   httpClient.close();
   return url;
 }
+
 Future<String> extractBvid(String input) async {
   final RegExp bvRegex = RegExp(r'BV[0-9A-Za-z]{10}');
   final String trimmedInput = input.trim();
@@ -98,17 +94,12 @@ Future<String> extractBvid(String input) async {
 
 // 2. 根据 BV 号请求 B 站 API 获取封面图片链接字符串
 Future<String> fetchBilibiliCover(String bvid) async {
+  var apiResponse = await http.get(Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$bvid'));
+  var jsonResponse = jsonDecode(apiResponse.body);
 
+  if (jsonResponse['code'] != 0) {
+    return '';
+  }
 
-    var apiResponse = await http.get(
-      Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$bvid'),
-    );
-    var jsonResponse = jsonDecode(apiResponse.body);
-
-    if (jsonResponse['code'] != 0) {
-      return '';
-    }
-
-    return jsonResponse['data']['pic'] ?? '';
-
+  return jsonResponse['data']['pic'] ?? '';
 }

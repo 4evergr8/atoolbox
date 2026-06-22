@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,18 +41,18 @@ class _BackupScreenState extends State<BackupScreen> {
     final close = await showLoadingDialogGlobal();
 
     try {} catch (e) {
-      showErrorSnackBarGlobal('$e');
+      showSnackBarGlobal('$e');
     } finally {
       close();
     }
-    final bvid = await extractBvId(inputUrl);
-    await fetchAndSaveVideo(context, ua, bvid);
+    final bvid = await extractBvid(inputUrl);
+    await fetchAndSaveVideo( ua, bvid);
 
     // 关闭备份中的弹窗
     Navigator.of(context).pop();
 
     // 保存设置
-    await _saveSettings(ua, id);
+    await _saveSettings(ua, bvid);
   }
 
   @override

@@ -98,16 +98,16 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
 
                       try {
                         if (widget.media.content != null) {
-                          String BV = await extractBvId(widget.media.content!);
+                          String BV = await extractBvid(widget.media.content!);
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           final ua =
                               prefs.getString('ua') ??
                               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
-                          await fetchAndSaveVideo(context, ua, BV);
+                          await fetchAndSaveVideo(ua, BV);
                           Navigator.of(context).pop();
                         }
                       } catch (e) {
-                        showErrorSnackBarGlobal('$e');
+                        showSnackBarGlobal('$e');
                       } finally {
                         close();
                       }
