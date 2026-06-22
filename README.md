@@ -53,7 +53,6 @@ PicOrigin integrates multiple reverse image search engines:
 - trace.moe（动漫截图识别 / anime scene finder）
 - Lenso.ai（AI图像识别 / AI-powered reverse image search）
 
-
 👉 一键打开多个引擎，提高“找出处”成功率  
 👉 One-click multi-engine search to maximize source detection accuracy
 
@@ -62,6 +61,7 @@ PicOrigin integrates multiple reverse image search engines:
 ## ✨ 核心功能 / Features
 
 ### 🔎 1. 以图搜图 / Reverse Image Search
+
 支持本地图片或图片URL输入，快速跳转多个搜索引擎查找来源。
 
 Supports local images or image URLs and redirects to multiple reverse search engines.
@@ -69,6 +69,7 @@ Supports local images or image URLs and redirects to multiple reverse search eng
 ---
 
 ### 📷 2. 图片来源查找 / Image Source Finder
+
 用于查找：
 
 - 图片原始出处
@@ -86,6 +87,7 @@ Find:
 ---
 
 ### 📱 3. 分享即搜 / Share-to-Search
+
 从系统分享图片直接进入应用，一键进行反向搜图或识别。
 
 Share images from other apps directly to PicOrigin for instant search.
@@ -93,35 +95,36 @@ Share images from other apps directly to PicOrigin for instant search.
 ---
 
 ### 📊 4. 多引擎聚合 / Multi-Engine Aggregation
+
 一次搜索同时覆盖多个搜索平台，提高查找成功率。
 
 Search across multiple engines simultaneously to improve accuracy.
 
 ---
 
-
-
 ## 🚀 使用方法 / How to Use
 
 ### 📌 方法一 / Method 1
+
 1. 打开应用  
-   Open the app  
+   Open the app
 2. 选择图片  
-   Select an image  
+   Select an image
 3. 点击“以图搜图”  
-   Tap “Reverse Image Search”  
+   Tap “Reverse Image Search”
 4. 自动打开多个搜索引擎结果  
    Multiple search engines will be opened
 
 ---
 
 ### 📌 方法二 / Method 2
+
 1. 在任意应用中分享图片  
-   Share an image from any app  
+   Share an image from any app
 2. 选择 PicOrigin  
-   Select PicOrigin  
+   Select PicOrigin
 3. 自动进入分析页面  
-   Enter analysis screen  
+   Enter analysis screen
 4. 一键搜索出处  
    Search image source instantly
 
@@ -134,7 +137,6 @@ Search across multiple engines simultaneously to improve accuracy.
 * 识别网络图片来源 / Identify image origin
 * 反向搜图工具 / Reverse image search tool
 * 图片溯源分析 / Image provenance tracking
-
 
 ## 📌 SEO关键词 / Keywords
 
@@ -150,6 +152,7 @@ trace image online
 sauce finder
 anime reverse image search
 ```
+
 ---
 
 <p align="center">
