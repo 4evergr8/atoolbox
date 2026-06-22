@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:picorigin/service/clipboard.dart';
 
 class URLDecode extends StatefulWidget {
@@ -61,13 +62,13 @@ class _URLDecodeScreenState extends State<URLDecode> {
       }
     }
     final editedUrl = parts.join('');
-    await clipboardCopy(editedUrl);
+    await Clipboard.setData(ClipboardData(text:editedUrl));
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('链接已复制到剪贴板')));
   }
 
   // 从剪贴板粘贴到输入框
   void _pasteFromClipboard() async {
-    String text = await clipboardPaste();
+    String text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       _urlController.text = text;
     }
