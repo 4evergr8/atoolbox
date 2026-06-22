@@ -1,12 +1,11 @@
-import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
-import 'internet/url_decode.dart';
-import 'intranet/base64.dart';
-import 'intranet/beast.dart';
-import 'intranet/ocr_screen.dart';
-import 'intranet/qrcode.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/views/offline/decode_base64.dart';
+import 'package:picorigin/views/offline/decode_beast.dart';
+import 'package:picorigin/views/offline/decode_url.dart';
+import 'package:picorigin/views/offline/image_ocr.dart';
+import 'package:picorigin/views/offline/image_qrcode.dart';
 
 class IntranetPage extends StatefulWidget {
   const IntranetPage({super.key});

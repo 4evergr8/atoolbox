@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
 
 class SpeedTestScreen extends StatefulWidget {
   const SpeedTestScreen({super.key});
@@ -10,8 +11,13 @@ class SpeedTestScreen extends StatefulWidget {
 }
 
 class _SpeedTestScreenState extends State<SpeedTestScreen> {
-  final TextEditingController _domesticUrlController = TextEditingController(text: 'http://updates-http.cdn-apple.com/2019WinterFCS/fullrestores/041-39257/32129B6C-292C-11E9-9E72-4511412B0A59/iPhone_4.7_12.1.4_16D57_Restore.ipsw');
-  final TextEditingController _internationalUrlController = TextEditingController(text: 'https://dl.google.com/dl/android/aosp/comet-ad1a.240530.030-factory-77dca584.zip');
+  final TextEditingController _domesticUrlController = TextEditingController(
+    text:
+        'http://updates-http.cdn-apple.com/2019WinterFCS/fullrestores/041-39257/32129B6C-292C-11E9-9E72-4511412B0A59/iPhone_4.7_12.1.4_16D57_Restore.ipsw',
+  );
+  final TextEditingController _internationalUrlController = TextEditingController(
+    text: 'https://dl.google.com/dl/android/aosp/comet-ad1a.240530.030-factory-77dca584.zip',
+  );
 
   double _domesticDownloadSpeed = 0.0;
   double _internationalDownloadSpeed = 0.0;
@@ -31,16 +37,19 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
     final streamedResponse = await http.Client().send(request);
 
     int totalBytes = 0;
-    _domesticSubscription = streamedResponse.stream.listen((List<int> bytes) {
-      totalBytes += bytes.length;
-      setState(() {
-        _domesticDownloadSpeed = (totalBytes / (1024 * 1024)) / (stopwatch.elapsedMilliseconds / 1000);
-      });
-    }, onDone: () {
-      setState(() {
-        _isDomesticTesting = false;
-      });
-    });
+    _domesticSubscription = streamedResponse.stream.listen(
+      (List<int> bytes) {
+        totalBytes += bytes.length;
+        setState(() {
+          _domesticDownloadSpeed = (totalBytes / (1024 * 1024)) / (stopwatch.elapsedMilliseconds / 1000);
+        });
+      },
+      onDone: () {
+        setState(() {
+          _isDomesticTesting = false;
+        });
+      },
+    );
   }
 
   void _stopDomesticTest() {
@@ -62,16 +71,19 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
     final streamedResponse = await http.Client().send(request);
 
     int totalBytes = 0;
-    _internationalSubscription = streamedResponse.stream.listen((List<int> bytes) {
-      totalBytes += bytes.length;
-      setState(() {
-        _internationalDownloadSpeed = (totalBytes / (1024 * 1024)) / (stopwatch.elapsedMilliseconds / 1000);
-      });
-    }, onDone: () {
-      setState(() {
-        _isInternationalTesting = false;
-      });
-    });
+    _internationalSubscription = streamedResponse.stream.listen(
+      (List<int> bytes) {
+        totalBytes += bytes.length;
+        setState(() {
+          _internationalDownloadSpeed = (totalBytes / (1024 * 1024)) / (stopwatch.elapsedMilliseconds / 1000);
+        });
+      },
+      onDone: () {
+        setState(() {
+          _isInternationalTesting = false;
+        });
+      },
+    );
   }
 
   void _stopInternationalTest() {
@@ -96,10 +108,7 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '网速测试',
-              style: theme.textTheme.headlineSmall,
-            ),
+            Text('网速测试', style: theme.textTheme.headlineSmall),
             SizedBox(height: 20),
 
             // 国内网络测试
@@ -111,20 +120,12 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
                 children: [
                   TextField(
                     controller: _domesticUrlController,
-                    decoration: InputDecoration(
-                      labelText: '测试链接',
-                      hintText: '国内网速测试链接',
-                    ),
+                    decoration: InputDecoration(labelText: '测试链接', hintText: '国内网速测试链接'),
                   ),
                   SizedBox(height: 16),
-                  LinearProgressIndicator(
-                    value: _isDomesticTesting ? null : _domesticDownloadSpeed / 100,
-                  ),
+                  LinearProgressIndicator(value: _isDomesticTesting ? null : _domesticDownloadSpeed / 100),
                   SizedBox(height: 8),
-                  Text(
-                    '下载速度: ${_domesticDownloadSpeed.toStringAsFixed(2)} MB/s',
-                    style: theme.textTheme.bodyMedium,
-                  ),
+                  Text('下载速度: ${_domesticDownloadSpeed.toStringAsFixed(2)} MB/s', style: theme.textTheme.bodyMedium),
                   SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -155,15 +156,10 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
                 children: [
                   TextField(
                     controller: _internationalUrlController,
-                    decoration: InputDecoration(
-                      labelText: '测试链接',
-                      hintText: '国际网速测试链接',
-                    ),
+                    decoration: InputDecoration(labelText: '测试链接', hintText: '国际网速测试链接'),
                   ),
                   SizedBox(height: 16),
-                  LinearProgressIndicator(
-                    value: _isInternationalTesting ? null : _internationalDownloadSpeed / 100,
-                  ),
+                  LinearProgressIndicator(value: _isInternationalTesting ? null : _internationalDownloadSpeed / 100),
                   SizedBox(height: 8),
                   Text(
                     '下载速度: ${_internationalDownloadSpeed.toStringAsFixed(2)} MB/s',
@@ -195,16 +191,14 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

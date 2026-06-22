@@ -1,8 +1,6 @@
-import 'package:atoolbox/service/video_download.dart';
-import 'package:atoolbox/widgets/popup_infinity.dart';
 import 'package:flutter/material.dart';
+import 'package:picorigin/service/video_download.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -23,7 +21,9 @@ class _BackupScreenState extends State<BackupScreen> {
 
   Future<void> _loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _uaController.text = prefs.getString('ua') ?? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
+    _uaController.text =
+        prefs.getString('ua') ??
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
     _idController.text = prefs.getString('id') ?? '';
   }
 
@@ -37,15 +37,8 @@ class _BackupScreenState extends State<BackupScreen> {
     String ua = _uaController.text;
     String id = _idController.text;
 
-    // 显示带有无限进度条的弹窗
-    DialogUtils.showLoadingDialog(
-      context: context,
-      title: '备份中...',
-      content: '请稍候，备份正在进行...',
-    );
-
     // 执行备份操作
-    await fetchAndSaveVideo(context,ua, id);
+    await fetchAndSaveVideo(context, ua, id);
 
     // 关闭备份中的弹窗
     Navigator.of(context).pop();
@@ -68,10 +61,7 @@ class _BackupScreenState extends State<BackupScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '备份设置',
-              style: theme.textTheme.headlineSmall,
-            ),
+            Text('备份设置', style: theme.textTheme.headlineSmall),
             SizedBox(height: 20),
             _buildSettingCard(
               context,
@@ -79,10 +69,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'UA',
               child: TextField(
                 controller: _uaController,
-                decoration: InputDecoration(
-                  labelText: 'UA',
-                  hintText: '请输入UserAgent',
-                ),
+                decoration: InputDecoration(labelText: 'UA', hintText: '请输入UserAgent'),
               ),
             ),
             SizedBox(height: 16),
@@ -92,10 +79,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'BV',
               child: TextField(
                 controller: _idController,
-                decoration: InputDecoration(
-                  labelText: 'BV1GJ411x7h7',
-                  hintText: '请输入BV号',
-                ),
+                decoration: InputDecoration(labelText: 'BV1GJ411x7h7', hintText: '请输入BV号'),
               ),
             ),
             SizedBox(height: 20),
@@ -111,16 +95,14 @@ class _BackupScreenState extends State<BackupScreen> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

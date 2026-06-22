@@ -1,20 +1,19 @@
 import 'dart:io';
 
-import 'package:atoolbox/l10n/app_localizations.dart';
-import 'package:atoolbox/service/qrcode.dart';
 import 'package:flutter/material.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/service/ocr.dart';
+import 'package:picorigin/service/qrcode.dart';
+import 'package:picorigin/service/thumbnail_search.dart';
+import 'package:picorigin/service/video_download.dart';
+import 'package:picorigin/views/offline/image_ocr.dart';
+import 'package:picorigin/widget.dart';
+import 'package:picorigin/widgets/popup_links.dart';
+import 'package:picorigin/widgets/popup_text.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../service/image_search.dart';
-import '/service/internet/thumbnail_search.dart';
-import '/service/internet/video_download.dart';
-import '/service/intranet/ocr.dart';
-import '/service/intranet/qrcode.dart';
-import '/widgets/popup_infinity.dart';
-import '/widgets/popup_links.dart';
-import '/widgets/popup_text.dart';
-import 'intranet/ocr_screen.dart';
 
 // ShareReceiverPage 负责显示和处理分享内容
 class ShareReceiverPage extends StatefulWidget {
@@ -97,20 +96,22 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                   ),
                   ElevatedButton.icon(
                     onPressed: () async {
-                      if (widget.media.content != null) {
-                        DialogUtils.showLoadingDialog(
-                          context: context,
-                          title: AppLocalizations.of(context)!.downloading,
-                          content: AppLocalizations.of(context)!.downloading_vid,
-                        );
+                      final close = await showLoadingDialogGlobal();
 
-                        String BV = await extractBvId(widget.media.content!);
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        final ua =
-                            prefs.getString('ua') ??
-                            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
-                        await fetchAndSaveVideo(context, ua, BV);
-                        Navigator.of(context).pop();
+                      try {
+                        if (widget.media.content != null) {
+                          String BV = await extractBvId(widget.media.content!);
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          final ua =
+                              prefs.getString('ua') ??
+                              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
+                          await fetchAndSaveVideo(context, ua, BV);
+                          Navigator.of(context).pop();
+                        }
+                      } catch (e) {
+                        showErrorSnackBarGlobal('$e');
+                      } finally {
+                        close();
                       }
                     },
                     icon: Icon(Icons.settings_backup_restore),
@@ -152,11 +153,8 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                         children: [
                           ElevatedButton.icon(
                             onPressed: () async {
-                              DialogUtils.showLoadingDialog(
-                                context: context,
-                                title: AppLocalizations.of(context)!.uploading,
-                                content: AppLocalizations.of(context)!.uploading_pic,
-                              );
+                              final close = await showLoadingDialogGlobal();
+
                               try {
                                 final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
                                 Navigator.of(context).pop();
@@ -172,6 +170,8 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                                     content: Text('${AppLocalizations.of(context)!.upload_fail} ${e.toString()}'),
                                   ),
                                 );
+                              } finally {
+                                close();
                               }
                             },
                             icon: Icon(Icons.search),

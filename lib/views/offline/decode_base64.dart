@@ -1,10 +1,6 @@
-import 'package:PicOrigin/service/base64.dart';
-import 'package:PicOrigin/service/clipboard.dart';
 import 'package:flutter/material.dart';
-
-
-
-
+import 'package:picorigin/service/clipboard.dart';
+import 'package:picorigin/service/decode.dart';
 
 class EncodeDecode extends StatefulWidget {
   const EncodeDecode({super.key});
@@ -20,17 +16,13 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   // 解码并复制到剪贴板
   void _decodeAndCopy() async {
     try {
-      String decodedString = await decodeBase64(_decodeController.text);
+      String decodedString = await base64_decode(_decodeController.text);
       await clipboard_copy(decodedString);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('解码成功，已复制到剪贴板')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('解码成功，已复制到剪贴板')));
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('解码失败: $e')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('解码失败: $e')));
     }
   }
 
@@ -38,16 +30,12 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   void _encodeAndCopy() async {
     String input = _encodeController.text;
     try {
-      String encodedString = await encodeToBase64(input);
+      String encodedString = await base64_encode(input);
       await clipboard_copy(encodedString);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('编码成功，已复制到剪贴板')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('编码成功，已复制到剪贴板')));
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('编码失败: $e')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('编码失败: $e')));
     }
   }
 
@@ -81,10 +69,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '编解码工具',
-              style: theme.textTheme.headlineSmall,
-            ),
+            Text('编解码工具', style: theme.textTheme.headlineSmall),
             const SizedBox(height: 20),
 
             // 第一组：解码
@@ -94,12 +79,11 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
               title: 'Base64 解码',
               child: TextField(
                 controller: _decodeController,
-                decoration: const InputDecoration(
-                  labelText: '输入 Base64 编码的字符串',
-                  hintText: '例如：SGVsbG8gV29ybGQh',
-                ),
-                maxLines: null, // 允许多行输入
-                minLines: 3, // 最小行数
+                decoration: const InputDecoration(labelText: '输入 Base64 编码的字符串', hintText: '例如：SGVsbG8gV29ybGQh'),
+                maxLines: null,
+                // 允许多行输入
+                minLines: 3,
+                // 最小行数
                 expands: false, // 不自动填充剩余空间
               ),
             ),
@@ -128,12 +112,11 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
               title: 'Base64 编码',
               child: TextField(
                 controller: _encodeController,
-                decoration: const InputDecoration(
-                  labelText: '输入需要编码的字符串',
-                  hintText: '例如：Hello World!',
-                ),
-                maxLines: null, // 允许多行输入
-                minLines: 3, // 最小行数
+                decoration: const InputDecoration(labelText: '输入需要编码的字符串', hintText: '例如：Hello World!'),
+                maxLines: null,
+                // 允许多行输入
+                minLines: 3,
+                // 最小行数
                 expands: false, // 不自动填充剩余空间
               ),
             ),
@@ -160,16 +143,14 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

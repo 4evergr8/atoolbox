@@ -1,13 +1,15 @@
-import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/themes/theme.dart';
+import 'package:picorigin/themes/util.dart';
+import 'package:picorigin/widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'aaa.dart';
-import 'themes/util.dart';
-import 'themes/theme.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -33,10 +35,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('zh'),
-      ],
+      supportedLocales: const [Locale('en'), Locale('zh')],
       title: 'PicOrigin',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       home: const HomeScreen(), // 使用 HomeScreen 组件
@@ -77,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.welcome),
-          content:  Text(AppLocalizations.of(context)!.welcome_full),
+          content: Text(AppLocalizations.of(context)!.welcome_full),
           actions: [
             ElevatedButton.icon(
               onPressed: () async {
@@ -85,9 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (await canLaunchUrl(uri)) {
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('https://github.com/4evergr8/FlutterPicOrigin')),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('https://github.com/4evergr8/FlutterPicOrigin')));
                 }
                 Navigator.of(context).pop(); // 关闭弹窗
               },

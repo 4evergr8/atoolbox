@@ -85,7 +85,7 @@ class MeowTranslator {
   }
 }
 
-Future<String> encrypt(String dict, String plain) async {
+Future<String> beast_encode(String dict, String plain) async {
   try {
     final translator = MeowTranslator();
     translator.setCharMap(dict);
@@ -95,7 +95,7 @@ Future<String> encrypt(String dict, String plain) async {
   }
 }
 
-Future<String> decrypt(String cipher) async {
+Future<String> beast_decode(String cipher) async {
   try {
     final translator = MeowTranslator();
     return translator.parseToHuman(cipher);

@@ -1,4 +1,4 @@
-import 'package:PicOrigin/views/share.dart';
+import 'package:picorigin/views/share.dart';
 import 'package:flutter/material.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
 

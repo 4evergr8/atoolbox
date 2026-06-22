@@ -1,7 +1,6 @@
-import 'package:PicOrigin/service/beast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
-
+import 'package:picorigin/service/decode.dart';
 
 class BeastEncodeDecode extends StatefulWidget {
   const BeastEncodeDecode({super.key});
@@ -21,23 +20,17 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     String plain = _plainController.text;
 
     if (dict.length != 4) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('字典必须为4个字符')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('字典必须为4个字符')));
       return;
     }
 
     try {
-      String cipher = await encrypt(dict, plain);
+      String cipher = await beast_encode(dict, plain);
       _cipherController.text = cipher;
       await Clipboard.setData(ClipboardData(text: cipher));
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('加密成功，已复制到剪贴板')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('加密成功，已复制到剪贴板')));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('加密失败: $e')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('加密失败: $e')));
     }
   }
 
@@ -46,16 +39,12 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     String cipher = _cipherController.text;
 
     try {
-      String plain = await decrypt(cipher);
+      String plain = await beast_decode(cipher);
       _plainController.text = plain;
       await Clipboard.setData(ClipboardData(text: plain));
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('解密成功，已复制到剪贴板')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('解密成功，已复制到剪贴板')));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('解密失败: $e')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('解密失败: $e')));
     }
   }
 
@@ -83,10 +72,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
               title: '密文',
               child: TextField(
                 controller: _cipherController,
-                decoration: const InputDecoration(
-                  labelText: '请输入密文',
-                  hintText: '你好',
-                ),
+                decoration: const InputDecoration(labelText: '请输入密文', hintText: '你好'),
                 maxLines: null,
                 minLines: 3,
               ),
@@ -106,10 +92,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
               title: '字典（4字符）',
               child: TextField(
                 controller: _dictController,
-                decoration: const InputDecoration(
-                  labelText: '请输入字典',
-                  hintText: '说的道理',
-                ),
+                decoration: const InputDecoration(labelText: '请输入字典', hintText: '说的道理'),
                 maxLength: 4,
               ),
             ),
@@ -122,10 +105,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
               title: '明文',
               child: TextField(
                 controller: _plainController,
-                decoration: const InputDecoration(
-                  labelText: '请输入明文',
-                  hintText: '你好',
-                ),
+                decoration: const InputDecoration(labelText: '请输入明文', hintText: '你好'),
                 maxLines: null,
                 minLines: 3,
               ),
@@ -143,16 +123,14 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

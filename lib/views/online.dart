@@ -1,7 +1,10 @@
-import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
+import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/views/online/netspeed_screen.dart';
+import 'package:picorigin/views/online/search_image.dart';
+import 'package:picorigin/views/online/search_thumbnail.dart';
+import 'package:picorigin/views/online/video_backup.dart';
 
 class InternetPage extends StatefulWidget {
   const InternetPage({super.key});
@@ -89,7 +92,6 @@ class _InternetPageState extends State<InternetPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               _buildFunctionItem(
                 context,
                 icon: Icons.image,

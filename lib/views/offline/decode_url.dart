@@ -35,8 +35,14 @@ class _URLDecodeScreenState extends State<URLDecode> {
         {'key': TextEditingController(text: uri.host), 'value': TextEditingController(text: '?')},
       ];
       queryParams.forEach((key, value) {
-        _decodedUrlControllers.add({'key': TextEditingController(text: key), 'value': TextEditingController(text: '=')});
-        _decodedUrlControllers.add({'key': TextEditingController(text: value), 'value': TextEditingController(text: '&')});
+        _decodedUrlControllers.add({
+          'key': TextEditingController(text: key),
+          'value': TextEditingController(text: '='),
+        });
+        _decodedUrlControllers.add({
+          'key': TextEditingController(text: value),
+          'value': TextEditingController(text: '&'),
+        });
       });
       // Remove the last '&' if it exists
       if (_decodedUrlControllers.isNotEmpty && _decodedUrlControllers.last['value']!.text == '&') {
@@ -56,9 +62,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
     }
     final editedUrl = parts.join('');
     Clipboard.setData(ClipboardData(text: editedUrl));
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('链接已复制到剪贴板')),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('链接已复制到剪贴板')));
   }
 
   @override
@@ -75,10 +79,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'URL 解码与编辑',
-              style: theme.textTheme.headlineSmall,
-            ),
+            Text('URL 解码与编辑', style: theme.textTheme.headlineSmall),
             SizedBox(height: 20),
             _buildSettingCard(
               context,
@@ -89,10 +90,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
                 children: [
                   TextField(
                     controller: _urlController,
-                    decoration: InputDecoration(
-                      labelText: '输入待解码链接',
-                      hintText: '例如: ',
-                    ),
+                    decoration: InputDecoration(labelText: '输入待解码链接', hintText: '例如: '),
                     maxLines: 1,
                     scrollPhysics: ClampingScrollPhysics(),
                   ),
@@ -101,11 +99,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
                     onPressed: _decodeUrl,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.dns),
-                        SizedBox(width: 8),
-                        Text('解码'),
-                      ],
+                      children: [Icon(Icons.dns), SizedBox(width: 8), Text('解码')],
                     ),
                   ),
                 ],
@@ -167,11 +161,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
               onPressed: _copyToClipboard,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.copy),
-                  SizedBox(width: 8),
-                  Text('复制链接'),
-                ],
+                children: [Icon(Icons.copy), SizedBox(width: 8), Text('复制链接')],
               ),
             ),
           ],
@@ -181,16 +171,14 @@ class _URLDecodeScreenState extends State<URLDecode> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

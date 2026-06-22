@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:picorigin/service/thumbnail_search.dart';
+import 'package:picorigin/widgets/popup_links.dart';
 
 class ThumbnailSearchScreen extends StatefulWidget {
   const ThumbnailSearchScreen({super.key});
@@ -36,15 +36,13 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
         title: Text('视频封面搜图', style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
-      body: SingleChildScrollView( // 使用 SingleChildScrollView 包裹整个内容
+      body: SingleChildScrollView(
+        // 使用 SingleChildScrollView 包裹整个内容
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '寻找封面出处',
-              style: theme.textTheme.headlineSmall,
-            ),
+            Text('寻找封面出处', style: theme.textTheme.headlineSmall),
             SizedBox(height: 20),
             _buildSettingCard(
               context,
@@ -53,9 +51,7 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
               child: TextField(
                 controller: _searchController, // 使用类级别的控制器
                 onChanged: (value) => setState(() => _searchKeyword = value),
-                decoration: InputDecoration(
-                  labelText: '支持视频链接、BV号、b23短链',
-                ),
+                decoration: InputDecoration(labelText: '支持视频链接、BV号、b23短链'),
               ),
             ),
             SizedBox(height: 20),
@@ -63,8 +59,7 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
               onPressed: () async {
                 // 触发异步搜索函数
                 final result = await extractAndSearchUrls(_searchKeyword);
-                showLinkButtonsPopup(context,result);
-
+                showLinkButtonsPopup(context, result);
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min, // 使内容紧凑
@@ -74,7 +69,7 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
                   Text('搜索'), // 按钮文本
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -82,11 +77,11 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4, // 添加阴影
       shape: RoundedRectangleBorder(

@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import '../../service/image_search.dart';
-import '/widgets/popup_links.dart';
-import '/widgets/popup_infinity.dart';
+import 'package:picorigin/service/image_search.dart';
+import 'package:picorigin/widget.dart';
+import 'package:picorigin/widgets/popup_links.dart';
 
 class ImageSearchScreen extends StatefulWidget {
   const ImageSearchScreen({super.key});
@@ -48,15 +49,13 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
         title: Text('图片搜索', style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
-      body: SingleChildScrollView( // 使用 SingleChildScrollView 包裹整个内容
+      body: SingleChildScrollView(
+        // 使用 SingleChildScrollView 包裹整个内容
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '图片搜索',
-              style: theme.textTheme.headlineSmall,
-            ),
+            Text('图片搜索', style: theme.textTheme.headlineSmall),
             SizedBox(height: 20),
             _buildSettingCard(
               context,
@@ -72,9 +71,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                   });
                 },
                 title: Text(_isLocalImage ? '搜索本地图片' : '搜索图片链接'),
-                subtitle: Text(_isLocalImage
-                    ? '从本地选择图片进行搜索'
-                    : '输入图片链接进行搜索'),
+                subtitle: Text(_isLocalImage ? '从本地选择图片进行搜索' : '输入图片链接进行搜索'),
               ),
             ),
             SizedBox(height: 16),
@@ -85,9 +82,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
               child: TextField(
                 controller: _workerUrlController,
                 onChanged: (value) => setState(() => _workerUrl = value),
-                decoration: InputDecoration(
-                  labelText: 'Worker URL',
-                ),
+                decoration: InputDecoration(labelText: 'Worker URL'),
               ),
             ),
             if (_isLocalImage) ...[
@@ -99,9 +94,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       final picker = ImagePicker();
-                      final pickedFile = await picker.pickImage(
-                        source: ImageSource.gallery,
-                      );
+                      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
                       if (pickedFile != null) {
                         setState(() {
                           _imageFile = File(pickedFile.path);
@@ -120,12 +113,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                   child: Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      Image.file(
-                        _imageFile!,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
+                      Image.file(_imageFile!, width: 100, height: 100, fit: BoxFit.cover),
                       IconButton(
                         icon: Icon(Icons.close),
                         onPressed: () {
@@ -146,9 +134,7 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
                 child: TextField(
                   controller: _imageUrlController,
                   onChanged: (value) => setState(() => _imageUrl = value),
-                  decoration: InputDecoration(
-                    labelText: 'Image URL',
-                  ),
+                  decoration: InputDecoration(labelText: 'Image URL'),
                 ),
               ),
             ],
@@ -157,41 +143,30 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
               onPressed: () async {
                 if (_isLocalImage) {
                   if (_imageFile != null) {
+                    final close = await showLoadingDialogGlobal();
+
                     try {
-                      DialogUtils.showLoadingDialog(
-                        context: context,
-                        title: '上传中...',
-                        content: '请稍候，正在上传图片...',
-                      );
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('图片上传成功，URL: $imageUrl')),
-                      );
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('图片上传成功，URL: $imageUrl')));
                       final result = generateReverseImageSearchUrls(imageUrl);
                       Navigator.of(context).pop();
 
                       showLinkButtonsPopup(context, result);
-
-
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('出现错误: ${e.toString()}')),
-                      );
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('出现错误: ${e.toString()}')));
+                    } finally {
+                      close();
                     }
                   } else {
                     // 提示用户选择图片
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('请选择一张图片')),
-                    );
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('请选择一张图片')));
                   }
                 } else {
                   try {
                     final result = generateReverseImageSearchUrls(_imageUrl);
                     showLinkButtonsPopup(context, result);
                   } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('出现错误: ${e.toString()}')),
-                    );
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('出现错误: ${e.toString()}')));
                   }
                 }
               },
@@ -211,11 +186,11 @@ class _ImageSearchScreenState extends State<ImageSearchScreen> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4, // 添加阴影
       shape: RoundedRectangleBorder(

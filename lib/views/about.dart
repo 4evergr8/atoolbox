@@ -1,6 +1,7 @@
-import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
@@ -18,16 +19,10 @@ class AboutPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // 头像
-              CircleAvatar(
-                radius: 60,
-                backgroundImage: const AssetImage('assets/aaa.png'),
-              ),
+              CircleAvatar(radius: 60, backgroundImage: const AssetImage('assets/aaa.png')),
               const SizedBox(height: 20),
 
-              Text(
-                'PicOrigin',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+              Text('PicOrigin', style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 10),
               // 开发者简介
               Text(
@@ -36,8 +31,6 @@ class AboutPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 20),
-
-
 
               ListTile(
                 leading: const Icon(Icons.code),
@@ -134,10 +127,8 @@ class AboutPage extends StatelessWidget {
                       ),
                     ],
                   ),
-
                 ],
-              )
-
+              ),
             ],
           ),
         ),

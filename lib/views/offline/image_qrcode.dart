@@ -1,10 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:atoolbox/l10n/app_localizations.dart';
-import '/service/intranet/qrcode.dart';
-import '/widgets/popup_infinity.dart';
-import '/widgets/popup_text.dart'; // 导入二维码识别函数
+import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/service/qrcode.dart';
+import 'package:picorigin/widgets/popup_text.dart';
 
 class QRCodeScan extends StatefulWidget {
   const QRCodeScan({super.key});
@@ -63,9 +63,7 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
                       : ElevatedButton(
                         onPressed: () async {
                           final picker = ImagePicker();
-                          final pickedFile = await picker.pickImage(
-                            source: ImageSource.gallery,
-                          );
+                          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
                           if (pickedFile != null) {
                             setState(() {
                               _imageFile = File(pickedFile.path);
@@ -79,13 +77,8 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                DialogUtils.showLoadingDialog(
-                  context: context,
-                  title: AppLocalizations.of(context)!.scanning,
-                  content: AppLocalizations.of(context)!.waiting,
-                );
                 if (_imageFile != null) {
-                  final result = await scanQRCodeFromImage(context,_imageFile!.path,);
+                  final result = await scanQRCodeFromImage(context, _imageFile!.path);
                   // 将二维码内容显示在弹窗中
                   Navigator.of(context).pop();
                   showTextPopup(context, result);

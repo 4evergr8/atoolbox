@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
-import 'package:atoolbox/l10n/app_localizations.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 // 弹窗函数
 void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
   final theme = Theme.of(context);
@@ -23,32 +24,33 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min, // 确保按钮紧凑
-                    children: links.map((link) {
-                      return ElevatedButton(
-                        onPressed: () async {
-
-                          // 打开链接
-                          final uri = Uri.parse(link[1]);
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('${AppLocalizations.of(context)!.can_not_open_link} ${link[1]}')),
-                            );
-                          }
-                        },
-                        onLongPress: () {
-                          // 复制链接到剪贴板
-                          Clipboard.setData(ClipboardData(text: link[1])).then((_) {
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('${AppLocalizations.of(context)!.link_copied} ${link[1]}')),
-                            );
-                          });
-                        },
-                        child: Text(link[0]),
-                      );
-                    }).toList(),
+                    children:
+                        links.map((link) {
+                          return ElevatedButton(
+                            onPressed: () async {
+                              // 打开链接
+                              final uri = Uri.parse(link[1]);
+                              if (await canLaunchUrl(uri)) {
+                                await launchUrl(uri, mode: LaunchMode.externalApplication);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('${AppLocalizations.of(context)!.can_not_open_link} ${link[1]}'),
+                                  ),
+                                );
+                              }
+                            },
+                            onLongPress: () {
+                              // 复制链接到剪贴板
+                              Clipboard.setData(ClipboardData(text: link[1])).then((_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('${AppLocalizations.of(context)!.link_copied} ${link[1]}')),
+                                );
+                              });
+                            },
+                            child: Text(link[0]),
+                          );
+                        }).toList(),
                   ),
                 ),
               ),

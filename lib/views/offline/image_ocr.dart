@@ -1,9 +1,10 @@
+import 'dart:io'; // 用于处理文件
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // 用于选择本地图片
-import 'dart:io'; // 用于处理文件
-import '../../service/ocr.dart';
-import '/widgets/popup_text.dart';
 
+import '/widgets/popup_text.dart';
+import '../../service/ocr.dart';
 
 enum Language { chinese, english, japanese }
 
@@ -18,7 +19,6 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
   File? _imageFile; // 用于存储选择的本地图片文件
   bool _isImageSelected = false; // 标记是否选择了图片
   Language _selectedLanguage = Language.chinese; // 默认为中文
-
 
   @override
   void initState() {
@@ -47,42 +47,36 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
               context,
               icon: Icons.image,
               title: '选择图片',
-              child: _isImageSelected
-                  ? Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Image.file(
-                    _imageFile!,
-                    width: double.infinity,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      setState(() {
-                        _isImageSelected = false;
-                        _imageFile = null;
-                      });
-                    },
-                  ),
-                ],
-              )
-                  : ElevatedButton(
-                onPressed: () async {
-                  final picker = ImagePicker();
-                  final pickedFile = await picker.pickImage(
-                    source: ImageSource.gallery,
-                  );
-                  if (pickedFile != null) {
-                    setState(() {
-                      _imageFile = File(pickedFile.path);
-                      _isImageSelected = true; // 图片已选择
-                    });
-                  }
-                },
-                child: Text('选择图片'),
-              ),
+              child:
+                  _isImageSelected
+                      ? Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Image.file(_imageFile!, width: double.infinity, height: 200, fit: BoxFit.cover),
+                          IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              setState(() {
+                                _isImageSelected = false;
+                                _imageFile = null;
+                              });
+                            },
+                          ),
+                        ],
+                      )
+                      : ElevatedButton(
+                        onPressed: () async {
+                          final picker = ImagePicker();
+                          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                          if (pickedFile != null) {
+                            setState(() {
+                              _imageFile = File(pickedFile.path);
+                              _isImageSelected = true; // 图片已选择
+                            });
+                          }
+                        },
+                        child: Text('选择图片'),
+                      ),
             ),
 
             SizedBox(height: 20),
@@ -135,11 +129,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
               onPressed: _startOCR,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.search),
-                  SizedBox(width: 8),
-                  Text('开始识别'),
-                ],
+                children: [Icon(Icons.search), SizedBox(width: 8), Text('开始识别')],
               ),
             ),
           ],
@@ -150,9 +140,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
 
   Future<void> _startOCR() async {
     if (_imageFile == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('请选择图片')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('请选择图片')));
       return;
     }
 
@@ -160,18 +148,16 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
       final recognizedText = await performOCR(_imageFile!, _selectedLanguage);
       showTextPopup(context, recognizedText);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('OCR识别失败: ${e.toString()}')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('OCR识别失败: ${e.toString()}')));
     }
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4, // 添加阴影
       shape: RoundedRectangleBorder(
