@@ -41,16 +41,16 @@ class _BackupScreenState extends State<BackupScreen> {
   void _startBackup() async {
     String ua = _uaController.text;
     String inputUrl = _idController.text;
-    showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
+    final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
     try {
       final bvid = await extractBvid(inputUrl);
       await fetchAndSaveVideo(ua, bvid);
-      scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+     close();
       showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
       await _saveSettings(ua, bvid);
     } catch (e) {
-      scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+     close();
       showSnackBarGlobal("fail", '$e');
     }
   }
