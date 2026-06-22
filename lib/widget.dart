@@ -132,13 +132,12 @@ VoidCallback showSnackBarGlobal(String type, String text) {
 
   final context = messenger.context;
 
-
   late SnackBar snackBar;
 
   if (type == "load") {
     snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
-      duration: const Duration(days: 1),
+      duration: const Duration(hours: 1),
       content: Row(
         children: [
           SizedBox(
