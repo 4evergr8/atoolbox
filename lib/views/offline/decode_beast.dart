@@ -26,7 +26,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     }
 
     try {
-      String cipher = await beast_encode(dict, plain);
+      String cipher = await encodeBeast(dict, plain);
       _cipherController.text = cipher;
       await Clipboard.setData(ClipboardData(text: cipher));
       showSnackBarGlobal("success", '已复制到剪贴板');
@@ -40,7 +40,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     String cipher = _cipherController.text;
 
     try {
-      String plain = await beast_decode(cipher);
+      String plain = await decodeBeast(cipher);
       _plainController.text = plain;
       await Clipboard.setData(ClipboardData(text: plain));
       showSnackBarGlobal("success", '已复制到剪贴板');
