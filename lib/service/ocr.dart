@@ -1,7 +1,8 @@
+import 'package:PicOrigin/views/offline/image_ocr.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'dart:io';
 
-import '/views/intranet/ocr_screen.dart';
+
 
 
 Future<String> performOCR(File imageFile, Language language) async {

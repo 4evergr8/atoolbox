@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
-import '/service/intranet/base64.dart'; // 用于 Base64 编解码
+import '../../service/base64.dart'; // 用于 Base64 编解码
 
 class EncodeDecode extends StatefulWidget {
   const EncodeDecode({super.key});

@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:atoolbox/l10n/app_localizations.dart';
+import 'package:atoolbox/service/qrcode.dart';
 import 'package:flutter/material.dart';
 import 'package:share_handler_platform_interface/share_handler_platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '/service/internet/image_search.dart';
+import '../service/image_search.dart';
 import '/service/internet/thumbnail_search.dart';
 import '/service/internet/video_download.dart';
 import '/service/intranet/ocr.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import '../../service/internet/image_search.dart';
+import '../../service/image_search.dart';
 import '/widgets/popup_links.dart';
 import '/widgets/popup_infinity.dart';
 

@@ -2,10 +2,6 @@ import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import 'internet/backup_screen.dart';
-import 'internet/image_screen.dart';
-import 'internet/netspeed_screen.dart';
-import 'internet/thumbnail_screen.dart';
 
 class InternetPage extends StatefulWidget {
   const InternetPage({super.key});

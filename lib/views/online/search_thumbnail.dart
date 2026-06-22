@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '/service/internet/thumbnail_search.dart';
-import '/widgets/popup_links.dart';
+
 
 
 class ThumbnailSearchScreen extends StatefulWidget {

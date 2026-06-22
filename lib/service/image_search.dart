@@ -9,12 +9,7 @@ Future<String> searchLocalImage(File imageFile, String workerUrl) async {
   int timestamp = DateTime.now().millisecondsSinceEpoch;
   timestamp=9999999999999-timestamp;
   String key = '${timestamp.toString().padLeft(13, '0')}$randomKey-APP';
-
-
-
   String uploadUrl = '$workerUrl/upload/$key';
-
-
   List<int> imageBytes = await imageFile.readAsBytes();
 
   // 创建 MultipartRequest
@@ -32,7 +27,6 @@ Future<String> searchLocalImage(File imageFile, String workerUrl) async {
   if (response.statusCode == 200) {
     // 构造下载链接
     String downloadUrl = '$workerUrl/download/$key';
-    print('图片上传成功，下载链接: $downloadUrl');
     return downloadUrl;
   } else {
     String errorMsg = await response.stream.bytesToString();
@@ -70,7 +64,7 @@ List<List<String>> generateReverseImageSearchUrls(String picUrl) {
 
     ['3DIQDB', 'https://3d.iqdb.org/?url=$picUrl'],
     ['IQDB', 'https://iqdb.org/?url=$picUrl'],
-    
+
     ['WAIT', 'https://trace.moe/?url=$picUrl'],
     ['Trace.moe', 'https://trace.moe/?url=$picUrl'],
   ];

@@ -1,4 +1,7 @@
+import 'package:atoolbox/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '/views/internet_page.dart';
 import '/views/intranet_page.dart';
 import '/service/share_handler.dart';
@@ -67,3 +70,42 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 }
 
+
+Future<VoidCallback> showLoadingDialogGlobal() async {
+  final overlay = navigatorKey.currentState?.overlay;
+  if (overlay == null) return () {};
+
+  late OverlayEntry overlayEntry;
+  overlayEntry = OverlayEntry(
+    builder: (_) => Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      child: Material(
+        color: Colors.transparent,
+        child: LinearProgressIndicator(
+          minHeight: 4,
+          backgroundColor: Theme.of(navigatorKey.currentContext!).colorScheme.primaryContainer,
+        ),
+      ),
+    ),
+  );
+
+  overlay.insert(overlayEntry);
+  return () => overlayEntry.remove();
+}
+void showErrorSnackBarGlobal(String message) {
+  final ctx = navigatorKey.currentContext;
+  if (ctx == null) return;
+
+  ScaffoldMessenger.of(ctx).showSnackBar(
+    SnackBar(
+      content: GestureDetector(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: message));
+        },
+        child: Text(message),
+      ),
+    ),
+  );
+}

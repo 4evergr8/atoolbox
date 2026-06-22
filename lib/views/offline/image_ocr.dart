@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // 用于选择本地图片
 import 'dart:io'; // 用于处理文件
-import '../../service/intranet/ocr.dart';
+import '../../service/ocr.dart';
 import '/widgets/popup_text.dart';
 
 

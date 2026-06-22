@@ -1,6 +1,7 @@
+import 'package:PicOrigin/service/beast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 用于操作剪贴板
-import '/service/intranet/beast.dart'; // 刚才的加解密代码
+
 
 class BeastEncodeDecode extends StatefulWidget {
   const BeastEncodeDecode({super.key});
