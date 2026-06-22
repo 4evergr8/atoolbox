@@ -386,8 +386,26 @@ abstract class AppLocalizations {
   /// No description provided for @qr_code.
   ///
   /// In en, this message translates to:
-  /// **'图片扫码识别'**
+  /// **'二维码扫描'**
   String get qr_code;
+
+  /// No description provided for @choose_pic.
+  ///
+  /// In en, this message translates to:
+  /// **'选择图片'**
+  String get choose_pic;
+
+  /// No description provided for @scanning.
+  ///
+  /// In en, this message translates to:
+  /// **'扫描中...'**
+  String get scanning;
+
+  /// No description provided for @waiting.
+  ///
+  /// In en, this message translates to:
+  /// **'请稍候...'**
+  String get waiting;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
