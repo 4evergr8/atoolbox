@@ -87,8 +87,6 @@ class _URLDecodeScreenState extends State<URLDecode> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('URL 解码与编辑', style: theme.textTheme.headlineSmall),
-            const SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.link,
