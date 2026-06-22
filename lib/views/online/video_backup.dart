@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -25,7 +27,7 @@ class _BackupScreenState extends State<BackupScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _uaController.text =
         prefs.getString('ua') ??
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
     _idController.text = prefs.getString('id') ?? '';
   }
 
@@ -51,6 +53,14 @@ class _BackupScreenState extends State<BackupScreen> {
     }
   }
 
+  // 粘贴内容到BV输入框
+  void _pasteFromClipboard() async {
+    String text = await clipboard_paste();
+    if (text.isNotEmpty) {
+      _idController.text = text;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -66,31 +76,41 @@ class _BackupScreenState extends State<BackupScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('备份设置', style: theme.textTheme.headlineSmall),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buildSettingCard(
               context,
               icon: Icons.browser_updated,
               title: 'UA',
               child: TextField(
                 controller: _uaController,
-                decoration: InputDecoration(labelText: 'UserAgent字符串', hintText: '请输入UserAgent'),
+                decoration: const InputDecoration(labelText: 'UserAgent字符串', hintText: '请输入UserAgent'),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _buildSettingCard(
               context,
               icon: Icons.video_collection,
               title: 'BV',
               child: TextField(
                 controller: _idController,
-                decoration: InputDecoration(labelText: '支持视频链接、BV号、b23短链', hintText: '请输入BV号'),
+                decoration: const InputDecoration(labelText: '支持视频链接、BV号、b23短链', hintText: '请输入BV号'),
               ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: _startBackup,
-              icon: Icon(Icons.settings_backup_restore),
-              label: Text('开始备份'),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _startBackup,
+                  icon: const Icon(Icons.settings_backup_restore),
+                  label: const Text('开始备份'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _pasteFromClipboard,
+                  icon: const Icon(Icons.assignment_returned),
+                  label: const Text('粘贴'),
+                ),
+              ],
             ),
           ],
         ),
@@ -99,11 +119,11 @@ class _BackupScreenState extends State<BackupScreen> {
   }
 
   Widget _buildSettingCard(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required Widget child,
-  }) {
+      BuildContext context, {
+        required IconData icon,
+        required String title,
+        required Widget child,
+      }) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -115,11 +135,11 @@ class _BackupScreenState extends State<BackupScreen> {
             Row(
               children: [
                 Icon(icon, size: 24),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Text(title, style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             child,
           ],
         ),
