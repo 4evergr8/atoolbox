@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
-import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/widget.dart';
