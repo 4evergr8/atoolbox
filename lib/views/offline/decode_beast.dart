@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/decode.dart';
+import 'package:picorigin/widget.dart';
 
 
 
@@ -22,7 +23,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     String plain = _plainController.text;
 
     if (dict.length != 4) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('字典必须为4个字符')));
+      showSnackBarGlobal('字典必须为4个字符');
       return;
     }
 
@@ -30,9 +31,9 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
       String cipher = await beast_encode(dict, plain);
       _cipherController.text = cipher;
       await clipboardCopy(cipher);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('加密成功，已复制到剪贴板')));
+      showSnackBarGlobal('成功，已复制到剪贴板');
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('加密失败: $e')));
+      showSnackBarGlobal('加密失败: $e');
     }
   }
 
@@ -44,9 +45,9 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
       String plain = await beast_decode(cipher);
       _plainController.text = plain;
       await clipboardCopy(plain);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('解密成功，已复制到剪贴板')));
+      showSnackBarGlobal('成功，已复制到剪贴板');
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('解密失败: $e')));
+      showSnackBarGlobal('$e');
     }
   }
 
