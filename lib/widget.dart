@@ -8,9 +8,9 @@ import 'package:picorigin/views/offline.dart';
 import 'package:picorigin/views/online.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void showSnackBarGlobal(String type, String text) {
+VoidCallback showSnackBarGlobal(String type, String text) {
   final messenger = scaffoldMessengerKey.currentState;
-  if (messenger == null) return;
+  if (messenger == null) return () {};
 
   final context = messenger.context;
 
@@ -66,7 +66,12 @@ void showSnackBarGlobal(String type, String text) {
       ),
     );
   }
+
+  return () {
+    scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+  };
 }
+
 
 // 弹窗函数
 void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
