@@ -94,7 +94,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                   ),
                   ElevatedButton.icon(
                     onPressed: () async {
-                      final close = await showLoadingDialogGlobal();
+                      final close = showSnackBarGlobal("load",AppLocalizations.of(context)!.waiting);
 
                       try {
                         if (widget.media.content != null) {
@@ -107,7 +107,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                           Navigator.of(context).pop();
                         }
                       } catch (e) {
-                        showSnackBarGlobal('$e');
+                        showSnackBarGlobal("fail",'$e');
                       } finally {
                         close();
                       }
@@ -151,7 +151,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                         children: [
                           ElevatedButton.icon(
                             onPressed: () async {
-                              final close = await showLoadingDialogGlobal();
+                              final close = showSnackBarGlobal("load",AppLocalizations.of(context)!.waiting);
 
                               try {
                                 final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
