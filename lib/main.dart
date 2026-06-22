@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     MaterialTheme theme = MaterialTheme(textTheme);
 
     return MaterialApp(
-      scaffoldMessengerKey: scaffoldMessengerKey,
+      navigatorKey: navigatorKey,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
