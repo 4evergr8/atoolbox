@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+// 把字符串写入剪贴板
+Future<void> clipboardCopy(String text) async {
+  // 实际由外部实现或结合 flutter/services 的 Clipboard.setData
+}
+
 // 从剪贴板读取字符串
 Future<String> clipboardPaste() async {
   return ''; // 实际由外部传入的剪贴板逻辑实现
@@ -48,7 +53,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
           'value': TextEditingController(text: '&'),
         });
       });
-      // 如果末尾是 '&'，则将其清除
+      // Remove the last '&' if it exists
       if (_decodedUrlControllers.isNotEmpty && _decodedUrlControllers.last['value']!.text == '&') {
         _decodedUrlControllers.last['value']!.text = '';
       }
@@ -56,7 +61,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
     });
   }
 
-  void _copyToClipboard() {
+  void _copyToClipboard() async {
     final List<String> parts = [];
     for (var controllerMap in _decodedUrlControllers) {
       parts.add(controllerMap['key']!.text);
@@ -65,11 +70,11 @@ class _URLDecodeScreenState extends State<URLDecode> {
       }
     }
     final editedUrl = parts.join('');
-    // 实际应调用外部统一包装的剪贴板复制工具，此处保持数据流完整
+    await clipboardCopy(editedUrl);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('链接已复制到剪贴板')));
   }
 
-  // 从剪贴板粘贴
+  // 从剪贴板粘贴到输入框
   void _pasteFromClipboard() async {
     String text = await clipboardPaste();
     if (text.isNotEmpty) {
@@ -109,11 +114,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      ElevatedButton.icon(
-                        onPressed: _decodeUrl,
-                        icon: const Icon(Icons.dns),
-                        label: const Text('解码'),
-                      ),
+                      ElevatedButton.icon(onPressed: _decodeUrl, icon: const Icon(Icons.dns), label: const Text('解码')),
                       const SizedBox(width: 12),
                       ElevatedButton.icon(
                         onPressed: _pasteFromClipboard,
@@ -139,11 +140,16 @@ class _URLDecodeScreenState extends State<URLDecode> {
                           Expanded(
                             child: TextField(
                               controller: _decodedUrlControllers[i]['key'],
+                              onChanged: (value) {
+                                setState(() {
+                                  _decodedUrlControllers[i]['key']!.text = value;
+                                });
+                              },
                             ),
                           ),
                           const SizedBox(width: 8),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {}, // 按钮无反应
                             child: Text(_decodedUrlControllers[i]['value']!.text),
                           ),
                         ],
@@ -154,11 +160,16 @@ class _URLDecodeScreenState extends State<URLDecode> {
                             Expanded(
                               child: TextField(
                                 controller: _decodedUrlControllers[i + 1]['key'],
+                                onChanged: (value) {
+                                  setState(() {
+                                    _decodedUrlControllers[i + 1]['key']!.text = value;
+                                  });
+                                },
                               ),
                             ),
                             const SizedBox(width: 8),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {}, // 按钮无反应
                               child: Text(_decodedUrlControllers[i + 1]['value']!.text),
                             ),
                           ],
@@ -167,11 +178,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
                   ),
                 ),
             const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: _copyToClipboard,
-              icon: const Icon(Icons.copy),
-              label: const Text('复制链接'),
-            ),
+            ElevatedButton.icon(onPressed: _copyToClipboard, icon: const Icon(Icons.copy), label: const Text('复制链接')),
           ],
         ),
       ),
@@ -179,11 +186,11 @@ class _URLDecodeScreenState extends State<URLDecode> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
