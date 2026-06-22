@@ -20,12 +20,7 @@ class MeowTranslator {
   }
 
   List<String> getCharMapToMeow() {
-    return [
-      charMap[3],
-      charMap[1],
-      charMap[0],
-      charMap[2],
-    ];
+    return [charMap[3], charMap[1], charMap[0], charMap[2]];
   }
 
   String strToHex(String str) {
@@ -39,9 +34,7 @@ class MeowTranslator {
   String hexToStr(String hex) {
     String str = "";
     for (int i = 0; i < hex.length; i += 4) {
-      str += String.fromCharCode(
-        int.parse(hex.substring(i, i + 4), radix: 16),
-      );
+      str += String.fromCharCode(int.parse(hex.substring(i, i + 4), radix: 16));
     }
     return str;
   }
