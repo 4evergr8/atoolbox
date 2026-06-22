@@ -38,9 +38,10 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
   // 解密并复制
   void _decryptAndCopy() async {
     String cipher = _cipherController.text;
+    String dict = _dictController.text;
 
     try {
-      String plain = await decodeBeast(cipher);
+      String plain = await decodeBeast(cipher, dict);
       _plainController.text = plain;
       await Clipboard.setData(ClipboardData(text: plain));
       showSnackBarGlobal("success", '已复制到剪贴板');
@@ -82,6 +83,19 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
             Text('兽音加解密工具', style: theme.textTheme.headlineSmall),
             const SizedBox(height: 20),
 
+            // 字典输入
+            _buildSettingCard(
+              context,
+              icon: Icons.view_array,
+              title: '字典（4字符）',
+              child: TextField(
+                controller: _dictController,
+                decoration: const InputDecoration(labelText: '请输入字典', hintText: '说的道理'),
+                maxLength: 4,
+              ),
+            ),
+            const SizedBox(height: 20),
+
             // 密文输入
             _buildSettingCard(
               context,
@@ -94,7 +108,9 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
                 minLines: 3,
               ),
             ),
+
             const SizedBox(height: 16),
+
             Row(
               children: [
                 ElevatedButton.icon(
@@ -110,19 +126,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
 
-            // 字典输入
-            _buildSettingCard(
-              context,
-              icon: Icons.view_array,
-              title: '字典（4字符）',
-              child: TextField(
-                controller: _dictController,
-                decoration: const InputDecoration(labelText: '请输入字典', hintText: '说的道理'),
-                maxLength: 4,
-              ),
-            ),
             const SizedBox(height: 16),
 
             // 明文输入
