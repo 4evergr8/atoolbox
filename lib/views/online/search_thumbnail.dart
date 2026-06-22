@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:picorigin/service/clipboard.dart';
-import 'package:picorigin/service/thumbnail_search.dart';
+import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/widget.dart';
 
 class ThumbnailSearchScreen extends StatefulWidget {
   const ThumbnailSearchScreen({super.key});
 
   @override
-  _ThumbnailSearchScreenState createState() => _ThumbnailSearchScreenState();
+  ThumbnailSearchScreenState createState() => ThumbnailSearchScreenState();
 }
 
-class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
+class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
   String _searchKeyword = 'BV1GJ411x7h7'; // 默认搜索关键词
   late TextEditingController _searchController;
 
@@ -71,9 +71,10 @@ class _ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
               children: [
                 ElevatedButton.icon(
                   onPressed: () async {
-                    // 触发异步搜索函数
-                    final result = await extractAndSearchUrls(_searchKeyword);
-                    showLinkButtonsPopup(context, result);
+                    final bvid = await extractBvid(_searchKeyword);
+                    final picUrl = await fetchBilibiliCover(bvid);
+                    final results = generateUrls(picUrl);
+                    showLinkButtonsPopup(context, results);
                   },
                   icon: const Icon(Icons.search), // 添加搜索图标
                   label: const Text('搜索'), // 按钮文本
