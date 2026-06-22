@@ -77,6 +77,6 @@ Future<void> fetchAndSaveVideo(
     final videoFile = File('${saveDir.path}/${id}_$cid.mp4');
     await videoFile.writeAsBytes(videoRes.bodyBytes);
   }
-  showSnackBarGlobal('已保存视频 $id');
+  showSnackBarGlobal("success",'已保存视频 $id');
 }
 
