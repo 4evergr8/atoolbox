@@ -28,7 +28,7 @@ class _BackupScreenState extends State<BackupScreen> {
     _uaController.text =
         prefs.getString('ua') ??
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
-    _idController.text = prefs.getString('id') ?? '';
+    _idController.text = prefs.getString('id') ?? 'BV1GJ411x7h7';
   }
 
   Future<void> _saveSettings(String ua, String id) async {
@@ -93,7 +93,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'BV',
               child: TextField(
                 controller: _idController,
-                decoration: const InputDecoration(labelText: '支持视频链接、BV号、b23短链', hintText: '请输入BV号'),
+                decoration: const InputDecoration(labelText: '支持视频链接、BV号、b23短链', hintText: '请输入文本'),
               ),
             ),
             const SizedBox(height: 16),
