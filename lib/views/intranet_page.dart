@@ -1,10 +1,10 @@
+import 'package:atoolbox/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:atoolbox/l10n/app_localizations.dart';
+
 import 'internet/url_decode.dart';
 import 'intranet/base64.dart';
 import 'intranet/beast.dart';
-import 'intranet/garbled_screen.dart';
 import 'intranet/ocr_screen.dart';
 import 'intranet/qrcode.dart';
 
@@ -93,9 +93,6 @@ class _IntranetPageState extends State<IntranetPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('无需联网', style: Theme.of(context).textTheme.headlineSmall),
-              SizedBox(height: 20),
-
               _buildFunctionItem(
                 context,
                 icon: Icons.import_export,
@@ -149,22 +146,6 @@ class _IntranetPageState extends State<IntranetPage> {
                   });
                 },
               ),
-
-              SizedBox(height: 16),
-
-              _buildFunctionItem(
-                context,
-                icon: Icons.transform,
-                title: '乱码恢复',
-                subtitle: '尝试将乱码恢复成人类语言',
-                onTap: () {
-                  _handleAdThenNavigate(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const GarbledRecovery()));
-                  });
-                },
-              ),
-
-
 
               SizedBox(height: 16),
 
