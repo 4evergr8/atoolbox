@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/service/clipboard.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class BackupScreen extends StatefulWidget {
   const BackupScreen({super.key});
@@ -28,7 +28,7 @@ class _BackupScreenState extends State<BackupScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _uaController.text =
         prefs.getString('ua') ??
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
     _idController.text = prefs.getString('id') ?? 'BV1GJ411x7h7';
   }
 
@@ -41,14 +41,14 @@ class _BackupScreenState extends State<BackupScreen> {
   void _startBackup() async {
     String ua = _uaController.text;
     String inputUrl = _idController.text;
-    final close =  showSnackBarGlobal("load",AppLocalizations.of(context)!.waiting);
+    final close = showSnackBarGlobal("load", AppLocalizations.of(context)!.waiting);
 
     try {
       final bvid = await extractBvid(inputUrl);
       await fetchAndSaveVideo(ua, bvid);
       await _saveSettings(ua, bvid);
     } catch (e) {
-      showSnackBarGlobal("fail",'$e');
+      showSnackBarGlobal("fail", '$e');
     } finally {
       close();
     }
@@ -56,7 +56,7 @@ class _BackupScreenState extends State<BackupScreen> {
 
   // 粘贴内容到BV输入框
   void _pasteFromClipboard() async {
-    String text = await clipboardPaste();
+    String text = (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     if (text.isNotEmpty) {
       _idController.text = text;
     }
@@ -120,11 +120,11 @@ class _BackupScreenState extends State<BackupScreen> {
   }
 
   Widget _buildSettingCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Widget child,
+  }) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
