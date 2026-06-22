@@ -30,7 +30,7 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
 
   // 从剪贴板粘贴
   void _pasteFromClipboard() async {
-    String text = await clipboard_paste();
+    String text = await clipboardPaste();
     if (text.isNotEmpty) {
       setState(() {
         _searchController.text = text;
