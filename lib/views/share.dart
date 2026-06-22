@@ -5,7 +5,6 @@ import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/ocr.dart';
 import 'package:picorigin/service/qrcode.dart';
-import 'package:picorigin/service/thumbnail_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/views/offline/image_ocr.dart';
 import 'package:picorigin/widget.dart';
@@ -84,8 +83,10 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                   ElevatedButton.icon(
                     onPressed: () async {
                       if (widget.media.content != null) {
-                        final links = await extractAndSearchUrls(widget.media.content!);
-                        showLinkButtonsPopup(context, links);
+                        final bvid = await extractBvid(widget.media.content!);
+                        final picUrl = await fetchBilibiliCover(bvid);
+                        final results = generateUrls(picUrl);
+                        showLinkButtonsPopup(context, results);
                       }
                     },
                     icon: Icon(Icons.link),
@@ -158,7 +159,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('${AppLocalizations.of(context)!.upload_success}$imageUrl')),
                                 );
-                                final result = generateReverseImageSearchUrls(imageUrl);
+                                final result = generateUrls(imageUrl);
                                 showLinkButtonsPopup(context, result);
                               } catch (e) {
                                 Navigator.of(context).pop();
