@@ -34,6 +34,7 @@ VoidCallback showSnackBarGlobal(String type, String text) {
   } else if (type == "success") {
     messenger.showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 1),
         content: GestureDetector(
           onTap: () {
             Clipboard.setData(ClipboardData(text: text));
@@ -51,6 +52,7 @@ VoidCallback showSnackBarGlobal(String type, String text) {
   } else {
     messenger.showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 3),
         content: GestureDetector(
           onTap: () {
             Clipboard.setData(ClipboardData(text: text));
