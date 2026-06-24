@@ -1,4 +1,4 @@
-name: FlutterPicOrigin
+name: PicOrigin
 
 on:
   workflow_dispatch:
