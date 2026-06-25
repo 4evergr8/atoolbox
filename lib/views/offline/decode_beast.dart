@@ -21,12 +21,11 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
     String dict = _dictController.text;
     String plain = _plainController.text;
 
-
     try {
       String cipher = await encodeBeast(dict, plain);
       _cipherController.text = cipher;
       await Clipboard.setData(ClipboardData(text: cipher));
-      showSnackBarGlobal("success",AppLocalizations.of(context)!.copied);
+      showSnackBarGlobal("success", AppLocalizations.of(context)!.copied);
     } catch (e) {
       showSnackBarGlobal("error", '$e');
     }
@@ -81,10 +80,10 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
             _buildSettingCard(
               context,
               icon: Icons.view_array,
-              title:AppLocalizations.of(context)!. dict,
+              title: AppLocalizations.of(context)!.dict,
               child: TextField(
                 controller: _dictController,
-                decoration:  InputDecoration(labelText: AppLocalizations.of(context)!.dict_enter),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.dict_enter),
                 maxLength: 4,
               ),
             ),
@@ -97,7 +96,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
               title: AppLocalizations.of(context)!.decode,
               child: TextField(
                 controller: _cipherController,
-                decoration:  InputDecoration(labelText: AppLocalizations.of(context)!.decode_enter),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.decode_enter),
                 maxLines: null,
                 minLines: 3,
               ),
@@ -130,7 +129,7 @@ class _BeastEncodeDecodeState extends State<BeastEncodeDecode> {
               title: AppLocalizations.of(context)!.encode,
               child: TextField(
                 controller: _plainController,
-                decoration:  InputDecoration(labelText: AppLocalizations.of(context)!.encode_enter),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.encode_enter),
                 maxLines: null,
                 minLines: 3,
               ),
