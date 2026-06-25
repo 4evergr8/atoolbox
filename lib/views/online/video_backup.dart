@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
-import 'package:picorigin/main.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/video_download.dart';
 import 'package:picorigin/widget.dart';
@@ -46,11 +45,11 @@ class _BackupScreenState extends State<BackupScreen> {
     try {
       final bvid = await extractBvid(inputUrl);
       await fetchAndSaveVideo(ua, bvid);
-     close();
+      close();
       showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
       await _saveSettings(ua, bvid);
     } catch (e) {
-     close();
+      close();
       showSnackBarGlobal("error", '$e');
     }
   }
@@ -83,7 +82,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'UA',
               child: TextField(
                 controller: _uaController,
-                decoration:  InputDecoration(labelText:AppLocalizations.of(context)!.ua_string),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.ua_string),
               ),
             ),
             const SizedBox(height: 16),
@@ -93,7 +92,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'BV',
               child: TextField(
                 controller: _idController,
-                decoration:  InputDecoration(labelText:AppLocalizations.of(context)!. image_thumbnail_text),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.image_thumbnail_text),
               ),
             ),
             const SizedBox(height: 16),
@@ -102,13 +101,13 @@ class _BackupScreenState extends State<BackupScreen> {
                 ElevatedButton.icon(
                   onPressed: _startBackup,
                   icon: const Icon(Icons.settings_backup_restore),
-                  label:  Text(AppLocalizations.of(context)!.start),
+                  label: Text(AppLocalizations.of(context)!.start),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: _pasteFromClipboard,
                   icon: const Icon(Icons.assignment_returned),
-                  label:  Text(AppLocalizations.of(context)!.paste),
+                  label: Text(AppLocalizations.of(context)!.paste),
                 ),
               ],
             ),
