@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
+import 'package:picorigin/widget.dart';
 
 class URLDecode extends StatefulWidget {
   const URLDecode({super.key});
@@ -62,7 +64,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
     }
     final editedUrl = parts.join('');
     await Clipboard.setData(ClipboardData(text: editedUrl));
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('链接已复制到剪贴板')));
+    showSnackBarGlobal('success', AppLocalizations.of(context)!.copied);
   }
 
   // 从剪贴板粘贴到输入框
@@ -79,7 +81,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('URL 解码与编辑', style: theme.textTheme.headlineMedium),
+        title: Text('URL', style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -90,25 +92,25 @@ class _URLDecodeScreenState extends State<URLDecode> {
             _buildSettingCard(
               context,
               icon: Icons.link,
-              title: '待解码链接',
+              title: AppLocalizations.of(context)!.decode,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextField(
                     controller: _urlController,
-                    decoration: const InputDecoration(labelText: '输入待解码链接', hintText: '例如: '),
+                    decoration:  InputDecoration(labelText: AppLocalizations.of(context)!.decode_enter),
                     maxLines: 1,
                     scrollPhysics: const ClampingScrollPhysics(),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      ElevatedButton.icon(onPressed: _decodeUrl, icon: const Icon(Icons.dns), label: const Text('解码')),
+                      ElevatedButton.icon(onPressed: _decodeUrl, icon: const Icon(Icons.link), label:  Text(AppLocalizations.of(context)!.decode)),
                       const SizedBox(width: 12),
                       ElevatedButton.icon(
                         onPressed: _pasteFromClipboard,
                         icon: const Icon(Icons.assignment_returned),
-                        label: const Text('粘贴'),
+                        label:  Text(AppLocalizations.of(context)!.paste),
                       ),
                     ],
                   ),
@@ -167,7 +169,7 @@ class _URLDecodeScreenState extends State<URLDecode> {
                   ),
                 ),
             const SizedBox(height: 20),
-            ElevatedButton.icon(onPressed: _copyToClipboard, icon: const Icon(Icons.copy), label: const Text('复制链接')),
+            ElevatedButton.icon(onPressed: _copyToClipboard, icon: const Icon(Icons.copy), label:  Text(AppLocalizations.of(context)!.copy)),
           ],
         ),
       ),
