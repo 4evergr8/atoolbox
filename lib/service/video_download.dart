@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:picorigin/widget.dart';
 
 Future<void> fetchAndSaveVideo(String ua, String id) async {
   final headers = {'User-Agent': ua};
 
   final downloadsDirectory = Directory('/storage/emulated/0/Download');
-
 
   final saveDir = Directory('${downloadsDirectory.path}/.备份');
   if (!saveDir.existsSync()) {
@@ -18,7 +16,6 @@ Future<void> fetchAndSaveVideo(String ua, String id) async {
   // 获取视频信息
   final infoUrl = Uri.parse('https://api.bilibili.com/x/web-interface/view?bvid=$id');
   final infoRes = await http.get(infoUrl, headers: headers);
-
 
   final infoJson = jsonDecode(infoRes.body);
   final data = infoJson['data'];
@@ -56,5 +53,4 @@ Future<void> fetchAndSaveVideo(String ua, String id) async {
     final videoFile = File('${saveDir.path}/${id}_$cid.mp4');
     await videoFile.writeAsBytes(videoRes.bodyBytes);
   }
-
 }
