@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
-import 'package:picorigin/main.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/widget.dart';
 
@@ -69,15 +68,21 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                     _imageFile = null; // 清空已选择的图片
                   });
                 },
-                title: Text(_isLocalImage ? AppLocalizations.of(context)!.image_local : AppLocalizations.of(context)!.image_link),
-                subtitle: Text(_isLocalImage ? AppLocalizations.of(context)!.image_local_text : AppLocalizations.of(context)!.image_link_text),
+                title: Text(
+                  _isLocalImage ? AppLocalizations.of(context)!.image_local : AppLocalizations.of(context)!.image_link,
+                ),
+                subtitle: Text(
+                  _isLocalImage
+                      ? AppLocalizations.of(context)!.image_local_text
+                      : AppLocalizations.of(context)!.image_link_text,
+                ),
               ),
             ),
             SizedBox(height: 16),
             _buildSettingCard(
               context,
               icon: Icons.link,
-              title:AppLocalizations.of(context)!.worker_link,
+              title: AppLocalizations.of(context)!.worker_link,
               child: TextField(
                 controller: _workerUrlController,
                 onChanged: (value) => setState(() => _workerUrl = value),
@@ -146,12 +151,12 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
 
                     try {
                       final imageUrl = await searchLocalImage(_imageFile!, _workerUrl);
-                     close();
+                      close();
                       showSnackBarGlobal("success", imageUrl);
                       final result = generateUrls(imageUrl);
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
-                     close();
+                      close();
                       showSnackBarGlobal("error", '$e');
                     }
                   }
