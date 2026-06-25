@@ -98,19 +98,23 @@ class _URLDecodeScreenState extends State<URLDecode> {
                 children: [
                   TextField(
                     controller: _urlController,
-                    decoration:  InputDecoration(labelText: AppLocalizations.of(context)!.decode_enter),
+                    decoration: InputDecoration(labelText: AppLocalizations.of(context)!.decode_enter),
                     maxLines: 1,
                     scrollPhysics: const ClampingScrollPhysics(),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      ElevatedButton.icon(onPressed: _decodeUrl, icon: const Icon(Icons.link), label:  Text(AppLocalizations.of(context)!.decode)),
+                      ElevatedButton.icon(
+                        onPressed: _decodeUrl,
+                        icon: const Icon(Icons.link),
+                        label: Text(AppLocalizations.of(context)!.decode),
+                      ),
                       const SizedBox(width: 12),
                       ElevatedButton.icon(
                         onPressed: _pasteFromClipboard,
                         icon: const Icon(Icons.assignment_returned),
-                        label:  Text(AppLocalizations.of(context)!.paste),
+                        label: Text(AppLocalizations.of(context)!.paste),
                       ),
                     ],
                   ),
@@ -169,7 +173,11 @@ class _URLDecodeScreenState extends State<URLDecode> {
                   ),
                 ),
             const SizedBox(height: 20),
-            ElevatedButton.icon(onPressed: _copyToClipboard, icon: const Icon(Icons.copy), label:  Text(AppLocalizations.of(context)!.copy)),
+            ElevatedButton.icon(
+              onPressed: _copyToClipboard,
+              icon: const Icon(Icons.copy),
+              label: Text(AppLocalizations.of(context)!.copy),
+            ),
           ],
         ),
       ),
