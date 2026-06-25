@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
-import 'package:picorigin/main.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/service/ocr.dart';
 import 'package:picorigin/service/qrcode.dart';
@@ -105,11 +104,11 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                               prefs.getString('ua') ??
                               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36';
                           await fetchAndSaveVideo(ua, BV);
-                         close();
+                          close();
                           showSnackBarGlobal("success", AppLocalizations.of(context)!.success_video);
                         }
                       } catch (e) {
-                       close();
+                        close();
                         showSnackBarGlobal("error", '$e');
                       }
                     },
@@ -156,12 +155,12 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
 
                               try {
                                 final imageUrl = await searchLocalImage(File(path), _workerUrlController.text);
-                               close();
+                                close();
                                 showSnackBarGlobal("success", imageUrl);
                                 final result = generateUrls(imageUrl);
                                 showLinkButtonsPopup(context, result);
                               } catch (e) {
-                               close();
+                                close();
                                 showSnackBarGlobal("error", '$e');
                               }
                             },
