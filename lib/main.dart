@@ -5,8 +5,6 @@ import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/themes/theme.dart';
 import 'package:picorigin/themes/util.dart';
 import 'package:picorigin/widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
