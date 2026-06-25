@@ -51,7 +51,7 @@ class _BackupScreenState extends State<BackupScreen> {
       await _saveSettings(ua, bvid);
     } catch (e) {
      close();
-      showSnackBarGlobal("fail", '$e');
+      showSnackBarGlobal("error", '$e');
     }
   }
 
@@ -69,7 +69,7 @@ class _BackupScreenState extends State<BackupScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('备份', style: theme.textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.video_backup, style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -83,7 +83,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'UA',
               child: TextField(
                 controller: _uaController,
-                decoration: const InputDecoration(labelText: 'UserAgent字符串', hintText: '请输入UserAgent'),
+                decoration:  InputDecoration(labelText:AppLocalizations.of(context)!.ua_string),
               ),
             ),
             const SizedBox(height: 16),
@@ -93,7 +93,7 @@ class _BackupScreenState extends State<BackupScreen> {
               title: 'BV',
               child: TextField(
                 controller: _idController,
-                decoration: const InputDecoration(labelText: '支持视频链接、BV号、b23短链', hintText: '请输入文本'),
+                decoration:  InputDecoration(labelText:AppLocalizations.of(context)!. image_thumbnail_text),
               ),
             ),
             const SizedBox(height: 16),
@@ -102,13 +102,13 @@ class _BackupScreenState extends State<BackupScreen> {
                 ElevatedButton.icon(
                   onPressed: _startBackup,
                   icon: const Icon(Icons.settings_backup_restore),
-                  label: const Text('开始备份'),
+                  label:  Text(AppLocalizations.of(context)!.start),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: _pasteFromClipboard,
                   icon: const Icon(Icons.assignment_returned),
-                  label: const Text('粘贴'),
+                  label:  Text(AppLocalizations.of(context)!.paste),
                 ),
               ],
             ),
