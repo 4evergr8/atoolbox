@@ -110,7 +110,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                         }
                       } catch (e) {
                        close();
-                        showSnackBarGlobal("fail", '$e');
+                        showSnackBarGlobal("error", '$e');
                       }
                     },
                     icon: Icon(Icons.settings_backup_restore),
@@ -162,7 +162,7 @@ class _ShareReceiverPageState extends State<ShareReceiverPage> {
                                 showLinkButtonsPopup(context, result);
                               } catch (e) {
                                close();
-                                showSnackBarGlobal("fail", '$e');
+                                showSnackBarGlobal("error", '$e');
                               }
                             },
                             icon: Icon(Icons.search),
