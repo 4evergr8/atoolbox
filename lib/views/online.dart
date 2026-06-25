@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:picorigin/l10n/app_localizations.dart';
-import 'package:picorigin/views/online/netspeed_screen.dart';
 import 'package:picorigin/views/online/search_image.dart';
 import 'package:picorigin/views/online/search_thumbnail.dart';
 import 'package:picorigin/views/online/video_backup.dart';
@@ -128,20 +127,6 @@ class _InternetPageState extends State<InternetPage> {
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const BackupScreen()));
-                  });
-                },
-              ),
-
-              SizedBox(height: 16),
-
-              _buildFunctionItem(
-                context,
-                icon: Icons.speed,
-                title: AppLocalizations.of(context)!.speedtest,
-                subtitle: AppLocalizations.of(context)!.test_down,
-                onTap: () {
-                  _handleAdThenNavigate(() {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SpeedTestScreen()));
                   });
                 },
               ),
