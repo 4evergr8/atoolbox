@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -160,11 +159,95 @@ class AppLocalizationsZh extends AppLocalizations {
   String get choose_pic => '选择图片';
 
   @override
-  String get scanning => '扫描中...';
-
-  @override
   String get waiting => '请稍候...';
 
   @override
   String get success_video => '视频备份完成';
+
+  @override
+  String get decode => '解码';
+
+  @override
+  String get decode_enter => '输入待解码内容';
+
+  @override
+  String get decode_copy => '解码并复制';
+
+  @override
+  String get encode_copy => '编码并复制';
+
+  @override
+  String get paste => '粘贴';
+
+  @override
+  String get encode => '编码';
+
+  @override
+  String get dict => '字典';
+
+  @override
+  String get dict_enter => '请输入字典';
+
+  @override
+  String get encode_enter => '输入待编码内容';
+
+  @override
+  String get copied => '已复制';
+
+  @override
+  String get beast => '兽音译者';
+
+  @override
+  String get ocr_offline => '离线OCR';
+
+  @override
+  String get choose_char => '选择识别字符';
+
+  @override
+  String get char_chinese => '中文字符';
+
+  @override
+  String get char_lartin => '拉丁字符';
+
+  @override
+  String get char_japanese => '日文字符';
+
+  @override
+  String get image_search => '图片搜索';
+
+  @override
+  String get image_search_method => '搜索方式';
+
+  @override
+  String get image_local => '本地图片';
+
+  @override
+  String get image_local_text => '从本地选择图片进行搜索';
+
+  @override
+  String get image_link => '图片链接';
+
+  @override
+  String get image_link_text => '输入图片链接进行搜索';
+
+  @override
+  String get worker_link => '图床链接';
+
+  @override
+  String get search => '搜索';
+
+  @override
+  String get image_thumbnail => '视频封面搜索';
+
+  @override
+  String get image_thumbnail_text => '支持视频链接、BV号、b23短链';
+
+  @override
+  String get video_backup => 'B站视频备份';
+
+  @override
+  String get ua_string => 'UserAgent字符串';
+
+  @override
+  String get start => '开始';
 }
