@@ -74,7 +74,6 @@ VoidCallback showSnackBarGlobal(String type, String text) {
   };
 }
 
-
 // 弹窗函数
 void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
   final theme = Theme.of(context);
@@ -106,7 +105,7 @@ void showLinkButtonsPopup(BuildContext context, List<List<String>> links) {
                                 await launchUrl(uri, mode: LaunchMode.externalApplication);
                               } else {
                                 showSnackBarGlobal(
-                                  "fail",
+                                  "error",
                                   '${AppLocalizations.of(context)!.can_not_open_link} ${link[1]}',
                                 );
                               }
@@ -295,9 +294,7 @@ void showTextPopup(BuildContext context, String initialText) {
                       .join(' ')
                       .replaceAll(' \n ', '\n'); // 恢复换行
                   Clipboard.setData(ClipboardData(text: selectedText));
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.selected_copied)));
+                  showSnackBarGlobal('success', AppLocalizations.of(context)!.selected_copied);
                 },
                 icon: Icon(Icons.copy),
                 label: Text(AppLocalizations.of(context)!.copy),
