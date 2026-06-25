@@ -77,13 +77,9 @@ class _QRCodeScanScreenState extends State<QRCodeScan> {
               onPressed: () async {
                 if (_imageFile != null) {
                   final result = await scanQRCodeFromImage(context, _imageFile!.path);
-                  // 将二维码内容显示在弹窗中
-                  Navigator.of(context).pop();
                   showTextPopup(context, result);
                 } else {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.choose_pic)));
+                  showSnackBarGlobal("error", AppLocalizations.of(context)!.choose_pic);
                 }
               },
               child: Row(
