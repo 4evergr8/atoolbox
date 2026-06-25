@@ -2,6 +2,7 @@ import 'dart:io'; // 用于处理文件
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/service/ocr.dart';
 import 'package:picorigin/widget.dart'; // 用于选择本地图片
 
@@ -30,7 +31,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('离线OCR识别', style: theme.textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.ocr_offline, style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -42,7 +43,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
             _buildSettingCard(
               context,
               icon: Icons.image,
-              title: '选择图片',
+              title: AppLocalizations.of(context)!.choose_pic,
               child:
                   _isImageSelected
                       ? Stack(
@@ -71,7 +72,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
                             });
                           }
                         },
-                        child: Text('选择图片'),
+                        child: Text(AppLocalizations.of(context)!.choose_pic),
                       ),
             ),
 
@@ -81,11 +82,11 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
             _buildSettingCard(
               context,
               icon: Icons.language,
-              title: '选择识别语言',
+              title: AppLocalizations.of(context)!.choose_char,
               child: Column(
                 children: [
                   RadioListTile<Language>(
-                    title: Text('中文字符'),
+                    title: Text(AppLocalizations.of(context)!.char_chinese),
                     value: Language.chinese,
                     groupValue: _selectedLanguage,
                     onChanged: (Language? value) {
@@ -95,7 +96,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
                     },
                   ),
                   RadioListTile<Language>(
-                    title: Text('拉丁字符'),
+                    title: Text(AppLocalizations.of(context)!.char_lartin),
                     value: Language.english,
                     groupValue: _selectedLanguage,
                     onChanged: (Language? value) {
@@ -105,7 +106,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
                     },
                   ),
                   RadioListTile<Language>(
-                    title: Text('日文字符'),
+                    title: Text(AppLocalizations.of(context)!.char_japanese),
                     value: Language.japanese,
                     groupValue: _selectedLanguage,
                     onChanged: (Language? value) {
@@ -125,7 +126,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
               onPressed: _startOCR,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [Icon(Icons.search), SizedBox(width: 8), Text('开始识别')],
+                children: [Icon(Icons.search), SizedBox(width: 8), Text('OCR')],
               ),
             ),
           ],
@@ -136,7 +137,6 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
 
   Future<void> _startOCR() async {
     if (_imageFile == null) {
-      showSnackBarGlobal("fail", '请选择图片');
       return;
     }
 
@@ -144,7 +144,7 @@ class _OfflineOCRScreenState extends State<OfflineOCRScreen> {
       final recognizedText = await performOCR(_imageFile!, _selectedLanguage);
       showTextPopup(context, recognizedText);
     } catch (e) {
-      showSnackBarGlobal("fail", "$e");
+      showSnackBarGlobal("error", "$e");
     }
   }
 
