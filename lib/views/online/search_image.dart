@@ -16,7 +16,7 @@ class ImageSearchScreen extends StatefulWidget {
 
 class ImageSearchScreenState extends State<ImageSearchScreen> {
   bool _isLocalImage = true; // 默认为搜索本地图片文件
-  String _imageUrl = 'https://picsum.photos/200/200?random=1'; // 默认图片链接
+  String _imageUrl = ''; // 默认图片链接
   File? _imageFile; // 用于存储选择的本地图片文件
   bool _isImageSelected = false; // 标记是否选择了图片
   String _workerUrl = 'https://image-6eu.pages.dev'; // 默认 Worker 链接
@@ -47,7 +47,7 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('图片搜索', style: theme.textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.image_search, style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -59,7 +59,7 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
             _buildSettingCard(
               context,
               icon: Icons.cloud,
-              title: '搜索方式',
+              title: AppLocalizations.of(context)!.image_search_method,
               child: SwitchListTile(
                 value: _isLocalImage,
                 onChanged: (value) {
@@ -69,15 +69,15 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                     _imageFile = null; // 清空已选择的图片
                   });
                 },
-                title: Text(_isLocalImage ? '搜索本地图片' : '搜索图片链接'),
-                subtitle: Text(_isLocalImage ? '从本地选择图片进行搜索' : '输入图片链接进行搜索'),
+                title: Text(_isLocalImage ? AppLocalizations.of(context)!.image_local : AppLocalizations.of(context)!.image_link),
+                subtitle: Text(_isLocalImage ? AppLocalizations.of(context)!.image_local_text : AppLocalizations.of(context)!.image_link_text),
               ),
             ),
             SizedBox(height: 16),
             _buildSettingCard(
               context,
               icon: Icons.link,
-              title: 'Worker 链接',
+              title:AppLocalizations.of(context)!.worker_link,
               child: TextField(
                 controller: _workerUrlController,
                 onChanged: (value) => setState(() => _workerUrl = value),
@@ -89,7 +89,7 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                 _buildSettingCard(
                   context,
                   icon: Icons.image,
-                  title: '选择图片',
+                  title: AppLocalizations.of(context)!.choose_pic,
                   child: ElevatedButton(
                     onPressed: () async {
                       final picker = ImagePicker();
@@ -101,14 +101,14 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                         });
                       }
                     },
-                    child: Text('选择图片'),
+                    child: Text(AppLocalizations.of(context)!.choose_pic),
                   ),
                 ),
               if (_isImageSelected)
                 _buildSettingCard(
                   context,
                   icon: Icons.image,
-                  title: '已选择图片',
+                  title: AppLocalizations.of(context)!.choose_pic,
                   child: Stack(
                     alignment: Alignment.topRight,
                     children: [
@@ -129,7 +129,7 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
               _buildSettingCard(
                 context,
                 icon: Icons.link,
-                title: '图片链接',
+                title: AppLocalizations.of(context)!.image_link,
                 child: TextField(
                   controller: _imageUrlController,
                   onChanged: (value) => setState(() => _imageUrl = value),
@@ -152,18 +152,15 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                       showLinkButtonsPopup(context, result);
                     } catch (e) {
                      close();
-                      showSnackBarGlobal("fail", '$e');
+                      showSnackBarGlobal("error", '$e');
                     }
-                  } else {
-                    // 提示用户选择图片
-                    showSnackBarGlobal("fail", '请选择一张图片');
                   }
                 } else {
                   try {
                     final result = generateUrls(_imageUrl);
                     showLinkButtonsPopup(context, result);
                   } catch (e) {
-                    showSnackBarGlobal("fail", "$e");
+                    showSnackBarGlobal("error", "$e");
                   }
                 }
               },
@@ -172,7 +169,7 @@ class ImageSearchScreenState extends State<ImageSearchScreen> {
                 children: [
                   Icon(Icons.search), // 添加搜索图标
                   SizedBox(width: 8), // 图标和文本之间的间距
-                  Text('搜索'), // 按钮文本
+                  Text(AppLocalizations.of(context)!.search), // 按钮文本
                 ],
               ),
             ),
