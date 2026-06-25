@@ -41,7 +41,7 @@ Future<String> searchLocalImage(File imageFile, String workerUrl) async {
     return '$workerUrl/download/$key';
   } else {
     String errorMsg = await response.stream.bytesToString();
-    throw Exception('Failed to upload image. Status: ${response.statusCode}, Response: $errorMsg');
+    throw Exception('${response.statusCode},$errorMsg');
   }
 }
 
