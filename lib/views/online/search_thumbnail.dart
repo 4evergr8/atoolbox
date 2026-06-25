@@ -62,7 +62,7 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
               child: TextField(
                 controller: _searchController, // 使用类级别的控制器
                 onChanged: (value) => setState(() => _searchKeyword = value),
-                decoration:  InputDecoration(labelText: AppLocalizations.of(context)!.image_thumbnail_text),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.image_thumbnail_text),
               ),
             ),
             const SizedBox(height: 16),
@@ -76,13 +76,13 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
                     showLinkButtonsPopup(context, results);
                   },
                   icon: const Icon(Icons.search), // 添加搜索图标
-                  label:  Text(AppLocalizations.of(context)!.search), // 按钮文本
+                  label: Text(AppLocalizations.of(context)!.search), // 按钮文本
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: _pasteFromClipboard,
                   icon: const Icon(Icons.assignment_returned),
-                  label:  Text(AppLocalizations.of(context)!.paste),
+                  label: Text(AppLocalizations.of(context)!.paste),
                 ),
               ],
             ),
