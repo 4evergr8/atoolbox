@@ -95,7 +95,7 @@ class _IntranetPageState extends State<IntranetPage> {
               _buildFunctionItem(
                 context,
                 icon: Icons.import_export,
-                title: 'URL解码',
+                title: 'URL',
                 subtitle: 'URL解码与编辑',
                 onTap: () {
                   _handleAdThenNavigate(() {
@@ -109,7 +109,7 @@ class _IntranetPageState extends State<IntranetPage> {
               _buildFunctionItem(
                 context,
                 icon: Icons.lock_open,
-                title: 'Base64解码',
+                title: 'Base64',
                 subtitle: 'Base64编码与解码',
                 onTap: () {
                   _handleAdThenNavigate(() {
@@ -138,7 +138,7 @@ class _IntranetPageState extends State<IntranetPage> {
                 context,
                 icon: Icons.qr_code,
                 title: '图片扫码',
-                subtitle: '识别图片中的条码和二维码，支持识别多个',
+                subtitle: '识别图片中的条码和二维码',
                 onTap: () {
                   _handleAdThenNavigate(() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const QRCodeScan()));
@@ -150,8 +150,8 @@ class _IntranetPageState extends State<IntranetPage> {
 
               _buildFunctionItem(
                 context,
-                icon: Icons.pageview,
-                title: '离线OCR',
+                icon: Icons.translate,
+                title: AppLocalizations.of(context)!.ocr_offline,
                 subtitle: '从图片中提取文字',
                 onTap: () {
                   _handleAdThenNavigate(() {
