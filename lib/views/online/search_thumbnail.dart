@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/service/image_search.dart';
 import 'package:picorigin/widget.dart';
 
@@ -45,7 +46,7 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('视频封面搜图', style: theme.textTheme.headlineMedium),
+        title: Text(AppLocalizations.of(context)!.image_thumbnail, style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -57,11 +58,11 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
             _buildSettingCard(
               context,
               icon: Icons.link,
-              title: '视频封面搜图',
+              title: AppLocalizations.of(context)!.image_thumbnail,
               child: TextField(
                 controller: _searchController, // 使用类级别的控制器
                 onChanged: (value) => setState(() => _searchKeyword = value),
-                decoration: const InputDecoration(labelText: '支持视频链接、BV号、b23短链'),
+                decoration:  InputDecoration(labelText: AppLocalizations.of(context)!.image_thumbnail_text),
               ),
             ),
             const SizedBox(height: 16),
@@ -75,13 +76,13 @@ class ThumbnailSearchScreenState extends State<ThumbnailSearchScreen> {
                     showLinkButtonsPopup(context, results);
                   },
                   icon: const Icon(Icons.search), // 添加搜索图标
-                  label: const Text('搜索'), // 按钮文本
+                  label:  Text(AppLocalizations.of(context)!.search), // 按钮文本
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: _pasteFromClipboard,
                   icon: const Icon(Icons.assignment_returned),
-                  label: const Text('粘贴'),
+                  label:  Text(AppLocalizations.of(context)!.paste),
                 ),
               ],
             ),
