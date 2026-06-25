@@ -4,16 +4,10 @@ class MeowTranslator {
   late List<String> charMap;
 
   void setCharMap(String str) {
-    if (str.length != 4) {
-      throw Exception("字典必须为4个字符");
-    }
     charMap = [str[0], str[1], str[2], str[3]];
   }
 
   void setCharMapFromMeow(String str) {
-    if (str.length < 4) {
-      throw Exception("密文无效");
-    }
     charMap = List.filled(4, '');
     charMap[0] = str[2];
     charMap[1] = str[1];
@@ -56,9 +50,6 @@ class MeowTranslator {
     for (int i = 0; i < meow.length; i += 2) {
       int j = charMap.indexOf(meow[i]);
       int k = charMap.indexOf(meow[i + 1]);
-      if (j == -1 || k == -1) {
-        throw Exception("密文包含非法字符");
-      }
       int val = (j * 4 + k - (i ~/ 2) % 16 + 16) % 16;
       hex += val.toRadixString(16);
     }
@@ -86,12 +77,11 @@ Future<String> encodeBeast(String dict, String plain) async {
     translator.setCharMap(dict);
     return translator.parseToMeow(plain);
   } catch (e) {
-    throw Exception("加密失败: $e");
+    throw Exception("$e");
   }
 }
 
 Future<String> decodeBeast(String cipher, String dict) async {
-  try {
     final translator = MeowTranslator();
 
     bool isValidDict(String d) {
@@ -100,27 +90,16 @@ Future<String> decodeBeast(String cipher, String dict) async {
 
     bool cipherHasDict = cipher.length >= 4;
 
-    // =========================
-    // CASE 1: 密文有字典
-    // =========================
     if (cipherHasDict) {
       translator.setCharMapFromMeow(cipher);
       return translator.parseToHuman(cipher);
     }
 
-    // =========================
-    // CASE 2: 密文无字典 + 输入字典合法
-    // =========================
     if (!cipherHasDict && isValidDict(dict)) {
       translator.setCharMap(dict);
 
-      // 按原协议拼接成标准密文
       final standardCipher = translator.parseToMeow(translator.hexToStr(translator.strToHex("")));
 
-      // ❗关键：不能这样构造内容，正确方式是直接补结构
-      // 因为 parseToMeow 会重新编码
-
-      // 正确做法：直接拼 header + body
       final body = cipher;
       final map = translator.getCharMapToMeow();
 
@@ -130,13 +109,8 @@ Future<String> decodeBeast(String cipher, String dict) async {
       return translator.parseToHuman(rebuiltCipher);
     }
 
-    // =========================
-    // CASE 3: 都失败
-    // =========================
-    throw Exception("无法解密：缺少有效字典");
-  } catch (e) {
-    throw Exception("解密失败: $e");
-  }
+    throw Exception();
+
 }
 
 Future<String> decodeBase64(String base64String) async {
