@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -9,245 +10,245 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get welcome => '欢迎';
+  String get welcome => 'Welcome';
 
   @override
-  String get welcome_full => '欢迎使用，点击下方按钮查看使用方法。';
+  String get welcome_full => 'Welcome, tap the button below to see instructions.';
 
   @override
-  String get more => '了解更多';
+  String get more => 'Learn more';
 
   @override
-  String get online => '在线';
+  String get online => 'Online';
 
   @override
-  String get offline => '离线';
+  String get offline => 'Offline';
 
   @override
-  String get about => '关于';
+  String get about => 'About';
 
   @override
-  String get cancel => '取消';
+  String get cancel => 'Cancel';
 
   @override
-  String get link_options => '链接选项';
+  String get link_options => 'Link options';
 
   @override
-  String get can_not_open_link => '无法打开链接';
+  String get can_not_open_link => 'Unable to open link';
 
   @override
-  String get link_copied => '链接已复制:';
+  String get link_copied => 'Link copied:';
 
   @override
-  String get dismiss => '了解';
+  String get dismiss => 'Got it';
 
   @override
-  String get detail_info => '详细信息';
+  String get detail_info => 'Details';
 
   @override
-  String get selected_copied => '已复制选中的内容';
+  String get selected_copied => 'Selected content copied';
 
   @override
-  String get copy => '复制';
+  String get copy => 'Copy';
 
   @override
-  String get conform => '确认';
+  String get conform => 'Confirm';
 
   @override
-  String get source_code => '软件源代码';
+  String get source_code => 'Source code';
 
   @override
-  String get from => '此软件来源于无聊时的瞎想';
+  String get from => 'This software originated from a random idea during boredom';
 
   @override
-  String get website => '搜图网站';
+  String get website => 'Image search website';
 
   @override
-  String get need_connection => '需要联网';
+  String get need_connection => 'Internet connection required';
 
   @override
-  String get reverse => '反向搜图';
+  String get reverse => 'Reverse image search';
 
   @override
-  String get find_sourse => '寻找图片的出处';
+  String get find_sourse => 'Find image source';
 
   @override
-  String get artwork => '封面搜图';
+  String get artwork => 'Cover image search';
 
   @override
-  String get artwork_sourse => '寻找视频封面的出处，目前仅支持哔哩哔哩';
+  String get artwork_sourse => 'Find video cover source, currently only supports Bilibili';
 
   @override
-  String get backup => '视频备份';
+  String get backup => 'Video backup';
 
   @override
-  String get backup_video => '哔哩哔哩视频备份，无需登录';
+  String get backup_video => 'Bilibili video backup, no login required';
 
   @override
-  String get speedtest => '网速测试';
+  String get speedtest => 'Network speed test';
 
   @override
-  String get test_down => '网络下载速度测试';
+  String get test_down => 'Download speed test';
 
   @override
-  String get dns => 'DNS 查询';
+  String get dns => 'DNS query';
 
   @override
-  String get dns_test => '加密DNS查询测试';
+  String get dns_test => 'Encrypted DNS query test';
 
   @override
-  String get ip => 'IP反查域名';
+  String get ip => 'IP reverse lookup domain';
 
   @override
-  String get ip_reverse => 'DoHPTR查询测试';
+  String get ip_reverse => 'DoHPTR query test';
 
   @override
-  String get note1 => '软件使用了Flutter框架和Dart语言。';
+  String get note1 => 'The app uses Flutter framework and Dart language.';
 
   @override
-  String get note2 => '本地搜图功能借助了CloudflareWorker和R2存储桶。';
+  String get note2 => 'Local image search uses Cloudflare Worker and R2 storage bucket.';
 
   @override
-  String get note3 => '在线搜图功能灵感来源于搜图Bot酱。';
+  String get note3 => 'Online image search is inspired by Search Bot Chan.';
 
   @override
-  String get note4 => 'OCR功能来自google_mlkit_text_recognition。';
+  String get note4 => 'OCR functionality uses google_mlkit_text_recognition.';
 
   @override
-  String get note5 => '兽音译者功能来自CATT-L/MeowTranslator';
+  String get note5 => 'Beast language translator is based on CATT-L/MeowTranslator';
 
   @override
-  String get ocr_fail => 'OCR识别失败';
+  String get ocr_fail => 'OCR recognition failed';
 
   @override
-  String get share_process => '分享内容处理';
+  String get share_process => 'Processing shared content';
 
   @override
-  String get get_text => '接收到的文本';
+  String get get_text => 'Received text';
 
   @override
-  String get downloading => '下载中...';
+  String get downloading => 'Downloading...';
 
   @override
-  String get downloading_vid => '请稍候，正在备份视频...';
+  String get downloading_vid => 'Please wait, backing up video...';
 
   @override
-  String get uploading => '上传中...';
+  String get uploading => 'Uploading...';
 
   @override
-  String get uploading_pic => '请稍候，正在上传图片...';
+  String get uploading_pic => 'Please wait, uploading image...';
 
   @override
-  String get upload_success => '图片上传成功，URL: ';
+  String get upload_success => 'Image uploaded successfully, URL: ';
 
   @override
-  String get upload_fail => '图片上传失败:';
+  String get upload_fail => 'Image upload failed:';
 
   @override
-  String get ocr_zh => '中文字符提取';
+  String get ocr_zh => 'Chinese character extraction';
 
   @override
-  String get ocr_en => '拉丁字符提取';
+  String get ocr_en => 'Latin character extraction';
 
   @override
-  String get ocr_ja => '日文字符提取';
+  String get ocr_ja => 'Japanese character extraction';
 
   @override
-  String get qr_code => '二维码扫描';
+  String get qr_code => 'QR code scan';
 
   @override
-  String get choose_pic => '选择图片';
+  String get choose_pic => 'Select image';
 
   @override
-  String get waiting => '请稍候...';
+  String get waiting => 'Please wait...';
 
   @override
-  String get success_video => '视频备份完成';
+  String get success_video => 'Video backup completed';
 
   @override
-  String get decode => '解码';
+  String get decode => 'Decode';
 
   @override
-  String get decode_enter => '输入待解码内容';
+  String get decode_enter => 'Enter content to decode';
 
   @override
-  String get decode_copy => '解码并复制';
+  String get decode_copy => 'Decode and copy';
 
   @override
-  String get encode_copy => '编码并复制';
+  String get encode_copy => 'Encode and copy';
 
   @override
-  String get paste => '粘贴';
+  String get paste => 'Paste';
 
   @override
-  String get encode => '编码';
+  String get encode => 'Encode';
 
   @override
-  String get dict => '字典';
+  String get dict => 'Dictionary';
 
   @override
-  String get dict_enter => '请输入字典';
+  String get dict_enter => 'Please enter dictionary';
 
   @override
-  String get encode_enter => '输入待编码内容';
+  String get encode_enter => 'Enter content to encode';
 
   @override
-  String get copied => '已复制';
+  String get copied => 'Copied';
 
   @override
-  String get beast => '兽音译者';
+  String get beast => 'Beast translator';
 
   @override
-  String get ocr_offline => '离线OCR';
+  String get ocr_offline => 'Offline OCR';
 
   @override
-  String get choose_char => '选择识别字符';
+  String get choose_char => 'Select recognition characters';
 
   @override
-  String get char_chinese => '中文字符';
+  String get char_chinese => 'Chinese characters';
 
   @override
-  String get char_lartin => '拉丁字符';
+  String get char_lartin => 'Latin characters';
 
   @override
-  String get char_japanese => '日文字符';
+  String get char_japanese => 'Japanese characters';
 
   @override
-  String get image_search => '图片搜索';
+  String get image_search => 'Image search';
 
   @override
-  String get image_search_method => '搜索方式';
+  String get image_search_method => 'Search method';
 
   @override
-  String get image_local => '本地图片';
+  String get image_local => 'Local image';
 
   @override
-  String get image_local_text => '从本地选择图片进行搜索';
+  String get image_local_text => 'Select image from local device for search';
 
   @override
-  String get image_link => '图片链接';
+  String get image_link => 'Image link';
 
   @override
-  String get image_link_text => '输入图片链接进行搜索';
+  String get image_link_text => 'Enter image URL for search';
 
   @override
-  String get worker_link => '图床链接';
+  String get worker_link => 'Image hosting link';
 
   @override
-  String get search => '搜索';
+  String get search => 'Search';
 
   @override
-  String get image_thumbnail => '视频封面搜索';
+  String get image_thumbnail => 'Video cover search';
 
   @override
-  String get image_thumbnail_text => '支持视频链接、BV号、b23短链';
+  String get image_thumbnail_text => 'Supports video links, BV ID, and b23 short links';
 
   @override
-  String get video_backup => 'B站视频备份';
+  String get video_backup => 'Bilibili video backup';
 
   @override
-  String get ua_string => 'UserAgent字符串';
+  String get ua_string => 'User-Agent string';
 
   @override
-  String get start => '开始';
+  String get start => 'Start';
 }
