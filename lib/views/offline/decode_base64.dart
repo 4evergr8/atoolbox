@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:picorigin/l10n/app_localizations.dart';
 import 'package:picorigin/service/decode.dart';
 import 'package:picorigin/widget.dart';
 
@@ -11,8 +12,8 @@ class EncodeDecode extends StatefulWidget {
 }
 
 class _EncodeDecodeScreenState extends State<EncodeDecode> {
-  final TextEditingController _decodeController = TextEditingController(text: '5L2g5aW9'); // 设置默认解码值
-  final TextEditingController _encodeController = TextEditingController(text: '你好'); // 设置默认编码值
+  final TextEditingController _decodeController = TextEditingController(text: ''); // 设置默认解码值
+  final TextEditingController _encodeController = TextEditingController(text: ''); // 设置默认编码值
 
   // 解码并复制到剪贴板
   void _decodeAndCopy() async {
@@ -20,10 +21,10 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
       String decodedString = await decodeBase64(_decodeController.text);
       await Clipboard.setData(ClipboardData(text: decodedString));
 
-      showSnackBarGlobal("success", '已复制到剪贴板');
+      showSnackBarGlobal("success", AppLocalizations.of(context)!.copied);
       _encodeController.text = decodedString; // 将解码后的值显示在上方输入框内
     } catch (e) {
-      showSnackBarGlobal("fail", '$e');
+      showSnackBarGlobal("error", '$e');
     }
   }
 
@@ -33,10 +34,10 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
     try {
       String encodedString = await encodeBase64(input);
       await Clipboard.setData(ClipboardData(text: encodedString));
-      showSnackBarGlobal("fail", '已复制到剪贴板');
+      showSnackBarGlobal("success", AppLocalizations.of(context)!.copied);
       _decodeController.text = encodedString; // 将编码后的值显示在下方输入框内
     } catch (e) {
-      showSnackBarGlobal("fail", '$e');
+      showSnackBarGlobal("error", '$e');
     }
   }
 
@@ -62,7 +63,7 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('编解码工具', style: theme.textTheme.headlineMedium),
+        title: Text('Base64', style: theme.textTheme.headlineMedium),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: SingleChildScrollView(
@@ -74,14 +75,12 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
             _buildSettingCard(
               context,
               icon: Icons.lock_open,
-              title: 'Base64 解码',
+              title: AppLocalizations.of(context)!.decode,
               child: TextField(
                 controller: _decodeController,
-                decoration: const InputDecoration(labelText: '输入 Base64 编码的字符串', hintText: '例如：SGVsbG8gV29ybGQh'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.decode_enter),
                 maxLines: null,
-                // 允许多行输入
                 minLines: 3,
-                // 最小行数
                 expands: false, // 不自动填充剩余空间
               ),
             ),
@@ -91,13 +90,13 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
                 ElevatedButton.icon(
                   onPressed: _decodeAndCopy,
                   icon: const Icon(Icons.content_copy),
-                  label: const Text('解码并复制'),
+                  label: Text(AppLocalizations.of(context)!.decode_copy),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: _pasteToDecode,
                   icon: const Icon(Icons.assignment_returned),
-                  label: const Text('粘贴'),
+                  label: Text(AppLocalizations.of(context)!.paste),
                 ),
               ],
             ),
@@ -107,10 +106,10 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
             _buildSettingCard(
               context,
               icon: Icons.lock,
-              title: 'Base64 编码',
+              title: AppLocalizations.of(context)!.encode,
               child: TextField(
                 controller: _encodeController,
-                decoration: const InputDecoration(labelText: '输入需要编码的字符串', hintText: '例如：Hello World!'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.encode_enter),
                 maxLines: null,
                 // 允许多行输入
                 minLines: 3,
@@ -124,13 +123,13 @@ class _EncodeDecodeScreenState extends State<EncodeDecode> {
                 ElevatedButton.icon(
                   onPressed: _encodeAndCopy,
                   icon: const Icon(Icons.content_copy),
-                  label: const Text('编码并复制'),
+                  label: Text(AppLocalizations.of(context)!.encode_copy),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: _pasteToEncode,
                   icon: const Icon(Icons.assignment_returned),
-                  label: const Text('粘贴'),
+                  label: Text(AppLocalizations.of(context)!.paste),
                 ),
               ],
             ),
