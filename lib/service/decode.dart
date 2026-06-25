@@ -82,35 +82,34 @@ Future<String> encodeBeast(String dict, String plain) async {
 }
 
 Future<String> decodeBeast(String cipher, String dict) async {
-    final translator = MeowTranslator();
+  final translator = MeowTranslator();
 
-    bool isValidDict(String d) {
-      return d.length == 4 && d.split('').toSet().length == 4;
-    }
+  bool isValidDict(String d) {
+    return d.length == 4 && d.split('').toSet().length == 4;
+  }
 
-    bool cipherHasDict = cipher.length >= 4;
+  bool cipherHasDict = cipher.length >= 4;
 
-    if (cipherHasDict) {
-      translator.setCharMapFromMeow(cipher);
-      return translator.parseToHuman(cipher);
-    }
+  if (cipherHasDict) {
+    translator.setCharMapFromMeow(cipher);
+    return translator.parseToHuman(cipher);
+  }
 
-    if (!cipherHasDict && isValidDict(dict)) {
-      translator.setCharMap(dict);
+  if (!cipherHasDict && isValidDict(dict)) {
+    translator.setCharMap(dict);
 
-      final standardCipher = translator.parseToMeow(translator.hexToStr(translator.strToHex("")));
+    final standardCipher = translator.parseToMeow(translator.hexToStr(translator.strToHex("")));
 
-      final body = cipher;
-      final map = translator.getCharMapToMeow();
+    final body = cipher;
+    final map = translator.getCharMapToMeow();
 
-      final rebuiltCipher = map[0] + map[1] + map[2] + body + map[3];
+    final rebuiltCipher = map[0] + map[1] + map[2] + body + map[3];
 
-      translator.setCharMap(dict);
-      return translator.parseToHuman(rebuiltCipher);
-    }
+    translator.setCharMap(dict);
+    return translator.parseToHuman(rebuiltCipher);
+  }
 
-    throw Exception();
-
+  throw Exception();
 }
 
 Future<String> decodeBase64(String base64String) async {
