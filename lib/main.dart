@@ -48,58 +48,10 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _checkFirstLaunch();
-  }
-
-  Future<void> _checkFirstLaunch() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-
-    if (isFirstLaunch) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showFirstLaunchDialog();
-      });
-      await prefs.setBool('isFirstLaunch', false);
-    }
-  }
-
-  void _showFirstLaunchDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // 禁止点击外部关闭
-      builder: (context) {
-        return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.welcome),
-          content: Text(AppLocalizations.of(context)!.welcome_full),
-          actions: [
-            ElevatedButton.icon(
-              onPressed: () async {
-                final uri = Uri.parse('https://github.com/4evergr8/FlutterPicOrigin');
-                if (await canLaunchUrl(uri)) {
-                  await launchUrl(uri, mode: LaunchMode.externalApplication);
-                } else {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('https://github.com/4evergr8/FlutterPicOrigin')));
-                }
-                Navigator.of(context).pop(); // 关闭弹窗
-              },
-              icon: Icon(Icons.web),
-              label: Text(AppLocalizations.of(context)!.more),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BottomNavBar(); // 仅显示底部导航栏
