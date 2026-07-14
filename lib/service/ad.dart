@@ -19,7 +19,15 @@ class AdManager {
 
   int _adStateIndex = 0;
 
+  bool get _canShowAd {
+    return DateTime.now().isAfter(DateTime(2026, 7, 20));
+  }
+
   void loadInterstitialAd() {
+    if (!_canShowAd) {
+      return;
+    }
+
     if (_isAdReady || _interstitialAd != null) {
       return;
     }
@@ -60,9 +68,11 @@ class AdManager {
           _interstitialAd = null;
           showSnackBarGlobal('error', '$e');
 
-          Future.delayed(const Duration(seconds: 10), () {
-            loadInterstitialAd();
-          });
+          if (e.code != 3) {
+            Future.delayed(const Duration(seconds: 10), () {
+              loadInterstitialAd();
+            });
+          }
         },
       ),
     );
@@ -71,9 +81,7 @@ class AdManager {
   void showAdThen(VoidCallback action) {
     _adStateIndex++;
 
-    if (_adStateIndex % 3 == 1 &&
-        _isAdReady &&
-        _interstitialAd != null) {
+    if (_canShowAd && _adStateIndex % 3 == 1 && _isAdReady && _interstitialAd != null) {
       _pendingAction = action;
       _interstitialAd!.show();
     } else {
