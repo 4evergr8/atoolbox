@@ -5,6 +5,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("D:\\Project\\SDK\\sign\\my-release-key.jks")
+            storePassword = "aaa111111@"
+            keyAlias = "my-key-alias"
+            keyPassword = "aaa111111@"
+        }
+    }
     namespace = "app.flutter.picorigin"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
@@ -27,7 +35,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false // 禁用代码混淆
             isShrinkResources = false // 禁用资源压缩
         }
