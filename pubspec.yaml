@@ -8,7 +8,7 @@ flutter_native_splash:
   image: assets/aaa.png
   android: true
   ios: false
-version: 1.4.7+12
+version: 1.4.8+13
 environment:
   sdk: ^3.7.2
 
