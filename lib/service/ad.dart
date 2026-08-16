@@ -20,7 +20,7 @@ class AdManager {
   int _adStateIndex = 0;
 
   bool get _canShowAd {
-    return DateTime.now().isAfter(DateTime(2026, 7, 20));
+    return DateTime.now().isAfter(DateTime(2026, 8, 18));
   }
 
   void loadInterstitialAd() {
@@ -66,7 +66,7 @@ class AdManager {
         onAdFailedToLoad: (e) {
           _isAdReady = false;
           _interstitialAd = null;
-          showSnackBarGlobal('error', '$e');
+          //showSnackBarGlobal('error', '$e');
 
           if (e.code != 3) {
             Future.delayed(const Duration(seconds: 10), () {
