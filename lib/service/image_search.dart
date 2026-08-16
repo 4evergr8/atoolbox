@@ -12,6 +12,7 @@ List<List<String>> generateUrls(String picUrl) {
     ['Lenso.ai', 'https://lenso.ai/en/search-by-url?url=$picUrl&utm_source=sbi'],
     ['Google', 'https://www.google.com/searchbyimage?client=app&image_url=$picUrl'],
     ['SauceNAO', 'https://saucenao.com/search.php?url=$picUrl'],
+    ['onegai.moe', 'https://onegai.moe/search?url=$picUrl'],
     ['ascii2d', 'https://ascii2d.net/search/url/$picUrl'],
     ['TinEye', 'https://tineye.com/search/?url=$picUrl'],
     ['3DIQDB', 'https://3d.iqdb.org/?url=$picUrl'],
